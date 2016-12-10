@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Gaze.ViewModelMain;
 
 namespace Gaze
 {
@@ -20,9 +21,19 @@ namespace Gaze
     /// </summary>
     public partial class MainWindow : Window
     {
+        MainViewModel mainVM;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            mainVM = new MainViewModel();
+            this.DataContext = mainVM;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            mainVM.TestPushButton();
         }
     }
 }

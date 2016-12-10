@@ -7,6 +7,16 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="129*"/>
+            <RowDefinition Height="190*"/>
+        </Grid.RowDefinitions>
+
+
+        <Button Click="Button_Click">
+            <TextBlock FontWeight="Bold">Push me!</TextBlock>
+        </Button>
+        
         
     </Grid>
 </Window>

@@ -105,8 +105,6 @@
             <ListView Name="SuggestionBox" ItemsSource="{Binding SuggestionsList}" Initialized="SuggestionBox_Initialized" Background="DarkGray" HorizontalContentAlignment="Center" >
                 <ListView.ItemContainerStyle>
                     <Style>
-                        <Setter Property="Grid.Column" Value="{Binding ColumnIndex}" />
-                        <Setter Property="Grid.Row" Value="{Binding RowIndex}" />
                         <Setter Property="Grid.ColumnSpan" Value="2" />
                         <Setter Property="Grid.RowSpan" Value="3" />
                         <Setter Property="eyeX:Behavior.Activatable" Value="Default" />
@@ -123,7 +121,19 @@
 
         <!--FOOTER START-->
         <Grid Name="Footer" Grid.Row="2" Grid.Column="0">
-            <autocomplete:AutoComplete x:Name="autocompleteInput" TextChanged="autocompleteInput_TextChanged" Text="{Binding MessageToSend}"/>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+
+                <autocomplete:AutoComplete Grid.Column="0" x:Name="autocompleteInput" TextChanged="autocompleteInput_TextChanged" Text="{Binding MessageToSend}" FontSize="50" VerticalContentAlignment="Center" Margin="10,0,0,0" />
+                <Button Grid.Column="1"  Name="PlayText" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="PlayText_Activate" Click="PlayText_Activate">
+                    <TextBlock FontSize="40" FontWeight="Bold" Foreground="Green">Play</TextBlock>
+                </Button>
+            </Grid>
+
         </Grid>
 
         <Grid Name="FooterRight" Grid.Row="2" Grid.Column="1">

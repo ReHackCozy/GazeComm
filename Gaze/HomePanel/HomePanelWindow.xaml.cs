@@ -64,8 +64,6 @@ namespace Gaze.HomePanel
                 if (currentApp != null)
                     eyeXHostRef.TriggerActivation();
             }
-
-           
         }
 
         private void OnSendSMS(object sender, RoutedEventArgs e)
@@ -111,5 +109,9 @@ namespace Gaze.HomePanel
 
         }
 
+        private void PlayText_Activate(object sender, RoutedEventArgs e)
+        {
+            Utilities.Util.Speak(vm.MessageToSend, System.Speech.Synthesis.VoiceGender.Female);
+        }
     }
 }

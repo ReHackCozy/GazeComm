@@ -70,7 +70,6 @@ namespace Gaze.HomePanel
         {
             Utilities.Util.Speak(vm.MessageToSend, System.Speech.Synthesis.VoiceGender.Female);
             new SendMessage().Invoke(vm.MessageToSend, vm.PhoneNumber);
-
         }
 
         private void autocompleteInput_TextChanged(object sender, TextChangedEventArgs e)

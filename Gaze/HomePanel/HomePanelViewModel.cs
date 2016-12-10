@@ -5,12 +5,15 @@ using System.Linq;
 using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
-
+using Gaze.API;
 
 namespace Gaze.HomePanel
 {
     public class HomePanelViewModel : INotifyPropertyChanged
     {
+        //panic implementation, this probably shouldnt be here.
+        private AuthorizationAPI _authorizationAPI;
+
         private string _name;
         private string _phoneNumber;
         private string _messageToSend;
@@ -24,8 +27,22 @@ namespace Gaze.HomePanel
             _messageToSend = "";
 
             _suggestionsList = new ObservableCollection<GazableButton>();
+
+            _authorizationAPI = new AuthorizationAPI(sendTTS);
         }
 
+        public void sendTTS()
+        {
+            if(String.IsNullOrEmpty(_authorizationAPI.AccessToken))
+            {
+                //run authentication first
+                _authorizationAPI.Invoke();
+            } else
+            {
+                var number = "+" + _phoneNumber;
+                new SendTTS().Invoke(_messageToSend, number, _authorizationAPI.AccessToken);
+            }
+        }
 
         #region Setters Getters
 

@@ -59,7 +59,7 @@ namespace Gaze.API.Model
             }
         }
 
-        internal class SMSRespond
+        internal class SMSResponse : IRespondParameter
         {
             public String RespondResult { get; set; }
             public String RespondCode { get; set; }

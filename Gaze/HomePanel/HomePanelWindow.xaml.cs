@@ -45,17 +45,6 @@ namespace Gaze.HomePanel
 
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            var sugg = new GazableButton();
-            sugg.Height = 150;
-            sugg.Width = 150;
-            sugg.Content = "Suggestion";
-            sugg.value = "Suggestion AA";
-
-            vm.SuggestionsList.Add(sugg);
-        }
-
         private void OnEyeXActivate(object sender, RoutedEventArgs e)
         {
             var element = e.Source as FrameworkElement;
@@ -63,8 +52,8 @@ namespace Gaze.HomePanel
 
             var gazableButton = element.DataContext as GazableButton;
 
-            vm.Name = gazableButton.value;
-            SendMessageTxtBox.Text += gazableButton.value;
+            if(gazableButton.type == GazableButton.Type.Suggestion)
+                addWordToSendMessageTextFromButton(gazableButton.value);
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
@@ -101,11 +90,26 @@ namespace Gaze.HomePanel
                 sugg.Width = 150;
                 sugg.Content = (string)enumerate.Current;
                 sugg.value = (string)enumerate.Current;
+                sugg.type = GazableButton.Type.Suggestion;
+                sugg.Click += (o,s) => 
+                {
+                    if (sugg.type == GazableButton.Type.Suggestion)
+                        addWordToSendMessageTextFromButton(sugg.value);
+                } ;
 
                 vm.SuggestionsList.Add(sugg);
             }
-           
+        }
+
+        private void addWordToSendMessageTextFromButton(string text)
+        {
+
+            vm.MessageToSend += text;
+            vm.MessageToSend += " ";
+            autocompleteInput.Focus();
+            autocompleteInput.CaretIndex = autocompleteInput.Text.Length;
 
         }
+
     }
 }

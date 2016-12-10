@@ -12,26 +12,15 @@
     
     <Window.Resources>
         <Style x:Key="ButtonStyle" TargetType="Button">
+            <EventSetter Event="Click" Handler="OnEyeXActivate"/>
             <Setter Property="MaxWidth" Value="200" />
             <Setter Property="MaxHeight" Value="75" />
             <Setter Property="Margin" Value="10" />
             <Setter Property="Padding" Value="10" />
         </Style>
         <Style x:Key="EyeXActivatableButtonStyle" BasedOn="{StaticResource ButtonStyle}" TargetType="Button">
-            <!-- By use of attached properties, we can specify that: the button is activatable,
-                 that we do not want tentative activation focus events, and what handler should 
-                 be called when the button is activated. 
-            
-                 Read more about the Activatable Behavior and its associated concepts in the 
-                 Developer's Guide (available online and in the SDK docs/ folder) -->
             <Setter Property="eyeX:Behavior.Activatable" Value="Default" />
             <EventSetter Event="eyeX:Behavior.Activate" Handler="OnEyeXActivate" />
-            <!-- We also set up a trigger on the Behavior.ActivationFocus attached property, and
-                 specify how the button should look when focused for activation. 
-            
-                 Alternatively, we could have registered an event handler for the routed
-                 event Behavior.ActivationFocusChanged and done the handling in the code behind
-                 or via the MainWindowModel. -->
             <Style.Triggers>
                 <Trigger Property="eyeX:Behavior.ActivationFocus" Value="HasActivationFocus">
                     <Setter Property="BorderBrush" Value="DarkGray" />
@@ -68,7 +57,7 @@
                 </Grid>
 
                 <Grid Grid.Column="1" Margin="1,2,1,2">
-                    <TextBox Text="{Binding PhoneNumber}"  Foreground="White" FontWeight="Bold" FontSize="20" Margin="5,0,0,0" Background="DarkGray" BorderThickness="0"/>
+                    <TextBox Text="{Binding PhoneNumber}" Foreground="White" FontWeight="Bold" FontSize="20" Margin="5,0,0,0" Background="DarkGray" BorderThickness="0"/>
                 </Grid>
 
             </Grid>
@@ -134,11 +123,7 @@
 
         <!--FOOTER START-->
         <Grid Name="Footer" Grid.Row="2" Grid.Column="0">
-
-            <TextBox Text="{Binding MessageToSend}" Name="SendMessageTxtBox" TextChanged="TextBox_TextChanged" Visibility="Collapsed">
-                
-            </TextBox>
-            <autocomplete:AutoComplete x:Name="autocompleteInput" TextChanged="autocompleteInput_TextChanged"/>
+            <autocomplete:AutoComplete x:Name="autocompleteInput" TextChanged="autocompleteInput_TextChanged" Text="{Binding MessageToSend}"/>
         </Grid>
 
         <Grid Name="FooterRight" Grid.Row="2" Grid.Column="1">

@@ -18,13 +18,20 @@ namespace Gaze
     /// <summary>
     /// Interaction logic for UserControl1.xaml
     /// </summary>
+    /// 
+    
+
     public partial class GazableButton : Button
     {
+        public enum Type { Suggestion, Letter, Word, Others };
+
         public string value;
+        public Type type;
 
         public GazableButton()
         {
             value = "NONE";
+            type = Type.Others;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using EyeXFramework.Wpf;
+using Gaze.EyeTracker;
 
 namespace Gaze.HomePanel
 {
@@ -79,6 +81,27 @@ namespace Gaze.HomePanel
         private void OnSendSMS(object sender, RoutedEventArgs e)
         {
             SendMessageTxtBox.Text += "SEND SMS";
+            autocompleteInput.Text += "SEND SMS";
+        }
+
+        private void autocompleteInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            vm.SuggestionsList.Clear();
+            ArrayList mathingValues = autocompleteInput.getMatchingValues();
+            IEnumerator enumerate = mathingValues.GetEnumerator();
+
+            while (enumerate.MoveNext())
+            {
+                var sugg = new GazableButton();
+                sugg.Height = 150;
+                sugg.Width = 150;
+                sugg.Content = (string)enumerate.Current;
+                sugg.value = (string)enumerate.Current;
+
+                vm.SuggestionsList.Add(sugg);
+            }
+            autocompleteInput.Text += "SEND SMS";
+
         }
     }
 }

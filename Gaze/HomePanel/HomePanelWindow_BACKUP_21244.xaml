@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gaze.HomePanel"
         xmlns:eyeX="clr-namespace:EyeXFramework.Wpf;assembly=EyeXFramework"
-        xmlns:autocomplete="clr-namespace:Gaze.EyeTracker"
+<<<<<<< HEAD
         KeyUp="Window_KeyUp"
+=======
+        xmlns:autocomplete="clr-namespace:Gaze.EyeTracker"
+>>>>>>> b90ed2f64c142949a6e3c96986dfed0604b94d54
         mc:Ignorable="d"
         Title="HomePanel" Height="768" Width="1280" WindowState="Maximized">
     
@@ -135,18 +138,21 @@
         <!--FOOTER START-->
         <Grid Name="Footer" Grid.Row="2" Grid.Column="0">
 
-            <TextBox Text="{Binding MessageToSend}" Name="SendMessageTxtBox" TextChanged="TextBox_TextChanged" Visibility="Collapsed">
+<<<<<<< HEAD
+            <TextBox Text="{Binding MessageToSend}" Name="SendMessageTxtBox" TextChanged="TextBox_TextChanged">
                 
             </TextBox>
+            
+=======
             <autocomplete:AutoComplete x:Name="autocompleteInput" TextChanged="autocompleteInput_TextChanged"/>
+
+>>>>>>> b90ed2f64c142949a6e3c96986dfed0604b94d54
         </Grid>
 
         <Grid Name="FooterRight" Grid.Row="2" Grid.Column="1">
             <Button Name="SendSMS">
                 <TextBlock FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="OnSendSMS">Send SMS</TextBlock>
             </Button>
-            
-
         </Grid>
         <!--FOOTER ENDS-->
         

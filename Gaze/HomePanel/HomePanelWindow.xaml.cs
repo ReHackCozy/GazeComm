@@ -28,10 +28,12 @@ namespace Gaze.HomePanel
         public WpfEyeXHost eyeXHostRef;
         Stopwatch stopWatch;
 
+        //HACK
         double fixationBeginTimeStamp = 0;
         double fixationActivateDuration = 500; //In milisecond
         bool fixationStart = false;
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public HomePanelWindow()
         {
@@ -67,11 +69,14 @@ namespace Gaze.HomePanel
 
         }
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private void SuggestionBox_Initialized(object sender, EventArgs e)
         {
 
         }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private void OnEyeXActivate(object sender, RoutedEventArgs e)
         {
@@ -80,9 +85,11 @@ namespace Gaze.HomePanel
 
             var gazableButton = element.DataContext as GazableButton;
 
-            if(gazableButton.type == GazableButton.Type.Suggestion)
+            if (gazableButton.type == GazableButton.Type.Suggestion)
                 addWordToSendMessageTextFromButton(gazableButton.value);
         }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
@@ -94,11 +101,15 @@ namespace Gaze.HomePanel
             }
         }
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         private void OnSendSMS(object sender, RoutedEventArgs e)
         {
             Utilities.Util.Speak(vm.MessageToSend, System.Speech.Synthesis.VoiceGender.Female);
             new SendMessage().Invoke(vm.MessageToSend, vm.PhoneNumber);
         }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private void autocompleteInput_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -131,6 +142,8 @@ namespace Gaze.HomePanel
             }
         }
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         private void addWordToSendMessageTextFromButton(string text)
         {
 
@@ -141,6 +154,8 @@ namespace Gaze.HomePanel
 
         }
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         private void PlayText_Activate(object sender, RoutedEventArgs e)
         {
             if (vm.MessageToSend.Length == 0)
@@ -148,6 +163,8 @@ namespace Gaze.HomePanel
 
             Utilities.Util.Speak(vm.MessageToSend, System.Speech.Synthesis.VoiceGender.Female);
         }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private void OnVirtualKeyboardPressed(object sender, RoutedEventArgs e)
         {
@@ -158,16 +175,22 @@ namespace Gaze.HomePanel
             autocompleteInput.CaretIndex = autocompleteInput.Text.Length;
         }
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         private void autocompleteInput_Initialized(object sender, EventArgs e)
         {
             autocompleteInput.Focus();
             autocompleteInput.CaretIndex = autocompleteInput.Text.Length;
         }
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         private void LetterButton_HasGazeChanged(object sender, RoutedEventArgs e)
         {
             var button = sender as GazableButton;
         }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private void SuggestionButton_HasGazeChanged(object sender, RoutedEventArgs e)
         {
@@ -179,6 +202,8 @@ namespace Gaze.HomePanel
 
         }
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         private void VK_BKSpace_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as GazableButton;
@@ -189,20 +214,28 @@ namespace Gaze.HomePanel
             autocompleteInput.CaretIndex = autocompleteInput.Text.Length;
         }
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         private void VK_BKSpace_HasGazeChanged(object sender, RoutedEventArgs e)
         {
 
         }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private void SendSMS_HasGazeChanged(object sender, RoutedEventArgs e)
         {
 
         }
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         private void PlayText_HasGazeChanged(object sender, RoutedEventArgs e)
         {
 
         }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private void GazableButton_Activate(object sender, RoutedEventArgs e)
         {
@@ -211,10 +244,14 @@ namespace Gaze.HomePanel
             autocompleteInput.CaretIndex = autocompleteInput.Text.Length;
         }
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         private void GazableButton_HasGazeChanged(object sender, RoutedEventArgs e)
         {
 
         }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public void OnGazeActivateButton()
         {
@@ -223,12 +260,10 @@ namespace Gaze.HomePanel
 
         }
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         private void OnFixatedGaze(object sender, EyeXFramework.FixationEventArgs e)
         {
-            //if(e.EventType == Tobii.EyeX.Framework.FixationDataEventType.Data)
-            //    eyeXHostRef.TriggerActivation();
-
-            
 
             if (e.EventType == Tobii.EyeX.Framework.FixationDataEventType.Begin)
             {
@@ -260,9 +295,9 @@ namespace Gaze.HomePanel
                 fixationBeginTimeStamp = 0;
             }
 
-
-
         }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private void Window_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
@@ -270,5 +305,22 @@ namespace Gaze.HomePanel
             if (currentApp != null)
                 eyeXHostRef.TriggerActivation();
         }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void SendTTS_Activate(object sender, RoutedEventArgs e)
+        {
+            vm.sendTTS();
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void Clr_Activate(object sender, RoutedEventArgs e)
+        {
+            vm.MessageToSend = "";
+            autocompleteInput.Focus();
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

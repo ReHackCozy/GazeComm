@@ -12,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using EyeXFramework.Wpf;
+using Gaze.EyeTracker;
 
 namespace Gaze.HomePanel
 {
@@ -21,6 +23,7 @@ namespace Gaze.HomePanel
     public partial class HomePanelWindow : Window
     {
         HomePanelViewModel vm;
+        public WpfEyeXHost eyeXHostRef;
 
         public HomePanelWindow()
         {
@@ -29,6 +32,11 @@ namespace Gaze.HomePanel
 
             this.DataContext = vm;
 
+            var currentApp = Application.Current as App;
+            eyeXHostRef = currentApp.eyeXHost;
+
+            if (eyeXHostRef == null)
+                Console.WriteLine("EyeX is NULL @ HomePanelWindow");
         }
 
         private void SuggestionBox_Initialized(object sender, EventArgs e)
@@ -42,9 +50,37 @@ namespace Gaze.HomePanel
             sugg.Height = 150;
             sugg.Width = 150;
             sugg.Content = "Suggestion";
-            sugg.value = "Suggestion";
+            sugg.value = "Suggestion AA";
 
             vm.SuggestionsList.Add(sugg);
+        }
+
+        private void OnEyeXActivate(object sender, RoutedEventArgs e)
+        {
+            var element = e.Source as FrameworkElement;
+            if (null == element) { return; }
+
+            var gazableButton = element.DataContext as GazableButton;
+
+            vm.Name = gazableButton.value;
+            SendMessageTxtBox.Text += gazableButton.value;
+        }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.LeftShift)
+            {
+                var currentApp = Application.Current as App;
+                if (currentApp != null)
+                    eyeXHostRef.TriggerActivation();
+            }
+
+           
+        }
+
+        private void OnSendSMS(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void autocompleteInput_TextChanged(object sender, TextChangedEventArgs e)
@@ -65,7 +101,8 @@ namespace Gaze.HomePanel
 
                 vm.SuggestionsList.Add(sugg);
             }
-                
+           
+
         }
     }
 }

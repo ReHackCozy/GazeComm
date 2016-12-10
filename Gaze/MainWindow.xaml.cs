@@ -45,6 +45,8 @@ namespace Gaze
         {
             //for testing API
             //TestSendSMS();
+            //for testing speech
+            //TestSpeech();
             HomePanel.HomePanelWindow homePanel = new HomePanel.HomePanelWindow();
             homePanel.Show();
         }
@@ -85,6 +87,11 @@ namespace Gaze
         private void TestSendSMS()
         {
             new SendMessage().Invoke("testing sending message", "60142725192");
+        }
+
+        private void TestSpeech()
+        {
+            Utilities.Util.Speak("hello how are you doing?");
         }
     }
 }

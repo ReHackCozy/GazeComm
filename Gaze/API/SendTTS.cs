@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Gaze.API.Model.SMS;
+using static Gaze.API.Model.TTS;
 
 namespace Gaze.API
 {
-    class SendMessage
+    class SendTTS
     {
         //TODO: put somewhere proper app config maybe
-        private readonly String _sendMessageURL = "https://developer.tm.com.my:8443/SMSSBV1/SMSImpl/SMSImplRS/SendMessage";
+        private readonly String _sendMessageURL = "https://ompserver.tm.com.my/rest/httpsessions/tts2Note/" + TTSRequestURL.Version;
 
         public void OnAPICallback(string message, IRespondParameter parameters)
         {
@@ -19,13 +19,13 @@ namespace Gaze.API
             Console.WriteLine(message);
         }
 
-        public void Invoke(String message, String to)
+        public void Invoke(String message, String to, String accessToken)
         {
             //hook up delegate
             APICallbackDelegate handler = OnAPICallback;
 
-            var request = new GenericRest<SMSResponse>();
-            request.invoke(createClient(), createRequest(message, to), handler);
+            var request = new GenericRest<TTSResponse>();
+            request.invoke(createClient(), createRequest(message, to, accessToken), handler);
         }
 
         private IRestClient createClient()
@@ -33,25 +33,21 @@ namespace Gaze.API
             return new RestClient(_sendMessageURL);
         }
 
-        private IRestRequest createRequest(String message, String to)
+        private IRestRequest createRequest(String message, String to, String accessToken)
         {
             var request = new RestRequest(Method.POST);
             request.RequestFormat = DataFormat.Json;
-            addHeader(ref request);
+
+            request.AddQueryParameter("app_key", TTSRequestURL.AppKey);
+            request.AddQueryParameter("access_token", accessToken);
+            request.AddQueryParameter("format", TTSRequestURL.Format);
             request.AddBody(createBody(message, to));
             return request;
         }
 
         private object createBody(String message, String to)
         {
-            return new SMSBody(message, to);
-        }
-
-        private void addHeader(ref RestRequest request)
-        {
-            request.AddHeader("APITokenId", SMSHeader.APITokenId);
-            request.AddHeader("PartnerId", SMSHeader.PartnerId);
-            request.AddHeader("PartnerTokenId", SMSHeader.PartnerTokenId);
+            return new TTSRequestBody(message, to);
         }
     }
 }

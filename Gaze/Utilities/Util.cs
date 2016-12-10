@@ -15,6 +15,12 @@ namespace Gaze.Utilities
             return string.Join("", hash.Select(b => b.ToString("x2")).ToArray());
         }
 
+        public static string Base64Encode(string plainText)
+        {
+            var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
+            return Convert.ToBase64String(plainTextBytes);
+        }
+
         public static void Speak(String message, VoiceGender gender = VoiceGender.Male, int age = 30)
         {
             // Initialize a new instance of the SpeechSynthesizer.

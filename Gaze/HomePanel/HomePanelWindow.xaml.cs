@@ -51,7 +51,9 @@ namespace Gaze.HomePanel
         {
             vm.SuggestionsList.Clear();
             ArrayList mathingValues = autocompleteInput.getMatchingValues();
-            IEnumerator enumerate = mathingValues.GetEnumerator();
+            List<string> withDupes = mathingValues.OfType<string>().ToList();
+            List<string> noDupes = withDupes.Distinct().ToList();
+            IEnumerator enumerate = noDupes.GetEnumerator();
 
             while (enumerate.MoveNext())
             {

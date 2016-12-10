@@ -267,11 +267,11 @@ namespace Gaze.EyeTracker
                         _updateValues = true;
                         //set the value from our file
                         //to the value in the textbox
-                        this.Text = str;
+                        //this.Text = str;
                         //re-highlight the remaining text
                         //as the user types
-                        this.SelectionStart = lastWord.Length;
-                        this.SelectionLength = str.Length - lastWord.Length;
+                        //this.SelectionStart = lastWord.Length;
+                        //this.SelectionLength = str.Length - lastWord.Length;
                         //set our boolean value to true
                         isFound = true;
                         _updateValues = false;

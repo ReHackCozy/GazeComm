@@ -42,8 +42,8 @@ namespace Gaze
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            mainVM.TestPushButton();
-     
+            HomePanel.HomePanelWindow homePanel = new HomePanel.HomePanelWindow();
+            homePanel.Show();
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)

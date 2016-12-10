@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gaze.HomePanel"
         xmlns:eyeX="clr-namespace:EyeXFramework.Wpf;assembly=EyeXFramework"
+        xmlns:autocomplete="clr-namespace:Gaze.EyeTracker"
         KeyUp="Window_KeyUp"
         mc:Ignorable="d"
         Title="HomePanel" Height="768" Width="1280" WindowState="Maximized">
@@ -63,6 +64,7 @@
 
                 <Grid Grid.Column="0">
                     <TextBlock Text="{Binding Name}"  Foreground="White" FontWeight="Bold" FontSize="20" Margin="5,0,0,0"/>
+
                 </Grid>
 
                 <Grid Grid.Column="1">
@@ -143,6 +145,8 @@
             <Button Name="SendSMS">
                 <TextBlock FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="OnSendSMS">Send SMS</TextBlock>
             </Button>
+            <autocomplete:AutoComplete x:Name="autocompleteInput" TextChanged="autocompleteInput_TextChanged"/>
+
         </Grid>
         <!--FOOTER ENDS-->
         

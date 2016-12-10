@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using EyeXFramework.Wpf;
 using Gaze.EyeTracker;
+using Gaze.API;
 
 namespace Gaze.HomePanel
 {
@@ -80,6 +81,8 @@ namespace Gaze.HomePanel
 
         private void OnSendSMS(object sender, RoutedEventArgs e)
         {
+            Utilities.Util.Speak(vm.MessageToSend, System.Speech.Synthesis.VoiceGender.Female);
+            new SendMessage().Invoke(vm.MessageToSend, vm.PhoneNumber);
 
         }
 

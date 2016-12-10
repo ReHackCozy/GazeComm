@@ -16,6 +16,10 @@ namespace Gaze.EyeTracker
         //List that holds the values to be loaded
         //by the textbox
         private ArrayList _reloadValues = new ArrayList();
+
+        //List that holds the values that matches the input
+        private ArrayList _matchingValues = new ArrayList();
+
         //Flag used to tell the keypress 
         //handler if it should autocomplete
         private bool _updateValues = false;
@@ -152,6 +156,11 @@ namespace Gaze.EyeTracker
                 }
             }
         }
+
+        public ArrayList getMatchingValues()
+        {
+            return _matchingValues;
+        }
         #endregion
 
         #region "Private Functions"
@@ -213,6 +222,11 @@ namespace Gaze.EyeTracker
                 throw new Exception("Could not open the value file for the control: " + this.Name, ee);
             }
         }
+
+        private void clearMatchingValues()
+        {
+            _matchingValues.Clear();
+        }
         #endregion
 
         /// <summary>
@@ -263,6 +277,20 @@ namespace Gaze.EyeTracker
                         _updateValues = false;
                     }
                 }
+
+                //populate the _matchingValues with all matching values
+                IEnumerator enumerate1 = _reloadValues.GetEnumerator();
+                while (enumerate1.MoveNext())
+                {
+                    //set our string variable to the value of
+                    //the current value in the enumerator
+                    string str = (string)enumerate1.Current;
+                    //check to see if it holds one of our values
+                    if (str.ToUpper().IndexOf(lastWord) == 0)
+                    {
+                        _matchingValues.Add(str);
+                    }
+                }
                 base.OnTextChanged(e);
             }
         }
@@ -276,6 +304,7 @@ namespace Gaze.EyeTracker
         {
             if (e.Key.Equals(8) || e.Key.Equals(46))
                 _updateValues = true;
+            clearMatchingValues();
             base.OnKeyDown(e);
         }
 

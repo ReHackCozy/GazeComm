@@ -8,6 +8,8 @@
         xmlns:eyeX="clr-namespace:EyeXFramework.Wpf;assembly=EyeXFramework"
         xmlns:autocomplete="clr-namespace:Gaze.EyeTracker"
         KeyUp="Window_KeyUp"
+        MouseLeftButtonUp="Window_MouseLeftButtonUp"
+        
         mc:Ignorable="d"
         Title="HomePanel" Height="1080" Width="1920" WindowState="Maximized">
     
@@ -61,7 +63,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="150"/>
+            <RowDefinition Height="130"/>
         </Grid.RowDefinitions>
 
         <!-- HEADER START -->
@@ -97,7 +99,7 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
-                    <RowDefinition Height="200"/>
+                    <RowDefinition Height="150"/>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="120"/>
@@ -133,9 +135,9 @@
                 <WrapPanel Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <WrapPanel.Resources>
                         <Style TargetType="{x:Type localroot:GazableButton}" BasedOn="{StaticResource LetterButton}">
-                            <Setter Property="Height" Value="120"/>
-                            <Setter Property="Width" Value="120"/>
-                            <Setter Property="Margin" Value="3,3,3,3"/>
+                            <Setter Property="Height" Value="150"/>
+                            <Setter Property="Width" Value="150"/>
+                            <Setter Property="Margin" Value="5,5,5,5"/>
                             <EventSetter Event="eyeX:Behavior.Activate" Handler="OnVirtualKeyboardPressed" />
                             <EventSetter Event="Click" Handler="OnVirtualKeyboardPressed" />
                             <EventSetter Event="eyeX:Behavior.HasGazeChanged" Handler="LetterButton_HasGazeChanged"/>

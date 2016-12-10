@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using EyeXFramework.Wpf;
 using Gaze.EyeTracker;
 using Gaze.API;
+using System.Diagnostics;
 
 namespace Gaze.HomePanel
 {
@@ -25,20 +26,47 @@ namespace Gaze.HomePanel
     {
         HomePanelViewModel vm;
         public WpfEyeXHost eyeXHostRef;
+        Stopwatch stopWatch;
+
+        double fixationBeginTimeStamp = 0;
+        double fixationActivateDuration = 500; //In milisecond
+        bool fixationStart = false;
+
 
         public HomePanelWindow()
         {
             InitializeComponent();
-            vm = new HomePanelViewModel();
+            vm = new HomePanelViewModel(this);
 
             this.DataContext = vm;
 
             var currentApp = Application.Current as App;
             eyeXHostRef = currentApp.eyeXHost;
 
+            stopWatch = new Stopwatch();
+
             if (eyeXHostRef == null)
                 Console.WriteLine("EyeX is NULL @ HomePanelWindow");
+
+
+            var eyePositionStream = eyeXHostRef.CreateEyePositionDataStream();
+            eyePositionStream.Next += (s,e) => 
+            {
+                
+                if (!e.LeftEye.IsValid && !e.RightEye.IsValid)
+                {
+                    //Try make it work
+                    //vm.IsBlinked = true; //setting this to True will call OnGazeActivateButton() but not false;
+
+                }
+
+            };
+
+            var fixationStream = eyeXHostRef.CreateFixationDataStream(Tobii.EyeX.Framework.FixationDataMode.Sensitive);
+            fixationStream.Next += OnFixatedGaze;
+
         }
+
 
         private void SuggestionBox_Initialized(object sender, EventArgs e)
         {
@@ -115,6 +143,9 @@ namespace Gaze.HomePanel
 
         private void PlayText_Activate(object sender, RoutedEventArgs e)
         {
+            if (vm.MessageToSend.Length == 0)
+                return;
+
             Utilities.Util.Speak(vm.MessageToSend, System.Speech.Synthesis.VoiceGender.Female);
         }
 
@@ -183,6 +214,61 @@ namespace Gaze.HomePanel
         private void GazableButton_HasGazeChanged(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        public void OnGazeActivateButton()
+        {
+
+            eyeXHostRef.TriggerActivation();
+
+        }
+
+        private void OnFixatedGaze(object sender, EyeXFramework.FixationEventArgs e)
+        {
+            //if(e.EventType == Tobii.EyeX.Framework.FixationDataEventType.Data)
+            //    eyeXHostRef.TriggerActivation();
+
+            
+
+            if (e.EventType == Tobii.EyeX.Framework.FixationDataEventType.Begin)
+            {
+                fixationStart = true;
+                fixationBeginTimeStamp = e.Timestamp;
+            }
+                
+
+            if (e.EventType == Tobii.EyeX.Framework.FixationDataEventType.Data)
+            {
+                if ((e.Timestamp - fixationBeginTimeStamp) > fixationActivateDuration)
+                {
+                    fixationBeginTimeStamp = 0;
+
+                    if(fixationStart)
+                    {
+                        OnGazeActivateButton();
+                        fixationStart = false;
+                    }
+                        
+                }
+                    
+            }
+    
+
+            if (e.EventType == Tobii.EyeX.Framework.FixationDataEventType.End)
+            {
+                fixationStart = false;
+                fixationBeginTimeStamp = 0;
+            }
+
+
+
+        }
+
+        private void Window_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var currentApp = Application.Current as App;
+            if (currentApp != null)
+                eyeXHostRef.TriggerActivation();
         }
     }
 }

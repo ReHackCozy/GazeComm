@@ -18,17 +18,25 @@ namespace Gaze.HomePanel
         private string _phoneNumber;
         private string _messageToSend;
 
+        private bool _isBlinked;
+
         private ObservableCollection<GazableButton> _suggestionsList;
 
-        public HomePanelViewModel()
+        private HomePanelWindow _viewRef;
+
+        public HomePanelViewModel(HomePanelWindow viewRef)
         {
             _name = "John Doe";
             _phoneNumber = "0196031591";
             _messageToSend = "";
+            _isBlinked = false;
 
             _suggestionsList = new ObservableCollection<GazableButton>();
 
             _authorizationAPI = new AuthorizationAPI(sendTTS);
+
+            //HACK
+            _viewRef = viewRef;
         }
 
         public void sendTTS()
@@ -113,6 +121,28 @@ namespace Gaze.HomePanel
                 }
 
                 OnPropertyChanged("SuggestionsList");
+            }
+        }
+
+        public bool IsBlinked
+        {
+            get
+            {
+                return _isBlinked;
+            }
+
+            set
+            {
+                if (_isBlinked == value) return;
+
+                _isBlinked = value;
+
+                if(IsBlinked)
+                {
+                    _viewRef.OnGazeActivateButton();
+                }
+
+                OnPropertyChanged("IsBlinked");
             }
         }
 

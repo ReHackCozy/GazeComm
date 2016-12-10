@@ -39,6 +39,11 @@ namespace Gaze
 
             var currentApp = Application.Current as App;
             eyeXHostRef = currentApp.eyeXHost;
+
+            //Hack
+            HomePanel.HomePanelWindow homePanel = new HomePanel.HomePanelWindow();
+            homePanel.Show();
+            this.Close();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

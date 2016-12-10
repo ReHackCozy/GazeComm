@@ -11,32 +11,40 @@
         Title="HomePanel" Height="768" Width="1280" WindowState="Maximized">
     
     <Window.Resources>
-        <Style x:Key="ButtonStyle" TargetType="Button">
-            <Setter Property="MaxWidth" Value="200" />
-            <Setter Property="MaxHeight" Value="75" />
-            <Setter Property="Margin" Value="10" />
-            <Setter Property="Padding" Value="10" />
-        </Style>
-        <Style x:Key="EyeXActivatableButtonStyle" BasedOn="{StaticResource ButtonStyle}" TargetType="Button">
-            <!-- By use of attached properties, we can specify that: the button is activatable,
-                 that we do not want tentative activation focus events, and what handler should 
-                 be called when the button is activated. 
-            
-                 Read more about the Activatable Behavior and its associated concepts in the 
-                 Developer's Guide (available online and in the SDK docs/ folder) -->
-            <Setter Property="eyeX:Behavior.Activatable" Value="Default" />
-            <EventSetter Event="eyeX:Behavior.Activate" Handler="OnEyeXActivate" />
-            <!-- We also set up a trigger on the Behavior.ActivationFocus attached property, and
-                 specify how the button should look when focused for activation. 
-            
-                 Alternatively, we could have registered an event handler for the routed
-                 event Behavior.ActivationFocusChanged and done the handling in the code behind
-                 or via the MainWindowModel. -->
-            <Style.Triggers>
-                <Trigger Property="eyeX:Behavior.ActivationFocus" Value="HasActivationFocus">
-                    <Setter Property="BorderBrush" Value="DarkGray" />
-                </Trigger>
-            </Style.Triggers>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#373737" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontFamily" Value="./#Segoe UI" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Width" Value="Auto"/>
+            <Setter Property="MinWidth" Value="50"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}">
+                            <Grid>
+                                <Path x:Name="PathIcon" Width="15" Height="25" Stretch="Fill" Fill="#4C87B3" HorizontalAlignment="Left" Margin="17,0,0,0" />
+                                <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                            </Grid>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#E59400" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="OrangeRed" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Window.Resources>
 
@@ -84,26 +92,35 @@
         <Grid Grid.Row="1" Grid.Column="0">
 
             <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
-
-
-
-
                 <StackPanel Orientation="Horizontal">
-                    <Button Content="TEST" Height="150" Width="150"/>
-                    <Button Content="TEST" Height="150" Width="150"/>
-                    <Button Content="TEST" Height="150" Width="150"/>
-                    <Button Content="TEST" Height="150" Width="150"/>
-                    <Button Content="TEST" Height="150" Width="150"/>
-                    <Button Content="TEST" Height="150" Width="150"/>
-                    <Button Content="TEST" Height="150" Width="150"/>
-                    <Button Content="TEST" Height="150" Width="150"/>
-                    <Button Content="TEST" Height="150" Width="150"/>
-                    <Button Content="TEST" Height="150" Width="150"/>
-                    <Button Content="TEST" Height="150" Width="150"/>
-                    <Button Content="TEST" Height="150" Width="150"/>
-                    <Button Content="TEST" Height="150" Width="150"/>
-                    <Button Content="TEST" Height="150" Width="150"/>
-                    <Button Content="TEST" Height="150" Width="150"/>
+                    <Button Content="Q"/>
+                    <Button Content="W"/>
+                    <Button Content="E"/>
+                    <Button Content="R"/>
+                    <Button Content="T"/>
+                    <Button Content="Y"/>
+                    <Button Content="U"/>
+                    <Button Content="I"/>
+                    <Button Content="O"/>
+                    <Button Content="P"/>
+                    <Button Content="A"/>
+                    <Button Content="S"/>
+                    <Button Content="D"/>
+                    <Button Content="F"/>
+                    <Button Content="G"/>
+                    <Button Content="H"/>
+                    <Button Content="J"/>
+                    <Button Content="K"/>
+                    <Button Content="L"/>
+                    <Button Content="ENTER" Width="150"/>
+                    <Button Content="Z"/>
+                    <Button Content="X"/>
+                    <Button Content="C"/>
+                    <Button Content="V"/>
+                    <Button Content="B"/>
+                    <Button Content="N"/>
+                    <Button Content="M"/>
+                    <Button Content="SPACE" Width="150"/>
                 </StackPanel>
             </ScrollViewer>
             
@@ -142,7 +159,7 @@
         </Grid>
 
         <Grid Name="FooterRight" Grid.Row="2" Grid.Column="1">
-            <Button Name="SendSMS" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="OnSendSMS" Click="OnSendSMS">
+            <Button Name="SendSMS" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="OnSendSMS" Click="OnSendSMS" Height="150">
                 <TextBlock FontSize="40" FontWeight="Bold">Send SMS</TextBlock>
             </Button>
             

@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Gaze.ViewModelMain;
+using EyeXFramework.Wpf;
 
 namespace Gaze
 {
@@ -20,9 +22,67 @@ namespace Gaze
     /// </summary>
     public partial class MainWindow : Window
     {
+        MainView mainVM;
+        public WpfEyeXHost eyeXHostRef;
+
+
+        TextBlock DebugOutput;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            mainVM = new MainView();
+            this.DataContext = mainVM;
+
+            var currentApp = Application.Current as App;
+            eyeXHostRef = currentApp.eyeXHost;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            mainVM.TestPushButton();
+     
+        }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.RightShift)
+            {
+                eyeXHostRef.TriggerActivation();
+
+            }
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.RightShift)
+            {
+                eyeXHostRef.TriggerActivationModeOn(); 
+            }
+
+           
+        }
+
+        private void Window_MouseMove(object sender, MouseEventArgs e)
+        {
+
+            
+
+            
+
+
+        }
+
+        private void DebugTextBog_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var textbox = sender as TextBox;
+            DebugOutput.Text = textbox.Text;
+        }
+
+        private void DebugOutPut_Initialized(object sender, EventArgs e)
+        {
+            DebugOutput = sender as TextBlock;
         }
     }
 }

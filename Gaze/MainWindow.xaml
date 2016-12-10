@@ -4,9 +4,30 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gaze"
+        xmlns:eyeX="clr-namespace:EyeXFramework.Wpf;assembly=EyeXFramework"
         mc:Ignorable="d"
+        KeyUp="Window_KeyUp"
+        KeyDown="Window_KeyDown"
+        MouseMove="Window_MouseMove"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="129*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Height="300px">
+            <Button Click="Button_Click" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="Button_Click" Height="150">
+                <TextBlock FontWeight="Bold">Push me!</TextBlock>
+            </Button>
+
+
+            <TextBlock FontWeight="Bold">Debug : TextBox</TextBlock>
+            <TextBox Name="DebugTextBog" TextChanged="DebugTextBog_TextChanged"/>
+            <TextBlock FontWeight="Bold">Output : TextBox</TextBlock>
+            <TextBlock Name="DebugOutPut" Initialized="DebugOutPut_Initialized" Text="" Height="50"></TextBlock>
+        </StackPanel>
+
+
         
     </Grid>
 </Window>

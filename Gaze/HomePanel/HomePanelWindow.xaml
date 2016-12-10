@@ -11,7 +11,7 @@
         Title="HomePanel" Height="768" Width="1280" WindowState="Maximized">
     
     <Window.Resources>
-        <Style TargetType="{x:Type Button}">
+        <Style TargetType="{x:Type Button}" x:Key="LetterButton"> 
             <Setter Property="Background" Value="#373737" />
             <Setter Property="Foreground" Value="White" />
             <Setter Property="FontSize" Value="15" />
@@ -20,7 +20,9 @@
             <Setter Property="Height" Value="50"/>
             <Setter Property="Width" Value="Auto"/>
             <Setter Property="MinWidth" Value="50"/>
-
+            <Setter Property="eyeX:Behavior.Activatable" Value="Default"/>
+            <Setter Property="eyeX:Behavior.GazeAware" Value="True"/>
+            
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -93,6 +95,16 @@
 
             <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
                 <StackPanel Orientation="Horizontal">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource LetterButton}">
+                            <Setter Property="Height" Value="100"/>
+                            <Setter Property="Width" Value="100"/>
+                            <Setter Property="Margin" Value="2,2,2,2"/>
+                            <EventSetter Event="eyeX:Behavior.Activate" Handler="OnVirtualKeyboardPressed" />
+                            <EventSetter Event="Click" Handler="OnVirtualKeyboardPressed" />
+                            <EventSetter Event="eyeX:Behavior.HasGazeChanged" Handler="LetterButton_HasGazeChanged"/>
+                        </Style>
+                    </StackPanel.Resources>
                     <Button Content="Q"/>
                     <Button Content="W"/>
                     <Button Content="E"/>
@@ -136,7 +148,9 @@
                         <Setter Property="Grid.ColumnSpan" Value="2" />
                         <Setter Property="Grid.RowSpan" Value="3" />
                         <Setter Property="eyeX:Behavior.Activatable" Value="Default" />
+                        <Setter Property="eyeX:Behavior.GazeAware" Value="True"/>
                         <EventSetter Event="eyeX:Behavior.Activate" Handler="OnEyeXActivate" />
+                        <EventSetter Event="eyeX:Behavior.HasGazeChanged" Handler="SuggestionButton_HasGazeChanged"/>
                     </Style>
                 </ListView.ItemContainerStyle>
 
@@ -156,7 +170,7 @@
                     <ColumnDefinition Width="200"/>
                 </Grid.ColumnDefinitions>
 
-                <autocomplete:AutoComplete Grid.Column="0" x:Name="autocompleteInput" TextChanged="autocompleteInput_TextChanged" Text="{Binding MessageToSend}" FontSize="50" VerticalContentAlignment="Center" Margin="10,0,0,0" />
+                <autocomplete:AutoComplete Grid.Column="0" x:Name="autocompleteInput" TextChanged="autocompleteInput_TextChanged" Text="{Binding MessageToSend}" Initialized="autocompleteInput_Initialized" FontSize="50" VerticalContentAlignment="Center" Margin="10,0,0,0" />
                 <Button Grid.Column="1"  Name="PlayText" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="PlayText_Activate" Click="PlayText_Activate">
                     <TextBlock FontSize="40" FontWeight="Bold" Foreground="Green">Play</TextBlock>
                 </Button>

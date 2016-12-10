@@ -89,6 +89,8 @@ namespace Gaze.HomePanel
                 sugg.Content = (string)enumerate.Current;
                 sugg.value = (string)enumerate.Current;
                 sugg.type = GazableButton.Type.Suggestion;
+
+                //HACK, couldve done in XAML
                 sugg.Click += (o,s) => 
                 {
                     if (sugg.type == GazableButton.Type.Suggestion)
@@ -112,6 +114,33 @@ namespace Gaze.HomePanel
         private void PlayText_Activate(object sender, RoutedEventArgs e)
         {
             Utilities.Util.Speak(vm.MessageToSend, System.Speech.Synthesis.VoiceGender.Female);
+        }
+
+        private void OnVirtualKeyboardPressed(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            vm.MessageToSend += button.Content;
+
+        }
+
+        private void autocompleteInput_Initialized(object sender, EventArgs e)
+        {
+            autocompleteInput.Focus();
+        }
+
+        private void LetterButton_HasGazeChanged(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+        }
+
+        private void SuggestionButton_HasGazeChanged(object sender, RoutedEventArgs e)
+        {
+            var element = e.Source as FrameworkElement;
+            if (null == element) { return; }
+
+            var gazableButton = element.DataContext as GazableButton;
+
+
         }
     }
 }

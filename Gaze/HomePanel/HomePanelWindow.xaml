@@ -14,6 +14,45 @@
         Title="HomePanel" Height="1080" Width="1920" WindowState="Maximized">
 
     <Window.Resources>
+        <Style TargetType="{x:Type localroot:GazableButton}" x:Key="SuggestionButtonStyle">
+            <Setter Property="Background" Value="#F27360" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontFamily" Value="./#Segoe UI" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Width" Value="Auto"/>
+            <Setter Property="MinWidth" Value="50"/>
+            <Setter Property="eyeX:Behavior.Activatable" Value="Default"/>
+            <Setter Property="eyeX:Behavior.GazeAware" Value="True"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}">
+                            <Grid>
+                                <Path x:Name="PathIcon" Width="15" Height="25" Stretch="Fill" Fill="#4C87B3" HorizontalAlignment="Left" Margin="17,0,0,0" />
+                                <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                            </Grid>
+                        </Border>
+                        
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#E59400" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="OrangeRed" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
         <Style TargetType="{x:Type localroot:GazableButton}" x:Key="LetterButton">
             <Setter Property="Background" Value="#373737" />
             <Setter Property="Foreground" Value="White" />
@@ -55,7 +94,7 @@
 
     <Grid>
 
-        <Grid Background="DarkGray">
+        <Grid Background="#9AAABA">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -69,7 +108,7 @@
             </Grid.RowDefinitions>
 
             <!-- HEADER START -->
-            <Grid Name="HeaderLeft" Grid.Row="0" Grid.Column="0" Background="Gray">
+            <Grid Name="HeaderLeft" Grid.Row="0" Grid.Column="0" Background="#485868">
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -83,14 +122,14 @@
                     </Grid>
 
                     <Grid Grid.Column="1" Margin="1,2,1,2">
-                        <TextBox Text="{Binding PhoneNumber}" Foreground="White" FontWeight="Bold" FontSize="20" Margin="5,0,0,0" Background="DarkGray" BorderThickness="0"/>
+                        <TextBox Text="{Binding PhoneNumber}" Foreground="White" FontWeight="Bold" FontSize="20" Margin="5,0,0,0" Background="Transparent" BorderThickness="0"/>
                     </Grid>
 
                 </Grid>
 
             </Grid>
 
-            <Grid Name="HeaderRight" Grid.Row="0" Grid.Column="1" Background="Gray">
+            <Grid Name="HeaderRight" Grid.Row="0" Grid.Column="1" Background="#485868">
                 <TextBlock Text="Team Cozy" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="20" Foreground="White"/>
             </Grid>
             <!-- HEADER END -->
@@ -107,12 +146,12 @@
                         <RowDefinition Height="120"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0" Background="Black">
-                        <TextBlock Text="Suggestions" Foreground="White" FontSize="20" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <StackPanel Grid.Row="0" Background="#6E6F71">
+                        <TextBlock Text="Suggestions" Foreground="White" FontSize="20" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </StackPanel>
 
 
-                    <ListView Name="SuggestionBox" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding SuggestionsList}" Initialized="SuggestionBox_Initialized" Background="DarkGray" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" >
+                    <ListView Name="SuggestionBox" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding SuggestionsList}" Initialized="SuggestionBox_Initialized" Background="#9FC2BB" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" >
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Horizontal"></StackPanel>
@@ -130,8 +169,8 @@
                         </ListView.ItemContainerStyle>
                     </ListView>
 
-                    <StackPanel Grid.Row="2" Background="Black">
-                        <TextBlock Text="Virtual Keyboard" Foreground="White" FontSize="20" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <StackPanel Grid.Row="2" Background="#485868">
+                        <TextBlock Text="Virtual Keyboard" Foreground="White" FontSize="20" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </StackPanel>
 
                     <WrapPanel Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -171,14 +210,12 @@
                         <localroot:GazableButton Content="B"/>
                         <localroot:GazableButton Content="N"/>
                         <localroot:GazableButton Content="M"/>
-                        <!--<localroot:GazableButton Content="SPACE" Width="400" Background="Black"/>
-                    <localroot:GazableButton Content="BACKSPACE" Width="240" Background="DarkRed" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="VK_BKSpace_Click" Click="VK_BKSpace_Click" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="VK_BKSpace_HasGazeChanged"   />-->
                     </WrapPanel>
 
                     <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <localroot:GazableButton Content="SPACE" Width="1000" Height="120" Background="Black" Foreground="white" FontSize="30" FontWeight="Bold" Margin="2,2,2,2" Style="{StaticResource LetterButton}"  eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate"  Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged"/>
-                        <localroot:GazableButton Content="BACKSPACE"  Margin="2,2,2,2" Width="240" Height="120" Background="Chocolate"  FontSize="30" Foreground="white" FontWeight="Bold"  Style="{StaticResource LetterButton}" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="VK_BKSpace_Click" Click="VK_BKSpace_Click" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="VK_BKSpace_HasGazeChanged"/>
-                        <localroot:GazableButton Content="CLR"  Margin="2,2,2,2" Width="240" Height="120" Background="Brown" FontSize="30" Foreground="white" FontWeight="Bold"  Style="{StaticResource LetterButton}" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="Clr_Activate" Click="Clr_Activate"  eyeX:Behavior.GazeAware="True" />
+                        <localroot:GazableButton Content="SPACE" Width="1000" Height="120" Background="#6E6F71" Foreground="white" FontSize="30" FontWeight="Bold" Margin="2,2,2,2" Style="{StaticResource LetterButton}"  eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate"  Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged"/>
+                        <localroot:GazableButton Content="BACKSPACE"  Margin="2,2,2,2" Width="240" Height="120" Background="#F5A46C"  FontSize="30" Foreground="white" FontWeight="Bold"  Style="{StaticResource LetterButton}" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="VK_BKSpace_Click" Click="VK_BKSpace_Click" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="VK_BKSpace_HasGazeChanged"/>
+                        <localroot:GazableButton Content="CLR"  Margin="2,2,2,2" Width="240" Height="120" Background="#F27360" FontSize="30" Foreground="white" FontWeight="Bold"  Style="{StaticResource LetterButton}" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="Clr_Activate" Click="Clr_Activate"  eyeX:Behavior.GazeAware="True" />
                     </StackPanel>
 
                 </Grid>
@@ -186,7 +223,7 @@
             </Grid>
 
             <!--Right Panel-->
-            <Grid Grid.Row="1" Grid.Column="1" Background="DarkGray">
+            <Grid Grid.Row="1" Grid.Column="1" Background="#6E6F71">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -203,12 +240,14 @@
 
             <!--FOOTER START-->
             <Grid Name="Footer" Grid.Row="2" Grid.Column="0">
-                <autocomplete:AutoComplete Grid.Column="0" x:Name="autocompleteInput" TextChanged="autocompleteInput_TextChanged" Text="{Binding MessageToSend}" Initialized="autocompleteInput_Initialized" FontSize="50" VerticalContentAlignment="Center" Margin="10,0,0,0" Grid.ColumnSpan="2" />
+                <autocomplete:AutoComplete Grid.Column="0" x:Name="autocompleteInput" BorderThickness="0" Background="White" TextChanged="autocompleteInput_TextChanged" Text="{Binding MessageToSend}" Initialized="autocompleteInput_Initialized" FontSize="50" VerticalContentAlignment="Center" Margin="10,3,10,3" Grid.ColumnSpan="2" />
             </Grid>
 
             <Grid Name="FooterRight" Grid.Row="2" Grid.Column="1">
-                <Button Grid.Column="2"  Name="PlayText" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="PlayText_Activate" Click="PlayText_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="PlayText_HasGazeChanged">
-                    <TextBlock FontSize="40" FontWeight="Bold" Foreground="Green">></TextBlock>
+                <Button Grid.Column="2"  Name="PlayText" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="PlayText_Activate" Background="#F3C766" Click="PlayText_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="PlayText_HasGazeChanged">
+                    <StackPanel>
+                        <Image Source="SpeakIcon.png" Height="130"/>
+                    </StackPanel>
                 </Button>
             </Grid>
             <!--FOOTER ENDS-->

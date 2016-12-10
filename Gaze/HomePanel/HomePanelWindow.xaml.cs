@@ -129,7 +129,7 @@ namespace Gaze.HomePanel
                 sugg.type = GazableButton.Type.Suggestion;
                 sugg.FontSize = 50;
                 sugg.BorderThickness = new Thickness(0);
-                sugg.Style = this.FindResource("LetterButton") as Style;
+                sugg.Style = this.FindResource("SuggestionButtonStyle") as Style;
 
                 //HACK, couldve done in XAML
                 sugg.Click += (o,s) => 

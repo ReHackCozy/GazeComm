@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gaze.HomePanel"
+        xmlns:eyeX="clr-namespace:EyeXFramework.Wpf;assembly=EyeXFramework"
         mc:Ignorable="d"
         Title="HomePanel" Height="768" Width="1280" WindowState="Maximized">
-    <Grid Background="Gray">
+    <Grid Background="DarkGray">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -20,7 +21,7 @@
         </Grid.RowDefinitions>
 
         <!-- HEADER START -->
-        <Grid Name="HeaderLeft" Grid.Row="0" Grid.Column="0">
+        <Grid Name="HeaderLeft" Grid.Row="0" Grid.Column="0" Background="Gray">
 
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -40,8 +41,8 @@
             
         </Grid>
 
-        <Grid Name="HeaderRight" Grid.Row="0" Grid.Column="1" Background="Teal">
-            <TextBlock Text="Preset" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="20" Foreground="White"/>
+        <Grid Name="HeaderRight" Grid.Row="0" Grid.Column="1" Background="Gray">
+            <TextBlock Text="Suggestion" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="20" Foreground="White"/>
         </Grid>
         <!-- HEADER END -->
         
@@ -74,17 +75,25 @@
             
         </Grid>
 
-        <Grid Grid.Row="1" Grid.Column="1" Background="Turquoise">
+        <!--SUGGESTION LIST-->
+        <Grid Grid.Row="1" Grid.Column="1" Background="DarkGray">
 
+            <ListView Name="SuggestionBox" ItemsSource="{Binding SuggestionsList}" Initialized="SuggestionBox_Initialized" Background="DarkGray" HorizontalContentAlignment="Center" >
 
-
+            </ListView>
 
         </Grid>
+        <!--SUGGESTION LIST END-->
+        
         <!--BODY END-->
 
         <!--FOOTER START-->
         <Grid Name="Footer" Grid.Row="2" Grid.Column="0">
 
+            <TextBox Text="{Binding MessageToSend}" TextChanged="TextBox_TextChanged">
+                
+            </TextBox>
+            
         </Grid>
         <!--FOOTER ENDS-->
         

@@ -29,5 +29,21 @@ namespace Gaze.HomePanel
             this.DataContext = vm;
 
         }
+
+        private void SuggestionBox_Initialized(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //var sugg = new GazableButton();
+            //sugg.Height = 150;
+            //sugg.Width = 150;
+            //sugg.Content = "Suggestion";
+            //sugg.value = "Suggestion";
+
+            //vm.SuggestionsList.Add(sugg);
+        }
     }
 }

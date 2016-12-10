@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.ComponentModel;
 using System.Text;
@@ -12,11 +13,28 @@ namespace Gaze.HomePanel
     {
         private string _name;
         private string _phoneNumber;
+        private string _messageToSend;
+
+        private ObservableCollection<GazableButton> _suggestionsList;
 
         public HomePanelViewModel()
         {
             _name = "John Doe";
             _phoneNumber = "019-666 4444";
+            _messageToSend = "Message to send";
+
+            _suggestionsList = new ObservableCollection<GazableButton>();
+
+            //for (int i = 0; i < 15; ++i)
+            //{
+            //    var sugg = new GazableButton();
+            //    sugg.Height = 150;
+            //    sugg.Width = 150;
+            //    sugg.Content = "Suggestion";
+            //    sugg.value = "Suggestion";
+
+            //    _suggestionsList.Add(sugg);
+            //}
         }
 
 
@@ -51,6 +69,38 @@ namespace Gaze.HomePanel
 
                 _phoneNumber = value;
                 OnPropertyChanged("PhoneNumber");
+            }
+        }
+
+        public string MessageToSend
+        {
+            get
+            {
+                return _messageToSend;
+            }
+
+            set
+            {
+                if (_messageToSend == value) return;
+
+                _messageToSend = value;
+                OnPropertyChanged("MessageToSend");
+            }
+        }
+
+        public ObservableCollection<GazableButton> SuggestionsList
+        {
+            get
+            {
+                return _suggestionsList;
+            }
+
+            set
+            {
+                if (_suggestionsList == value) return;
+
+                _suggestionsList = value;
+                OnPropertyChanged("SuggestionsList");
             }
         }
 

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Gaze.ViewModelMain;
+using Gaze.HomePanel;
 using EyeXFramework.Wpf;
 
 namespace Gaze
@@ -41,8 +42,9 @@ namespace Gaze
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            mainVM.TestPushButton();
-     
+            HomePanel.HomePanelWindow homePanel = new HomePanelWindow();
+            homePanel.Show();
+
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)

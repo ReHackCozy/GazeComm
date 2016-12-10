@@ -1,0 +1,26 @@
+﻿<Window x:Class="Gaze.MainPanel"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gaze"
+        mc:Ignorable="d"
+        Title="MainPanel" Height="300" Width="300"
+        WindowState="Maximized">
+    <Grid>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <TextBlock>test</TextBlock>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <TextBlock>test</TextBlock>
+        </Grid>
+
+    </Grid>
+</Window>

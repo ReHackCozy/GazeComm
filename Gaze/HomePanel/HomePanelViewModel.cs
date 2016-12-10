@@ -39,8 +39,8 @@ namespace Gaze.HomePanel
                 _authorizationAPI.Invoke();
             } else
             {
-                //send tts here
-                new SendTTS().Invoke("hello this call is to test sending tts, you rock", "+60142725192", _authorizationAPI.AccessToken);
+                var number = "+" + _phoneNumber;
+                new SendTTS().Invoke(_messageToSend, number, _authorizationAPI.AccessToken);
             }
         }
 

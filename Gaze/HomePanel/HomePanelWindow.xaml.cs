@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,13 +38,32 @@ namespace Gaze.HomePanel
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //var sugg = new GazableButton();
-            //sugg.Height = 150;
-            //sugg.Width = 150;
-            //sugg.Content = "Suggestion";
-            //sugg.value = "Suggestion";
+            var sugg = new GazableButton();
+            sugg.Height = 150;
+            sugg.Width = 150;
+            sugg.Content = "Suggestion";
+            sugg.value = "Suggestion";
 
-            //vm.SuggestionsList.Add(sugg);
+            vm.SuggestionsList.Add(sugg);
+        }
+
+        private void autocompleteInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            vm.SuggestionsList.Clear();
+            ArrayList mathingValues = autocompleteInput.getMatchingValues();
+            IEnumerator enumerate = mathingValues.GetEnumerator();
+
+            while (enumerate.MoveNext())
+            {
+                var sugg = new GazableButton();
+                sugg.Height = 150;
+                sugg.Width = 150;
+                sugg.Content = (string)enumerate.Current;
+                sugg.value = (string)enumerate.Current;
+
+                vm.SuggestionsList.Add(sugg);
+            }
+                
         }
     }
 }

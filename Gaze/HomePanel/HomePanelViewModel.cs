@@ -20,21 +20,10 @@ namespace Gaze.HomePanel
         public HomePanelViewModel()
         {
             _name = "John Doe";
-            _phoneNumber = "019-666 4444";
-            _messageToSend = "Message to send";
+            _phoneNumber = "0196031591";
+            _messageToSend = "";
 
             _suggestionsList = new ObservableCollection<GazableButton>();
-
-            //for (int i = 0; i < 15; ++i)
-            //{
-            //    var sugg = new GazableButton();
-            //    sugg.Height = 150;
-            //    sugg.Width = 150;
-            //    sugg.Content = "Suggestion";
-            //    sugg.value = "Suggestion";
-
-            //    _suggestionsList.Add(sugg);
-            //}
         }
 
 
@@ -100,6 +89,12 @@ namespace Gaze.HomePanel
                 if (_suggestionsList == value) return;
 
                 _suggestionsList = value;
+                
+                foreach (var sugg in _suggestionsList)
+                {
+                    sugg.type = GazableButton.Type.Suggestion;
+                }
+
                 OnPropertyChanged("SuggestionsList");
             }
         }

@@ -80,8 +80,7 @@ namespace Gaze.HomePanel
 
         private void OnSendSMS(object sender, RoutedEventArgs e)
         {
-            SendMessageTxtBox.Text += "SEND SMS";
-            autocompleteInput.Text += "SEND SMS";
+
         }
 
         private void autocompleteInput_TextChanged(object sender, TextChangedEventArgs e)
@@ -100,7 +99,7 @@ namespace Gaze.HomePanel
 
                 vm.SuggestionsList.Add(sugg);
             }
-            autocompleteInput.Text += "SEND SMS";
+           
 
         }
     }

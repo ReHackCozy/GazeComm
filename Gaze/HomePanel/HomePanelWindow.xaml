@@ -142,8 +142,8 @@
         </Grid>
 
         <Grid Name="FooterRight" Grid.Row="2" Grid.Column="1">
-            <Button Name="SendSMS">
-                <TextBlock FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="OnSendSMS">Send SMS</TextBlock>
+            <Button Name="SendSMS" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="OnSendSMS" Click="OnSendSMS">
+                <TextBlock FontSize="40" FontWeight="Bold">Send SMS</TextBlock>
             </Button>
             
 

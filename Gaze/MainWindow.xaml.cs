@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Gaze.ViewModelMain;
 using EyeXFramework.Wpf;
+using Gaze.API;
 using Gaze.EyeTracker;
 
 namespace Gaze
@@ -42,6 +43,8 @@ namespace Gaze
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            //for testing API
+            //TestSendSMS();
             HomePanel.HomePanelWindow homePanel = new HomePanel.HomePanelWindow();
             homePanel.Show();
         }
@@ -77,6 +80,11 @@ namespace Gaze
         private void DebugOutPut_Initialized(object sender, EventArgs e)
         {
             DebugOutput = sender as TextBlock;
+        }
+
+        private void TestSendSMS()
+        {
+            new SendMessage().Invoke("testing sending message", "60142725192");
         }
     }
 }

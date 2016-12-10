@@ -11,7 +11,7 @@ namespace Gaze.API.Model
 
         internal static class SMSHeader
         {
-            public static readonly String APITokenId = "eI4WlvTSD7FFip1595L8suhlPcw=";
+            public static readonly String APITokenId = "A83NXDEnRCcwkd5k3KLp4qknuak=";
             public static readonly String PartnerId = "x53cWqsrAJP3qaD8WAack/z/bRc=";
             public static readonly String PartnerTokenId = "gc5aD4RFwCPvl6jfQicJbGCZszE=";
         }
@@ -19,34 +19,34 @@ namespace Gaze.API.Model
         internal class SMSBody
         {
             //hardcoded - TM's fault
-            public String Username
+            public String username
             {
                 get { return "ceo"; }
                 private set { }
             }
-            public String Password
+            public String password
             {
                 get { return Utilities.Util.HashSHA1("ceotab"); }
                 private set { }
             }
-            public String MessageType
+            public String msgtype
             {
                 get { return "text"; }
                 private set { }
             }
-            public String Message { get; set; }
-            public String To { get; set; }
-            public String HashKey
+            public String message { get; set; }
+            public String to { get; set; }
+            public String hashkey
             {
-                get { return Utilities.Util.HashSHA1("ceoceotab" + To); }
+                get { return Utilities.Util.HashSHA1("ceoceotab" + to); }
                 private set { }
             }
-            public String Filename
+            public String filename
             {
                 get { return "null"; }
                 private set { }
             }
-            public String TranscId
+            public String transcid
             {
                 get { return Guid.NewGuid().ToString(); }
                 private set { }
@@ -54,8 +54,8 @@ namespace Gaze.API.Model
 
             public SMSBody(String message, String to)
             {
-                Message = message;
-                To = to;
+                this.message = message;
+                this.to = to;
             }
         }
 

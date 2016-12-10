@@ -11,28 +11,34 @@ namespace Gaze.API
     class SendMessage
     {
         //TODO: put somewhere proper app config maybe
-        private readonly String _sendMessageURL = "https://developer.tm.com.my:8443/SMSSBV1/";
-        private readonly String _sendMessageAction = "SMSImpl/SMSImplRS/SendMessage";
+        private readonly String _sendMessageURL = "https://developer.tm.com.my:8443/SMSSBV1/SMSImpl/SMSImplRS/SendMessage";
+
+        public static void OnAPICallback(string message)
+        {
+            //Do something here
+            Console.WriteLine(message);
+        }
 
         public void Invoke(String message, String to)
         {
+            //hook up delegate
+            APICallbackDelegate handler = OnAPICallback;
+
             var request = new GenericRest<SMSRespond>();
-            var response = request.invoke(createClient(), createRequest(message, to));
+            request.invoke(createClient(), createRequest(message, to), handler);
         }
 
         private IRestClient createClient()
         {
-            var client = new RestClient(_sendMessageURL);
-            return client;
+            return new RestClient(_sendMessageURL);
         }
 
         private IRestRequest createRequest(String message, String to)
         {
-            var request = new RestRequest(_sendMessageAction, Method.POST);
-
+            var request = new RestRequest(Method.POST);
+            request.RequestFormat = DataFormat.Json;
             addHeader(ref request);
             request.AddBody(createBody(message, to));
-
             return request;
         }
 

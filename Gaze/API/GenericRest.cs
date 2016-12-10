@@ -7,14 +7,18 @@ using System.Threading.Tasks;
 
 namespace Gaze.API
 {
+    public delegate void APICallbackDelegate(String message);
+
     class GenericRest<T> where T : new()
     {
-
-        public String invoke(IRestClient client, IRestRequest request)
+        public void invoke(IRestClient client, IRestRequest request, APICallbackDelegate callback)
         {
-            //TODO: async
-            var response = client.Execute<T>(request);
-            return response.Content; 
+            //To bypass invalid certificate
+            System.Net.ServicePointManager.ServerCertificateValidationCallback = (senderX, certificate, chain, sslPolicyErrors) => { return true; };
+
+            client.ExecuteAsync<T>(request, response => {
+                callback(response.StatusCode.ToString());
+            });
         }
     }
 }

@@ -25,7 +25,7 @@
             <TextBlock FontWeight="Bold">Debug : TextBox</TextBlock>
             <autocomplete:AutoComplete x:Name="autocompleteInput" TextChanged="autocompleteInput_TextChanged"/>
             <TextBlock FontWeight="Bold">Output : TextBox</TextBlock>
-            <TextBlock Name="DebugOutPut" Initialized="DebugOutPut_Initialized" Text="" Height="50"></TextBlock>
+            <TextBlock Name="DebugOutPut" Initialized="DebugOutPut_Initialized" Text="" Height="60"></TextBlock>
         </StackPanel>
 
 

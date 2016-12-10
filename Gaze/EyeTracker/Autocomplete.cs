@@ -5,10 +5,11 @@ using System.ComponentModel;
 using System.IO;
 using System.Collections;
 using System.Windows.Input;
+using System.Linq;
 
 namespace Gaze.EyeTracker
 {
-    class AutoComplete : TextBox
+    public class AutoComplete : TextBox
     {
 
         #region "Variables"
@@ -233,6 +234,7 @@ namespace Gaze.EyeTracker
             }
             else
             {
+                string lastWord = tmp.Split(' ').Last();
                 //create our enumerator to iterate through our ArrayList
                 IEnumerator enumerate = _reloadValues.GetEnumerator();
                 //set out bool value to false
@@ -245,7 +247,7 @@ namespace Gaze.EyeTracker
                     //the current value in the enumerator
                     string str = (string)enumerate.Current;
                     //check to see if it holds one of our values
-                    if (str.ToUpper().IndexOf(tmp) == 0)
+                    if (str.ToUpper().IndexOf(lastWord) == 0)
                     {
                         //update our values
                         _updateValues = true;
@@ -254,8 +256,8 @@ namespace Gaze.EyeTracker
                         this.Text = str;
                         //re-highlight the remaining text
                         //as the user types
-                        this.SelectionStart = tmp.Length;
-                        this.SelectionLength = str.Length - tmp.Length;
+                        this.SelectionStart = lastWord.Length;
+                        this.SelectionLength = str.Length - lastWord.Length;
                         //set our boolean value to true
                         isFound = true;
                         _updateValues = false;

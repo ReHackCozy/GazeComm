@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gaze"
+        xmlns:autocomplete="clr-namespace:Gaze.EyeTracker"
         xmlns:eyeX="clr-namespace:EyeXFramework.Wpf;assembly=EyeXFramework"
         mc:Ignorable="d"
         KeyUp="Window_KeyUp"
@@ -22,7 +23,7 @@
 
 
             <TextBlock FontWeight="Bold">Debug : TextBox</TextBlock>
-            <TextBox Name="DebugTextBog" TextChanged="DebugTextBog_TextChanged"/>
+            <autocomplete:AutoComplete x:Name="autocompleteInput" TextChanged="autocompleteInput_TextChanged"/>
             <TextBlock FontWeight="Bold">Output : TextBox</TextBlock>
             <TextBlock Name="DebugOutPut" Initialized="DebugOutPut_Initialized" Text="" Height="50"></TextBlock>
         </StackPanel>

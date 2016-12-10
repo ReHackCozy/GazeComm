@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Gaze.ViewModelMain;
 using EyeXFramework.Wpf;
+using Gaze.EyeTracker;
 
 namespace Gaze
 {
@@ -24,7 +25,7 @@ namespace Gaze
     {
         MainView mainVM;
         public WpfEyeXHost eyeXHostRef;
-
+        //AutoComplete autocompleteInput;
 
         TextBlock DebugOutput;
 
@@ -60,23 +61,16 @@ namespace Gaze
             {
                 eyeXHostRef.TriggerActivationModeOn(); 
             }
-
-           
         }
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
 
-            
-
-            
-
-
         }
 
-        private void DebugTextBog_TextChanged(object sender, TextChangedEventArgs e)
+        private void autocompleteInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var textbox = sender as TextBox;
+            var textbox = sender as AutoComplete;
             DebugOutput.Text = textbox.Text;
         }
 

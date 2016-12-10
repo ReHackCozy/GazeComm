@@ -89,6 +89,9 @@ namespace Gaze.HomePanel
                 sugg.Content = (string)enumerate.Current;
                 sugg.value = (string)enumerate.Current;
                 sugg.type = GazableButton.Type.Suggestion;
+                sugg.FontSize = 50;
+                sugg.BorderThickness = new Thickness(0);
+                sugg.Style = this.FindResource("LetterButton") as Style;
 
                 //HACK, couldve done in XAML
                 sugg.Click += (o,s) => 
@@ -118,19 +121,22 @@ namespace Gaze.HomePanel
 
         private void OnVirtualKeyboardPressed(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
+            var button = sender as GazableButton;
             vm.MessageToSend += button.Content;
 
+            autocompleteInput.Focus();
+            autocompleteInput.CaretIndex = autocompleteInput.Text.Length;
         }
 
         private void autocompleteInput_Initialized(object sender, EventArgs e)
         {
             autocompleteInput.Focus();
+            autocompleteInput.CaretIndex = autocompleteInput.Text.Length;
         }
 
         private void LetterButton_HasGazeChanged(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
+            var button = sender as GazableButton;
         }
 
         private void SuggestionButton_HasGazeChanged(object sender, RoutedEventArgs e)
@@ -140,6 +146,43 @@ namespace Gaze.HomePanel
 
             var gazableButton = element.DataContext as GazableButton;
 
+
+        }
+
+        private void VK_BKSpace_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as GazableButton;
+            if(vm.MessageToSend.Length > 0)
+                vm.MessageToSend = vm.MessageToSend.Remove(vm.MessageToSend.Length - 1);
+
+            autocompleteInput.Focus();
+            autocompleteInput.CaretIndex = autocompleteInput.Text.Length;
+        }
+
+        private void VK_BKSpace_HasGazeChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SendSMS_HasGazeChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PlayText_HasGazeChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void GazableButton_Activate(object sender, RoutedEventArgs e)
+        {
+            vm.MessageToSend += " ";
+            autocompleteInput.Focus();
+            autocompleteInput.CaretIndex = autocompleteInput.Text.Length;
+        }
+
+        private void GazableButton_HasGazeChanged(object sender, RoutedEventArgs e)
+        {
 
         }
     }

@@ -4,14 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gaze.HomePanel"
+        xmlns:localroot="clr-namespace:Gaze"
         xmlns:eyeX="clr-namespace:EyeXFramework.Wpf;assembly=EyeXFramework"
         xmlns:autocomplete="clr-namespace:Gaze.EyeTracker"
         KeyUp="Window_KeyUp"
         mc:Ignorable="d"
-        Title="HomePanel" Height="768" Width="1280" WindowState="Maximized">
+        Title="HomePanel" Height="1080" Width="1920" WindowState="Maximized">
     
     <Window.Resources>
-        <Style TargetType="{x:Type Button}" x:Key="LetterButton"> 
+        <Style TargetType="{x:Type localroot:GazableButton}" x:Key="LetterButton"> 
             <Setter Property="Background" Value="#373737" />
             <Setter Property="Foreground" Value="White" />
             <Setter Property="FontSize" Value="15" />
@@ -86,78 +87,106 @@
         </Grid>
 
         <Grid Name="HeaderRight" Grid.Row="0" Grid.Column="1" Background="Gray">
-            <TextBlock Text="Suggestion" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="20" Foreground="White"/>
+            <TextBlock Text="Team Cozy" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="20" Foreground="White"/>
         </Grid>
         <!-- HEADER END -->
         
         <!--BODY START-->
         <Grid Grid.Row="1" Grid.Column="0">
 
-            <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel.Resources>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource LetterButton}">
-                            <Setter Property="Height" Value="100"/>
-                            <Setter Property="Width" Value="100"/>
-                            <Setter Property="Margin" Value="2,2,2,2"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="200"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="120"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Background="Black">
+                    <TextBlock Text="Suggestions" Foreground="White" FontSize="30" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                </StackPanel>
+                
+
+                <ListView Name="SuggestionBox" Grid.Row="1" ItemsSource="{Binding SuggestionsList}" Initialized="SuggestionBox_Initialized" Background="DarkGray" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" >
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"></StackPanel>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="Grid.ColumnSpan" Value="2" />
+                            <Setter Property="Grid.RowSpan" Value="3" />
+                            <Setter Property="eyeX:Behavior.Activatable" Value="Default" />
+                            <Setter Property="eyeX:Behavior.GazeAware" Value="True"/>
+                            <EventSetter Event="eyeX:Behavior.Activate" Handler="OnEyeXActivate" />
+                            <EventSetter Event="eyeX:Behavior.HasGazeChanged" Handler="SuggestionButton_HasGazeChanged"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+
+                <StackPanel Grid.Row="2" Background="Black">
+                    <TextBlock Text="Virtual Keyboard" Foreground="White" FontSize="30" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                </StackPanel>
+
+                <WrapPanel Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <WrapPanel.Resources>
+                        <Style TargetType="{x:Type localroot:GazableButton}" BasedOn="{StaticResource LetterButton}">
+                            <Setter Property="Height" Value="120"/>
+                            <Setter Property="Width" Value="120"/>
+                            <Setter Property="Margin" Value="3,3,3,3"/>
                             <EventSetter Event="eyeX:Behavior.Activate" Handler="OnVirtualKeyboardPressed" />
                             <EventSetter Event="Click" Handler="OnVirtualKeyboardPressed" />
                             <EventSetter Event="eyeX:Behavior.HasGazeChanged" Handler="LetterButton_HasGazeChanged"/>
                         </Style>
-                    </StackPanel.Resources>
-                    <Button Content="Q"/>
-                    <Button Content="W"/>
-                    <Button Content="E"/>
-                    <Button Content="R"/>
-                    <Button Content="T"/>
-                    <Button Content="Y"/>
-                    <Button Content="U"/>
-                    <Button Content="I"/>
-                    <Button Content="O"/>
-                    <Button Content="P"/>
-                    <Button Content="A"/>
-                    <Button Content="S"/>
-                    <Button Content="D"/>
-                    <Button Content="F"/>
-                    <Button Content="G"/>
-                    <Button Content="H"/>
-                    <Button Content="J"/>
-                    <Button Content="K"/>
-                    <Button Content="L"/>
-                    <Button Content="ENTER" Width="150"/>
-                    <Button Content="Z"/>
-                    <Button Content="X"/>
-                    <Button Content="C"/>
-                    <Button Content="V"/>
-                    <Button Content="B"/>
-                    <Button Content="N"/>
-                    <Button Content="M"/>
-                    <Button Content="SPACE" Width="150"/>
+                    </WrapPanel.Resources>
+                    <localroot:GazableButton Content="Q"/>
+                    <localroot:GazableButton Content="W"/>
+                    <localroot:GazableButton Content="E"/>
+                    <localroot:GazableButton Content="R"/>
+                    <localroot:GazableButton Content="T"/>
+                    <localroot:GazableButton Content="Y"/>
+                    <localroot:GazableButton Content="U"/>
+                    <localroot:GazableButton Content="I"/>
+                    <localroot:GazableButton Content="O"/>
+                    <localroot:GazableButton Content="P"/>
+                    <localroot:GazableButton Content="A"/>
+                    <localroot:GazableButton Content="S"/>
+                    <localroot:GazableButton Content="D"/>
+                    <localroot:GazableButton Content="F"/>
+                    <localroot:GazableButton Content="G"/>
+                    <localroot:GazableButton Content="H"/>
+                    <localroot:GazableButton Content="J"/>
+                    <localroot:GazableButton Content="K"/>
+                    <localroot:GazableButton Content="L"/>
+                    <localroot:GazableButton Content="Z"/>
+                    <localroot:GazableButton Content="X"/>
+                    <localroot:GazableButton Content="C"/>
+                    <localroot:GazableButton Content="V"/>
+                    <localroot:GazableButton Content="B"/>
+                    <localroot:GazableButton Content="N"/>
+                    <localroot:GazableButton Content="M"/>
+                    <!--<localroot:GazableButton Content="SPACE" Width="400" Background="Black"/>
+                    <localroot:GazableButton Content="BACKSPACE" Width="240" Background="DarkRed" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="VK_BKSpace_Click" Click="VK_BKSpace_Click" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="VK_BKSpace_HasGazeChanged"   />-->
+                </WrapPanel>
+
+                <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <localroot:GazableButton Content="SPACE" Width="1000" Height="120" Background="Black" Foreground="white" FontSize="30" FontWeight="Bold" Margin="2,2,2,2" Style="{StaticResource LetterButton}"  eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate"  Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged"/>
+                    <localroot:GazableButton Content="BACKSPACE"  Margin="2,2,2,2" Width="240" Height="120" Background="DarkRed" FontSize="30" Foreground="white" FontWeight="Bold"  Style="{StaticResource LetterButton}" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="VK_BKSpace_Click" Click="VK_BKSpace_Click" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="VK_BKSpace_HasGazeChanged"/>
                 </StackPanel>
-            </ScrollViewer>
-            
-            
+
+            </Grid>
+
         </Grid>
 
-        <!--SUGGESTION LIST-->
+        <!--Right Panel-->
         <Grid Grid.Row="1" Grid.Column="1" Background="DarkGray">
 
-            <ListView Name="SuggestionBox" ItemsSource="{Binding SuggestionsList}" Initialized="SuggestionBox_Initialized" Background="DarkGray" HorizontalContentAlignment="Center" >
-                <ListView.ItemContainerStyle>
-                    <Style>
-                        <Setter Property="Grid.ColumnSpan" Value="2" />
-                        <Setter Property="Grid.RowSpan" Value="3" />
-                        <Setter Property="eyeX:Behavior.Activatable" Value="Default" />
-                        <Setter Property="eyeX:Behavior.GazeAware" Value="True"/>
-                        <EventSetter Event="eyeX:Behavior.Activate" Handler="OnEyeXActivate" />
-                        <EventSetter Event="eyeX:Behavior.HasGazeChanged" Handler="SuggestionButton_HasGazeChanged"/>
-                    </Style>
-                </ListView.ItemContainerStyle>
 
-            </ListView>
 
         </Grid>
-        <!--SUGGESTION LIST END-->
+        <!--Right Panel-->
         
         <!--BODY END-->
 
@@ -171,7 +200,7 @@
                 </Grid.ColumnDefinitions>
 
                 <autocomplete:AutoComplete Grid.Column="0" x:Name="autocompleteInput" TextChanged="autocompleteInput_TextChanged" Text="{Binding MessageToSend}" Initialized="autocompleteInput_Initialized" FontSize="50" VerticalContentAlignment="Center" Margin="10,0,0,0" />
-                <Button Grid.Column="1"  Name="PlayText" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="PlayText_Activate" Click="PlayText_Activate">
+                <Button Grid.Column="1"  Name="PlayText" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="PlayText_Activate" Click="PlayText_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="PlayText_HasGazeChanged">
                     <TextBlock FontSize="40" FontWeight="Bold" Foreground="Green">Play</TextBlock>
                 </Button>
             </Grid>
@@ -179,7 +208,7 @@
         </Grid>
 
         <Grid Name="FooterRight" Grid.Row="2" Grid.Column="1">
-            <Button Name="SendSMS" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="OnSendSMS" Click="OnSendSMS" Height="150">
+            <Button Name="SendSMS" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="OnSendSMS" Click="OnSendSMS" Height="150" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SendSMS_HasGazeChanged">
                 <TextBlock FontSize="40" FontWeight="Bold">Send SMS</TextBlock>
             </Button>
             

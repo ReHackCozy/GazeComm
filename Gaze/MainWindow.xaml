@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Height="300px">
-            <Button Click="Button_Click" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="Button_Click" Height="150">
+            <Button Click="Button_Click" Height="150">
                 <TextBlock FontWeight="Bold">Push me!</TextBlock>
             </Button>
 

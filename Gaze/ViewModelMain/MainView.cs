@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gaze.ViewModelMain
 {
-    public class MainViewModel
+    public class MainView
     {
 
 

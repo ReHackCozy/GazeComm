@@ -16,6 +16,9 @@ namespace Gaze.HomePanel
 
         private string _name;
         private string _phoneNumber;
+        private bool _genderMale;
+        private bool _genderFemale;
+        private int _age;
         private string _messageToSend;
 
         private bool _isBlinked;
@@ -28,11 +31,13 @@ namespace Gaze.HomePanel
         {
             _name = "John Doe";
             _phoneNumber = "0196031591";
+            _genderMale = true;
+            _genderFemale = false;
+            _age = 30;
             _messageToSend = "";
             _isBlinked = false;
 
             _suggestionsList = new ObservableCollection<GazableButton>();
-
             _authorizationAPI = new AuthorizationAPI(sendTTS);
 
             //HACK
@@ -47,9 +52,14 @@ namespace Gaze.HomePanel
                 _authorizationAPI.Invoke();
             } else
             {
-                var number = "+" + _phoneNumber;
+                var number = "+6" + _phoneNumber;
                 new SendTTS().Invoke(_messageToSend, number, _authorizationAPI.AccessToken);
             }
+        }
+
+        public void playTTS()
+        {
+            Utilities.Util.Speak(_messageToSend, _genderMale ? System.Speech.Synthesis.VoiceGender.Male : System.Speech.Synthesis.VoiceGender.Female, _age);
         }
 
         #region Setters Getters
@@ -83,6 +93,38 @@ namespace Gaze.HomePanel
 
                 _phoneNumber = value;
                 OnPropertyChanged("PhoneNumber");
+            }
+        }
+
+        
+        public bool GenderMale
+        {
+            get { return _genderMale; }
+            set
+            {
+                _genderMale = value;
+                OnPropertyChanged("GenderMale");
+            }
+        }
+
+        
+        public bool GenderFemale
+        {
+            get { return _genderFemale; }
+            set
+            {
+                _genderFemale = value;
+                OnPropertyChanged("GenderFemale");
+            }
+        }
+
+        public int Age
+        {
+            get { return _age; }
+            set
+            {
+                _age = value;
+                OnPropertyChanged("Age");
             }
         }
 

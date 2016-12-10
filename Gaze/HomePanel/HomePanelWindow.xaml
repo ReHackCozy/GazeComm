@@ -5,8 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gaze.HomePanel"
         xmlns:eyeX="clr-namespace:EyeXFramework.Wpf;assembly=EyeXFramework"
+        KeyUp="Window_KeyUp"
         mc:Ignorable="d"
         Title="HomePanel" Height="768" Width="1280" WindowState="Maximized">
+    
+    <Window.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="MaxWidth" Value="200" />
+            <Setter Property="MaxHeight" Value="75" />
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="Padding" Value="10" />
+        </Style>
+        <Style x:Key="EyeXActivatableButtonStyle" BasedOn="{StaticResource ButtonStyle}" TargetType="Button">
+            <!-- By use of attached properties, we can specify that: the button is activatable,
+                 that we do not want tentative activation focus events, and what handler should 
+                 be called when the button is activated. 
+            
+                 Read more about the Activatable Behavior and its associated concepts in the 
+                 Developer's Guide (available online and in the SDK docs/ folder) -->
+            <Setter Property="eyeX:Behavior.Activatable" Value="Default" />
+            <EventSetter Event="eyeX:Behavior.Activate" Handler="OnEyeXActivate" />
+            <!-- We also set up a trigger on the Behavior.ActivationFocus attached property, and
+                 specify how the button should look when focused for activation. 
+            
+                 Alternatively, we could have registered an event handler for the routed
+                 event Behavior.ActivationFocusChanged and done the handling in the code behind
+                 or via the MainWindowModel. -->
+            <Style.Triggers>
+                <Trigger Property="eyeX:Behavior.ActivationFocus" Value="HasActivationFocus">
+                    <Setter Property="BorderBrush" Value="DarkGray" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
     <Grid Background="DarkGray">
 
         <Grid.ColumnDefinitions>
@@ -51,6 +83,9 @@
 
             <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
 
+
+
+
                 <StackPanel Orientation="Horizontal">
                     <Button Content="TEST" Height="150" Width="150"/>
                     <Button Content="TEST" Height="150" Width="150"/>
@@ -68,8 +103,6 @@
                     <Button Content="TEST" Height="150" Width="150"/>
                     <Button Content="TEST" Height="150" Width="150"/>
                 </StackPanel>
-
-                
             </ScrollViewer>
             
             
@@ -79,6 +112,16 @@
         <Grid Grid.Row="1" Grid.Column="1" Background="DarkGray">
 
             <ListView Name="SuggestionBox" ItemsSource="{Binding SuggestionsList}" Initialized="SuggestionBox_Initialized" Background="DarkGray" HorizontalContentAlignment="Center" >
+                <ListView.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="Grid.Column" Value="{Binding ColumnIndex}" />
+                        <Setter Property="Grid.Row" Value="{Binding RowIndex}" />
+                        <Setter Property="Grid.ColumnSpan" Value="2" />
+                        <Setter Property="Grid.RowSpan" Value="3" />
+                        <Setter Property="eyeX:Behavior.Activatable" Value="Default" />
+                        <EventSetter Event="eyeX:Behavior.Activate" Handler="OnEyeXActivate" />
+                    </Style>
+                </ListView.ItemContainerStyle>
 
             </ListView>
 
@@ -90,10 +133,16 @@
         <!--FOOTER START-->
         <Grid Name="Footer" Grid.Row="2" Grid.Column="0">
 
-            <TextBox Text="{Binding MessageToSend}" TextChanged="TextBox_TextChanged">
+            <TextBox Text="{Binding MessageToSend}" Name="SendMessageTxtBox" TextChanged="TextBox_TextChanged">
                 
             </TextBox>
             
+        </Grid>
+
+        <Grid Name="FooterRight" Grid.Row="2" Grid.Column="1">
+            <Button Name="SendSMS">
+                <TextBlock FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="OnSendSMS">Send SMS</TextBlock>
+            </Button>
         </Grid>
         <!--FOOTER ENDS-->
         

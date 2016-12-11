@@ -181,7 +181,7 @@ namespace Gaze.HomePanel
             if (vm.MessageToSend.Length == 0)
                 return;
 
-            vm.playTTS();
+            vm.PlayTTS();
             Status.Text = "Text played";
             _startStatusTimer();
         }
@@ -336,7 +336,7 @@ namespace Gaze.HomePanel
 
         private void SendTTS_Activate(object sender, RoutedEventArgs e)
         {
-            vm.sendTTS();
+            vm.SendTTS();
             Status.Text = "TTS sent";
             _startStatusTimer();
         }
@@ -347,6 +347,11 @@ namespace Gaze.HomePanel
         {
             vm.MessageToSend = "";
             autocompleteInput.Focus();
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            vm.UpdateKeyboard();
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////

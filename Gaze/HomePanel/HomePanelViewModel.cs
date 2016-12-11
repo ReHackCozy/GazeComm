@@ -21,11 +21,24 @@ namespace Gaze.HomePanel
         private int _age;
         private string _messageToSend;
 
+        private bool _isLetters;
+        private bool _isWords;
+        private bool _isActions;
+
         private bool _isBlinked;
 
-        private ObservableCollection<GazableButton> _suggestionsList;
+        private ObservableCollection<GazableButton> _suggestionsList = new ObservableCollection<GazableButton>();
+        private ObservableCollection<String> _keyboardList = new ObservableCollection<String>();
 
         private HomePanelWindow _viewRef;
+
+        #region keyboard data
+
+        private IList<String> _lettersKeyboard = new List<string> { "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Z", "X", "C", "V", "B", "N", "M" };
+        private IList<String> _wordsKeyboard = new List<string> { "I", "You", "Help", "Give", "Try", "Me", "Near", "Far", "Height", "Width", "Sorry", "Sure", "Goodbye", "Possible", "Impossible", "Meal", "Hello", "Yes", "No", "Maybe", "Make", "Good", "Bad", "Okay", "Meh", "Opss" };
+        private IList<String> _actionsKeyboard = new List<string> { "Thank You", "You're welcome", "I'm hungry", "I love you", "I don't know", "You're beautiful", "I need a hug", "I'm tired", "Good job", "I agree", "I disagree", "I think so", "I'm happy", "I'm sad", "See you soon!", "Happy birthday!", "I'm sorry", "You're brilliant", "The cake is a lie", "That's fantastic", "I know", "Game is hard", "My apologies", "LOL that's funny", "OMG", "The end" };
+
+        #endregion
 
         public HomePanelViewModel(HomePanelWindow viewRef)
         {
@@ -37,14 +50,17 @@ namespace Gaze.HomePanel
             _messageToSend = "";
             _isBlinked = false;
 
-            _suggestionsList = new ObservableCollection<GazableButton>();
-            _authorizationAPI = new AuthorizationAPI(sendTTS);
+            _isLetters = false;
+            _isWords = true;
+            _isActions = false;
+            UpdateKeyboard();
+            _authorizationAPI = new AuthorizationAPI(SendTTS);
 
             //HACK
             _viewRef = viewRef;
         }
 
-        public void sendTTS()
+        public void SendTTS()
         {
             if(String.IsNullOrEmpty(_authorizationAPI.AccessToken))
             {
@@ -57,9 +73,36 @@ namespace Gaze.HomePanel
             }
         }
 
-        public void playTTS()
+        public void PlayTTS()
         {
             Utilities.Util.Speak(_messageToSend, _genderMale ? System.Speech.Synthesis.VoiceGender.Male : System.Speech.Synthesis.VoiceGender.Female, _age);
+        }
+
+        public void UpdateKeyboard()
+        {
+            if(_isLetters)
+            {
+                PopulateKeyboardList(_lettersKeyboard);
+            } else if (_isWords)
+            {
+                PopulateKeyboardList(_wordsKeyboard);
+            } else {
+                PopulateKeyboardList(_actionsKeyboard);
+            }
+        }
+
+        private void PopulateKeyboardList(IList<String> list)
+        {
+            //TODO: optimize
+            _keyboardList.Clear();
+            foreach (var i in list)
+            {
+                _keyboardList.Add(i);
+            }
+            //for(int i = 0; i < list.Count; ++i)
+            //{
+            //    _keyboardList[i] = list[i];
+            //}
         }
 
         #region Setters Getters
@@ -102,6 +145,8 @@ namespace Gaze.HomePanel
             get { return _genderMale; }
             set
             {
+                if (_genderMale == value) return;
+
                 _genderMale = value;
                 OnPropertyChanged("GenderMale");
             }
@@ -113,6 +158,8 @@ namespace Gaze.HomePanel
             get { return _genderFemale; }
             set
             {
+                if (_genderFemale == value) return;
+
                 _genderFemale = value;
                 OnPropertyChanged("GenderFemale");
             }
@@ -123,6 +170,8 @@ namespace Gaze.HomePanel
             get { return _age; }
             set
             {
+                if (_age == value) return;
+
                 _age = value;
                 OnPropertyChanged("Age");
             }
@@ -141,6 +190,43 @@ namespace Gaze.HomePanel
 
                 _messageToSend = value;
                 OnPropertyChanged("MessageToSend");
+            }
+        }
+
+        public bool IsLetters
+        {
+            get { return _isLetters; }
+            set
+            {
+                if (_isLetters == value) return;
+
+                _isLetters = value;
+                OnPropertyChanged("IsLetters");
+            }
+        }
+
+
+        public bool IsWords
+        {
+            get { return _isWords; }
+            set
+            {
+                if (_isWords == value) return;
+
+                _isWords = value;
+                OnPropertyChanged("IsWords");
+            }
+        }
+
+        public bool IsActions
+        {
+            get { return _isActions; }
+            set
+            {
+                if (_isActions == value) return;
+
+                _isActions = value;
+                OnPropertyChanged("IsActions");
             }
         }
 
@@ -163,6 +249,22 @@ namespace Gaze.HomePanel
                 }
 
                 OnPropertyChanged("SuggestionsList");
+            }
+        }
+
+        public ObservableCollection<String> KeyboardList
+        {
+            get
+            {
+                return _keyboardList;
+            }
+
+            set
+            {
+                if (_keyboardList == value) return;
+
+                _keyboardList = value;
+                OnPropertyChanged("KeyboardList");
             }
         }
 

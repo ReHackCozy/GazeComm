@@ -28,8 +28,10 @@ namespace Gaze.HomePanel
         public WpfEyeXHost eyeXHostRef;
         Stopwatch stopWatch;
 
-        System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+        System.Windows.Threading.DispatcherTimer statusTimer = new System.Windows.Threading.DispatcherTimer();
 
+        System.Windows.Threading.DispatcherTimer blinkTimer = new System.Windows.Threading.DispatcherTimer();
+        bool blinkTimerStarted = false;
         //HACK
         double fixationBeginTimeStamp = 0;
         double fixationActivateDuration = 500; //In milisecond
@@ -59,9 +61,17 @@ namespace Gaze.HomePanel
                 
                 if (!e.LeftEye.IsValid && !e.RightEye.IsValid)
                 {
+                    if (!blinkTimerStarted)
+                        _startBlinkTimer();
+                    
                     //Try make it work
                     //vm.IsBlinked = true; //setting this to True will call OnGazeActivateButton() but not false;
 
+                }
+                else
+                {
+                    if (blinkTimerStarted)
+                        _stopBlinkTimer();
                 }
 
             };
@@ -110,7 +120,7 @@ namespace Gaze.HomePanel
             Utilities.Util.Speak(vm.MessageToSend, System.Speech.Synthesis.VoiceGender.Female);
             new SendMessage().Invoke(vm.MessageToSend, vm.PhoneNumber);
             Status.Text = "SMS sent";
-            _startTimer();
+            _startStatusTimer();
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -167,7 +177,7 @@ namespace Gaze.HomePanel
 
             vm.playTTS();
             Status.Text = "Text played";
-            _startTimer();
+            _startStatusTimer();
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -318,7 +328,7 @@ namespace Gaze.HomePanel
         {
             vm.sendTTS();
             Status.Text = "TTS sent";
-            _startTimer();
+            _startStatusTimer();
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -331,18 +341,44 @@ namespace Gaze.HomePanel
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        private void _startTimer()
+        private void _startStatusTimer()
         {
-            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 5);
-            dispatcherTimer.Start();
+            statusTimer.Tick += new EventHandler(statusTimer_Tick);
+            statusTimer.Interval = new TimeSpan(0, 0, 0, 5);
+            statusTimer.Start();
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        private void statusTimer_Tick(object sender, EventArgs e)
         {
             Status.Text = "";
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void _startBlinkTimer()
+        {
+            blinkTimerStarted = true;
+            blinkTimer.Tick += new EventHandler(blinkTimer_Tick);
+            blinkTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            blinkTimer.Start();
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void _stopBlinkTimer()
+        {
+            blinkTimer.Stop();
+            blinkTimerStarted = false;
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void blinkTimer_Tick(object sender, EventArgs e)
+        {
+            blinkTimerStarted = false;
+            //Really close long enough, unsure which action to trigger
         }
 
     }

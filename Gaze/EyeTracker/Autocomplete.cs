@@ -237,6 +237,7 @@ namespace Gaze.EyeTracker
         /// <param name="e">An System.EventArgs that contains the event data.</param>
         protected override void OnTextChanged(TextChangedEventArgs e)
         {
+            _matchingValues.Clear();
             if (_reloadValues.Count == 0 && !_init) //Load the values from the file.
             {
                 RefreshValues();
@@ -244,7 +245,7 @@ namespace Gaze.EyeTracker
             string tmp = this.Text.ToUpper();
             if ((tmp == "") || _updateValues)
             {
-                //base.OnTextChanged(e);
+                base.OnTextChanged(e);
                 _matchingValues.Clear();
             }
             else

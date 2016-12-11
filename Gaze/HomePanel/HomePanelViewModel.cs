@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System; 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -35,14 +35,14 @@ namespace Gaze.HomePanel
         #region keyboard data
 
         private IList<String> _lettersKeyboard = new List<string> { "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Z", "X", "C", "V", "B", "N", "M" };
-        private IList<String> _wordsKeyboard = new List<string> {"You", "Help", "Give", "Try", "Me", "Near", "Far", "Height", "Width", "Sorry", "Sure", "Goodbye", "Possible", "Impossible", "Meal", "Hello", "Yes", "No", "Maybe", "Make", "Good", "Bad", "Okay", "Meh", "Opss" , "Hoorah"};
-        private IList<String> _actionsKeyboard = new List<string> { "Thank You", "You're welcome", "I'm hungry", "I love you", "I don't know", "You're beautiful", "I need a hug", "I'm tired", "Good job", "I agree", "I disagree", "I think so", "I'm happy", "I'm sad", "See you soon!", "Happy birthday!", "I'm sorry", "You're brilliant", "The cake is a lie", "That's fantastic", "I know", "Game is hard", "My apologies", "LOL that's funny", "OMG", "The end" };
+        private IList<String> _wordsKeyboard = new List<string> {"You ", "Help ", "Give ", "Try ", "Me ", "Near ", "Far ", "Height ", "Width ", "Sorry ", "Sure ", "Goodbye ", "Possible ", "Impossible ", "Meal ", "Hello ", "Yes ", "No ", "Maybe ", "Make ", "Good ", "Bad ", "Okay ", "Meh ", "Opss " , "Hoorah "};
+        private IList<String> _actionsKeyboard = new List<string> { "Thank You ", "You're welcome ", "I'm hungry ", "I love you ", "I don't know ", "You're beautiful ", "I need a hug ", "I'm tired ", "Good job ", "I agree ", "I disagree ", "I think so ", "I'm happy ", "I'm sad ", "See you soon! ", "Happy birthday! ", "I'm sorry ", "You're brilliant ", "The cake is a lie ", "That's fantastic ", "I know ", "Game is hard ", "My apologies ", "LOL that's funny ", "OMG ", "The end " };
 
         #endregion
 
         public HomePanelViewModel(HomePanelWindow viewRef)
         {
-            _name = "John Doe";
+            _name = "Pak Ali";
             _phoneNumber = "0196031591";
             _genderMale = true;
             _genderFemale = false;
@@ -51,8 +51,8 @@ namespace Gaze.HomePanel
             _isBlinked = false;
 
             _isLetters = false;
-            _isWords = true;
-            _isActions = false;
+            _isWords = false;
+            _isActions = true;
             UpdateKeyboard();
             _authorizationAPI = new AuthorizationAPI(SendTTS);
 
@@ -190,10 +190,10 @@ namespace Gaze.HomePanel
 
                 _messageToSend = value;
 
-                var tmp_str = _messageToSend.Split(' ').Last();
+                //var tmp_str = _messageToSend.Split(' ').Last();
 
-                if (tmp_str.Length > 1)
-                    _messageToSend += " ";
+                //if (tmp_str.Length > 1)
+                //    _messageToSend += " ";
 
                 
                 OnPropertyChanged("MessageToSend");

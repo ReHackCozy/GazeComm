@@ -236,14 +236,14 @@
             </Grid>
 
             <!--Right Panel-->
-            <Grid Grid.Row="1" Grid.Column="1" Background="#6E6F71">
+            <Grid Grid.Row="1" Grid.Column="1" Background="DarkGray">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="200"/>
                     <RowDefinition Height="200"/>
                 </Grid.RowDefinitions>
-                <TextBox x:Name="Status" Grid.Row="0" FontSize="40" FontWeight="Bold"/>
+                <TextBox x:Name="Status" Grid.Row="0" FontSize="40" FontWeight="Bold" Background="Transparent"/>
                 <localroot:GazableButton x:Name="SendTTS" Grid.Row="1" Content="Send TTS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SendTTS_Activate"  Click="SendTTS_Activate" eyeX:Behavior.GazeAware="True"/>
                 <Button x:Name="SendSMS" Grid.Row="2" eyeX:Behavior.Activatable="Default" Content="Send SMS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activate="OnSendSMS" Click="OnSendSMS" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SendSMS_HasGazeChanged"/>
             </Grid>

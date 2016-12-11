@@ -28,6 +28,9 @@ namespace Gaze.HomePanel
         public WpfEyeXHost eyeXHostRef;
         Stopwatch stopWatch;
 
+        System.Windows.Threading.DispatcherTimer activationCoolDown = new System.Windows.Threading.DispatcherTimer();
+        //bool activationReady = true;
+
         System.Windows.Threading.DispatcherTimer statusTimer = new System.Windows.Threading.DispatcherTimer();
 
         System.Windows.Threading.DispatcherTimer blinkTimer = new System.Windows.Threading.DispatcherTimer();
@@ -58,21 +61,24 @@ namespace Gaze.HomePanel
             var eyePositionStream = eyeXHostRef.CreateEyePositionDataStream();
             eyePositionStream.Next += (s,e) => 
             {
-                
-                if (!e.LeftEye.IsValid && !e.RightEye.IsValid)
-                {
-                    if (!blinkTimerStarted)
-                        _startBlinkTimer();
-                    
-                    //Try make it work
-                    //vm.IsBlinked = true; //setting this to True will call OnGazeActivateButton() but not false;
 
-                }
-                else
-                {
-                    if (blinkTimerStarted)
-                        _stopBlinkTimer();
-                }
+                //if (!activationReady)
+                //    return;
+
+                //    if (!e.LeftEye.IsValid && !e.RightEye.IsValid)
+                //{
+                //    if (!blinkTimerStarted)
+                //        _startBlinkTimer();
+                    
+                //    //Try make it work
+                //    //vm.IsBlinked = true; //setting this to True will call OnGazeActivateButton() but not false;
+
+                //}
+                //else
+                //{
+                //    if (blinkTimerStarted)
+                //        _stopBlinkTimer();
+                //}
 
             };
 
@@ -271,15 +277,19 @@ namespace Gaze.HomePanel
 
         public void OnGazeActivateButton()
         {
-
+   
             eyeXHostRef.TriggerActivation();
 
+            //_startActivationCooldown();
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private void OnFixatedGaze(object sender, EyeXFramework.FixationEventArgs e)
         {
+
+            //if (!activationReady)
+            //    return;
 
             if (e.EventType == Tobii.EyeX.Framework.FixationDataEventType.Begin)
             {
@@ -357,29 +367,48 @@ namespace Gaze.HomePanel
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        private void _startBlinkTimer()
-        {
-            blinkTimerStarted = true;
-            blinkTimer.Tick += new EventHandler(blinkTimer_Tick);
-            blinkTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
-            blinkTimer.Start();
-        }
+        //private void _startBlinkTimer()
+        //{
+        //    blinkTimerStarted = true;
+        //    blinkTimer.Tick += new EventHandler(blinkTimer_Tick);
+        //    blinkTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+        //    blinkTimer.Start();
+        //}
 
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        private void _stopBlinkTimer()
-        {
-            blinkTimer.Stop();
-            blinkTimerStarted = false;
-        }
+        //private void _stopBlinkTimer()
+        //{
+        //    blinkTimer.Stop();
+        //    blinkTimerStarted = false;
+        //}
 
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        private void blinkTimer_Tick(object sender, EventArgs e)
-        {
-            blinkTimerStarted = false;
-            //Really close long enough, unsure which action to trigger
-        }
+        //private void blinkTimer_Tick(object sender, EventArgs e)
+        //{
+        //    blinkTimerStarted = false;
+        //    if(activationReady)
+        //        OnGazeActivateButton();
+        //    //Really close long enough, unsure which action to trigger
+        //}
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //private void _startActivationCooldown()
+        //{
+        //    activationReady = false;
+        //    activationCoolDown.Tick += new EventHandler(_activationCooldownTick);
+        //    activationCoolDown.Interval = new TimeSpan(0, 0, 0, 0, 1000);
+        //    activationCoolDown.Start();
+        //}
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //private void _activationCooldownTick(object sender, EventArgs e)
+        //{
+        //    activationReady = true;
+        //}
 
     }
 }

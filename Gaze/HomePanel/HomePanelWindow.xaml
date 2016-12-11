@@ -36,7 +36,7 @@
                                 <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
                             </Grid>
                         </Border>
-                        
+
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" Value="#E59400" />
@@ -52,7 +52,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
 
         <Style TargetType="{x:Type localroot:GazableButton}" x:Key="LetterButton">
             <Setter Property="Background" Value="#373737" />
@@ -197,36 +196,41 @@
                                 <EventSetter Event="eyeX:Behavior.HasGazeChanged" Handler="LetterButton_HasGazeChanged"/>
                             </Style>
                         </WrapPanel.Resources>
-                        <localroot:GazableButton Content="Q"/>
-                        <localroot:GazableButton Content="W"/>
-                        <localroot:GazableButton Content="E"/>
-                        <localroot:GazableButton Content="R"/>
-                        <localroot:GazableButton Content="T"/>
-                        <localroot:GazableButton Content="Y"/>
-                        <localroot:GazableButton Content="U"/>
-                        <localroot:GazableButton Content="I"/>
-                        <localroot:GazableButton Content="O"/>
-                        <localroot:GazableButton Content="P"/>
-                        <localroot:GazableButton Content="A"/>
-                        <localroot:GazableButton Content="S"/>
-                        <localroot:GazableButton Content="D"/>
-                        <localroot:GazableButton Content="F"/>
-                        <localroot:GazableButton Content="G"/>
-                        <localroot:GazableButton Content="H"/>
-                        <localroot:GazableButton Content="J"/>
-                        <localroot:GazableButton Content="K"/>
-                        <localroot:GazableButton Content="L"/>
-                        <localroot:GazableButton Content="Z"/>
-                        <localroot:GazableButton Content="X"/>
-                        <localroot:GazableButton Content="C"/>
-                        <localroot:GazableButton Content="V"/>
-                        <localroot:GazableButton Content="B"/>
-                        <localroot:GazableButton Content="N"/>
-                        <localroot:GazableButton Content="M"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[0]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[1]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[2]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[3]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[4]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[5]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[6]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[7]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[8]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[9]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[10]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[11]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[12]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[13]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[14]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[15]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[16]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[17]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[18]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[19]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[20]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[21]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[22]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[23]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[24]}"/>
+                        <localroot:GazableButton Content="{Binding KeyboardList[25]}"/>
                     </WrapPanel>
 
                     <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <localroot:GazableButton Content="SPACE" Width="1000" Height="120" Background="#6E6F71" Foreground="white" FontSize="30" FontWeight="Bold" Margin="2,2,2,2" Style="{StaticResource LetterButton}"  eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate"  Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <RadioButton GroupName="2" Content="LETTERS" Width="160" Height="120" Background="#6E6F71" Foreground="white" FontSize="30" FontWeight="Bold" Margin="2,2,2,2" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate"  Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged" Checked="RadioButton_Checked"  IsChecked="{Binding IsLetters, Mode=TwoWay}" Style="{StaticResource {x:Type ToggleButton}}"/>
+                            <RadioButton GroupName="2" Content="WORDS" Width="160" Height="120" Background="#6E6F71" Foreground="white" FontSize="30" FontWeight="Bold" Margin="2,2,2,2" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate"  Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged" Checked="RadioButton_Checked" IsChecked="{Binding IsWords, Mode=TwoWay}" Style="{StaticResource {x:Type ToggleButton}}"/>
+                            <RadioButton GroupName="2" Content="ACTION" Width="160" Height="120" Background="#6E6F71" Foreground="white" FontSize="30" FontWeight="Bold" Margin="2,2,2,2" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate"  Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged" Checked="RadioButton_Checked" IsChecked="{Binding IsActions, Mode=TwoWay}" Style="{StaticResource {x:Type ToggleButton}}"/>
+                        </StackPanel>
+                        <localroot:GazableButton Content="SPACE" Width="500" Height="120" Background="#6E6F71" Foreground="white" FontSize="30" FontWeight="Bold" Margin="2,2,2,2" Style="{StaticResource LetterButton}" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate"  Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged"/>
                         <localroot:GazableButton Content="BACKSPACE"  Margin="2,2,2,2" Width="240" Height="120" Background="#F5A46C"  FontSize="30" Foreground="white" FontWeight="Bold"  Style="{StaticResource LetterButton}" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="VK_BKSpace_Click" Click="VK_BKSpace_Click" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="VK_BKSpace_HasGazeChanged"/>
                         <localroot:GazableButton Content="CLR"  Margin="2,2,2,2" Width="240" Height="120" Background="#F27360" FontSize="30" Foreground="white" FontWeight="Bold"  Style="{StaticResource LetterButton}" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="Clr_Activate" Click="Clr_Activate"  eyeX:Behavior.GazeAware="True" />
                     </StackPanel>

@@ -261,10 +261,10 @@
             </Grid>
 
             <Grid Name="FooterRight" Grid.Row="2" Grid.Column="1">
-                <Button Grid.Column="2"  Name="PlayText" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="PlayText_Activate" Background="#F3C766" Click="PlayText_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="PlayText_HasGazeChanged">
-                    <StackPanel>
+                <Button Grid.Column="2" Content="Speak" FontSize="50" FontWeight="Bold" Name="PlayText" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="PlayText_Activate" Background="#F3C766" Click="PlayText_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="PlayText_HasGazeChanged">
+                    <!--<StackPanel>
                         <Image Source="SpeakIcon.png" Height="130"/>
-                    </StackPanel>
+                    </StackPanel>-->
                 </Button>
             </Grid>
             <!--FOOTER ENDS-->

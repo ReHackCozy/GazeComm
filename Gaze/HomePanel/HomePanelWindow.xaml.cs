@@ -210,6 +210,11 @@ namespace Gaze.HomePanel
         private void LetterButton_HasGazeChanged(object sender, RoutedEventArgs e)
         {
             var button = sender as GazableButton;
+            
+            //button.Background
+            button.Focus();
+            //button.RaiseEvent(new RoutedEventArgs(GazableButton.MouseEnterEvent, button));
+
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -264,6 +269,11 @@ namespace Gaze.HomePanel
             vm.MessageToSend += " ";
             autocompleteInput.Focus();
             autocompleteInput.CaretIndex = autocompleteInput.Text.Length;
+
+            var rad_btn = sender as RadioButton;
+
+            if(rad_btn != null)
+                rad_btn.IsChecked = true;
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -337,6 +347,7 @@ namespace Gaze.HomePanel
         private void SendTTS_Activate(object sender, RoutedEventArgs e)
         {
             vm.SendTTS();
+            vm.PlayTTS();
             Status.Text = "TTS sent";
             _startStatusTimer();
         }

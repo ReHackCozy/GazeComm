@@ -241,33 +241,28 @@
             </Grid>
 
             <!--Right Panel-->
-            <Grid Grid.Row="1" Grid.Column="1" Background="DarkGray">
+            <Grid Grid.Row="1" Grid.Column="1" Background="DarkGray" Margin="0,0,8,0">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="200"/>
                     <RowDefinition Height="200"/>
                     <RowDefinition Height="200"/>
                 </Grid.RowDefinitions>
                 <TextBox x:Name="Status" Grid.Row="0" FontSize="40" FontWeight="Bold" Background="Transparent"/>
                 <localroot:GazableButton x:Name="SendTTS" Grid.Row="1" Content="Send TTS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SendTTS_Activate"  Click="SendTTS_Activate" eyeX:Behavior.GazeAware="True"/>
                 <Button x:Name="SendSMS" Grid.Row="2" eyeX:Behavior.Activatable="Default" Content="Send SMS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activate="OnSendSMS" Click="OnSendSMS" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SendSMS_HasGazeChanged"/>
+                <Button Content="Speak" Grid.Row="3" FontSize="50" FontWeight="Bold" Name="PlayText" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="PlayText_Activate" Background="#F3C766" Click="PlayText_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="PlayText_HasGazeChanged"/>
             </Grid>
             <!--Right Panel-->
 
             <!--BODY END-->
 
             <!--FOOTER START-->
-            <Grid Name="Footer" Grid.Row="2" Grid.Column="0">
-                <autocomplete:AutoComplete Grid.Column="0" x:Name="autocompleteInput" BorderThickness="0" Background="White" TextChanged="autocompleteInput_TextChanged" Text="{Binding MessageToSend}" Initialized="autocompleteInput_Initialized" FontSize="50" VerticalContentAlignment="Center" Margin="10,3,10,3" Grid.ColumnSpan="2" />
+            <Grid Name="Footer" Grid.Row="2" Grid.ColumnSpan="2">
+                <autocomplete:AutoComplete Grid.Column="0" x:Name="autocompleteInput" BorderThickness="0" Background="Wheat" TextChanged="autocompleteInput_TextChanged" Text="{Binding MessageToSend}" Initialized="autocompleteInput_Initialized" FontSize="50" VerticalContentAlignment="Center" Margin="10,3,10,3" Grid.ColumnSpan="2" />
             </Grid>
 
-            <Grid Name="FooterRight" Grid.Row="2" Grid.Column="1">
-                <Button Grid.Column="2" Content="Speak" FontSize="50" FontWeight="Bold" Name="PlayText" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="PlayText_Activate" Background="#F3C766" Click="PlayText_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="PlayText_HasGazeChanged">
-                    <!--<StackPanel>
-                        <Image Source="SpeakIcon.png" Height="130"/>
-                    </StackPanel>-->
-                </Button>
-            </Grid>
             <!--FOOTER ENDS-->
 
         </Grid>

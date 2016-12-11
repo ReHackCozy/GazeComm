@@ -230,7 +230,7 @@
                     <RowDefinition Height="200"/>
                     <RowDefinition Height="200"/>
                 </Grid.RowDefinitions>
-
+                <TextBox x:Name="Status" Grid.Row="0" FontSize="40" FontWeight="Bold"/>
                 <localroot:GazableButton x:Name="SendTTS" Grid.Row="1" Content="Send TTS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SendTTS_Activate"  Click="SendTTS_Activate" eyeX:Behavior.GazeAware="True"/>
                 <Button x:Name="SendSMS" Grid.Row="2" eyeX:Behavior.Activatable="Default" Content="Send SMS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activate="OnSendSMS" Click="OnSendSMS" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SendSMS_HasGazeChanged"/>
             </Grid>

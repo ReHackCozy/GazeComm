@@ -28,6 +28,8 @@ namespace Gaze.HomePanel
         public WpfEyeXHost eyeXHostRef;
         Stopwatch stopWatch;
 
+        System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+
         //HACK
         double fixationBeginTimeStamp = 0;
         double fixationActivateDuration = 500; //In milisecond
@@ -107,6 +109,8 @@ namespace Gaze.HomePanel
         {
             Utilities.Util.Speak(vm.MessageToSend, System.Speech.Synthesis.VoiceGender.Female);
             new SendMessage().Invoke(vm.MessageToSend, vm.PhoneNumber);
+            Status.Text = "SMS sent";
+            _startTimer();
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -162,6 +166,8 @@ namespace Gaze.HomePanel
                 return;
 
             Utilities.Util.Speak(vm.MessageToSend, System.Speech.Synthesis.VoiceGender.Female);
+            Status.Text = "Text played";
+            _startTimer();
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -311,6 +317,8 @@ namespace Gaze.HomePanel
         private void SendTTS_Activate(object sender, RoutedEventArgs e)
         {
             vm.sendTTS();
+            Status.Text = "TTS sent";
+            _startTimer();
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -322,5 +330,20 @@ namespace Gaze.HomePanel
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void _startTimer()
+        {
+            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 5);
+            dispatcherTimer.Start();
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            Status.Text = "";
+        }
+
     }
 }

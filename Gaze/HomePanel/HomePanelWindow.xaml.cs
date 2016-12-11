@@ -265,11 +265,15 @@ namespace Gaze.HomePanel
 
         private void GazableButton_Activate(object sender, RoutedEventArgs e)
         {
-            vm.MessageToSend += " ";
+            var rad_btn = sender as RadioButton;
+
+            if(rad_btn == null)
+                vm.MessageToSend += " ";
+
             autocompleteInput.Focus();
             autocompleteInput.CaretIndex = autocompleteInput.Text.Length;
 
-            var rad_btn = sender as RadioButton;
+           
 
             if(rad_btn != null)
                 rad_btn.IsChecked = true;

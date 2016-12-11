@@ -244,7 +244,8 @@ namespace Gaze.EyeTracker
             string tmp = this.Text.ToUpper();
             if ((tmp == "") || _updateValues)
             {
-                base.OnTextChanged(e);
+                //base.OnTextChanged(e);
+                _matchingValues.Clear();
             }
             else
             {

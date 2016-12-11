@@ -165,7 +165,7 @@ namespace Gaze.HomePanel
             if (vm.MessageToSend.Length == 0)
                 return;
 
-            Utilities.Util.Speak(vm.MessageToSend, System.Speech.Synthesis.VoiceGender.Female);
+            vm.playTTS();
             Status.Text = "Text played";
             _startTimer();
         }

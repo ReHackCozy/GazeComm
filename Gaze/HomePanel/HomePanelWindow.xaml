@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Gaze.HomePanel"
         xmlns:localroot="clr-namespace:Gaze"
         xmlns:eyeX="clr-namespace:EyeXFramework.Wpf;assembly=EyeXFramework"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:autocomplete="clr-namespace:Gaze.EyeTracker"
         KeyUp="Window_KeyUp"
         MouseLeftButtonUp="Window_MouseLeftButtonUp"
@@ -114,15 +115,27 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="300"/>
                         <ColumnDefinition Width="300"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="100"/>
                     </Grid.ColumnDefinitions>
 
                     <Grid Grid.Column="0">
                         <TextBlock Text="{Binding Name}"  Foreground="White" FontWeight="Bold" FontSize="20" Margin="5,0,0,0"/>
-
                     </Grid>
 
                     <Grid Grid.Column="1" Margin="1,2,1,2">
                         <TextBox Text="{Binding PhoneNumber}" Foreground="White" FontWeight="Bold" FontSize="20" Margin="5,0,0,0" Background="Transparent" BorderThickness="0"/>
+                    </Grid>
+
+                    <Grid Grid.Column="2">
+                        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2"  >
+                            <RadioButton GroupName="1" Foreground="White" FontWeight="Bold" FontSize="20" Margin="5,0,0,0" DockPanel.Dock="Top" VerticalContentAlignment="Center" IsChecked="{Binding Path=GenderMale, Mode=TwoWay}">Male</RadioButton>
+                            <RadioButton GroupName="1" Foreground="White" FontWeight="Bold" FontSize="20" Margin="10,0,0,0" DockPanel.Dock="Top" VerticalContentAlignment="Center" IsChecked="{Binding Path=GenderFemale, Mode=TwoWay}" >Female</RadioButton>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Grid.Column="3" Margin="1,2,1,2">
+                        <xctk:IntegerUpDown FormatString="N0" Increment="1" Minimum="1" Maximum="120" Text="{Binding Age}" Foreground="White" FontWeight="Bold" FontSize="20" Margin="5,0,0,0" Background="Transparent" BorderThickness="0"/>
                     </Grid>
 
                 </Grid>

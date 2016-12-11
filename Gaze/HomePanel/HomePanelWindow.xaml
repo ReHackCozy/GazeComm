@@ -142,7 +142,7 @@
             </Grid>
 
             <Grid Name="HeaderRight" Grid.Row="0" Grid.Column="1" Background="#485868">
-                <TextBlock Text="Team Cozy" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="20" Foreground="White"/>
+                <TextBlock Text="Gaze" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="20" Foreground="White"/>
             </Grid>
             <!-- HEADER END -->
 

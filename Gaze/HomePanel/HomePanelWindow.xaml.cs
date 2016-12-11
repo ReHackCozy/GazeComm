@@ -171,7 +171,6 @@ namespace Gaze.HomePanel
             vm.MessageToSend += " ";
             autocompleteInput.Focus();
             autocompleteInput.CaretIndex = autocompleteInput.Text.Length;
-
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////

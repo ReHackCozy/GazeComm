@@ -216,13 +216,11 @@ namespace Gaze.HomePanel
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        private void LetterButton_HasGazeChanged(object sender, RoutedEventArgs e)
+        private void KeyboardButton_HasGazeChanged(object sender, RoutedEventArgs e)
         {
             var button = sender as GazableButton;
-            
-            //button.Background
+
             button.Focus();
-            //button.RaiseEvent(new RoutedEventArgs(GazableButton.MouseEnterEvent, button));
 
         }
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using Gaze.API;
 
 namespace Gaze.HomePanel
@@ -28,9 +29,7 @@ namespace Gaze.HomePanel
         private bool _isBlinked;
 
         private ObservableCollection<GazableButton> _suggestionsList = new ObservableCollection<GazableButton>();
-        private ObservableCollection<String> _keyboardList = new ObservableCollection<String>();
-
-        private HomePanelWindow _viewRef;
+        private ObservableCollection<GazableButton> _keyboardButtonList = new ObservableCollection<GazableButton>();
 
         #region keyboard data
 
@@ -40,7 +39,7 @@ namespace Gaze.HomePanel
 
         #endregion
 
-        public HomePanelViewModel(HomePanelWindow viewRef)
+        public HomePanelViewModel()
         {
             _name = "Pak Ali";
             _phoneNumber = "0196031591";
@@ -55,9 +54,6 @@ namespace Gaze.HomePanel
             _isActions = true;
             UpdateKeyboard();
             _authorizationAPI = new AuthorizationAPI(SendTTS);
-
-            //HACK
-            _viewRef = viewRef;
         }
 
         public void SendTTS()
@@ -93,16 +89,11 @@ namespace Gaze.HomePanel
 
         private void PopulateKeyboardList(IList<String> list)
         {
-            //TODO: optimize
-            _keyboardList.Clear();
+            _keyboardButtonList.Clear();
             foreach (var i in list)
             {
-                _keyboardList.Add(i);
+                _keyboardButtonList.Add(new GazableButton(i,i,GazableButton.Type.Word));
             }
-            //for(int i = 0; i < list.Count; ++i)
-            //{
-            //    _keyboardList[i] = list[i];
-            //}
         }
 
         #region Setters Getters
@@ -259,44 +250,21 @@ namespace Gaze.HomePanel
             }
         }
 
-        public ObservableCollection<String> KeyboardList
+        public ObservableCollection<GazableButton> KeyboardButtonList
         {
             get
             {
-                return _keyboardList;
+                return _keyboardButtonList;
             }
 
             set
             {
-                if (_keyboardList == value) return;
+                if (_keyboardButtonList == value) return;
 
-                _keyboardList = value;
-                OnPropertyChanged("KeyboardList");
+                _keyboardButtonList = value;
+                OnPropertyChanged("KeyboardButtonList");
             }
         }
-
-        public bool IsBlinked
-        {
-            get
-            {
-                return _isBlinked;
-            }
-
-            set
-            {
-                if (_isBlinked == value) return;
-
-                _isBlinked = value;
-
-                if(IsBlinked)
-                {
-                    _viewRef.OnGazeActivateButton();
-                }
-
-                OnPropertyChanged("IsBlinked");
-            }
-        }
-
         #endregion
 
         #region INotifyPropertyChanged Members

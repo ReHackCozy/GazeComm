@@ -33,5 +33,12 @@ namespace Gaze
             value = "NONE";
             type = Type.Others;
         }
+
+        public GazableButton(string value, string display_text, Type button_type)
+        {
+            value = "NONE";
+            this.Content = display_text;
+            type = Type.Others;
+        }
     }
 }

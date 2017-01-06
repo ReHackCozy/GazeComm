@@ -185,8 +185,9 @@
                         <TextBlock Text="Virtual Keyboard" Foreground="White" FontSize="20" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </StackPanel>
 
-                    <WrapPanel Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <WrapPanel.Resources>
+                    <!-- Keyboard UI START -->
+                    <ItemsControl ItemsSource="{Binding KeyboardButtonList}" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <ItemsControl.Resources>
                             <Style TargetType="{x:Type localroot:GazableButton}" BasedOn="{StaticResource LetterButton}">
                                 <Setter Property="Height" Value="150"/>
                                 <Setter Property="Width" Value="150"/>
@@ -195,34 +196,19 @@
                                 <EventSetter Event="Click" Handler="OnVirtualKeyboardPressed" />
                                 <EventSetter Event="eyeX:Behavior.HasGazeChanged" Handler="LetterButton_HasGazeChanged"/>
                             </Style>
-                        </WrapPanel.Resources>
-                        <localroot:GazableButton Content="{Binding KeyboardList[0]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[1]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[2]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[3]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[4]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[5]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[6]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[7]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[8]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[9]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[10]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[11]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[12]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[13]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[14]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[15]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[16]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[17]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[18]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[19]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[20]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[21]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[22]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[23]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[24]}"/>
-                        <localroot:GazableButton Content="{Binding KeyboardList[25]}"/>
-                    </WrapPanel>
+                        </ItemsControl.Resources>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <!--<Image Source="{Binding Image}" Height="100"/> Something to try with-->
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                    <!-- Keyboard UI ENDS -->
 
                     <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Stretch">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="8,5,5,5">

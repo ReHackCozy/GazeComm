@@ -45,7 +45,7 @@ namespace Gaze.HomePanel
         public HomePanelWindow()
         {
             InitializeComponent();
-            vm = new HomePanelViewModel(this);
+            vm = new HomePanelViewModel();
 
             this.DataContext = vm;
 

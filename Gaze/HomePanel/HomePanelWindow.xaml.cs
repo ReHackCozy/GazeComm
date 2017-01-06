@@ -166,7 +166,17 @@ namespace Gaze.HomePanel
 
         private void addWordToSendMessageTextFromButton(string text)
         {
+            var tmp_msg_list = vm.MessageToSend.Split(' ').ToList();
+            tmp_msg_list.Remove(tmp_msg_list.Last());
 
+            vm.MessageToSend = "";
+
+            foreach (var str in tmp_msg_list)
+            {
+                vm.MessageToSend += str;
+                vm.MessageToSend += " ";
+            }
+            
             vm.MessageToSend += text;
             vm.MessageToSend += " ";
             autocompleteInput.Focus();

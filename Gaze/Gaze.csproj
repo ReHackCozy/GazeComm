@@ -161,6 +161,9 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Eyecon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Content Include="EyeXFramework.dll" />
     <Resource Include="HomePanel\PlayButton.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

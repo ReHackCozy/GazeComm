@@ -10,9 +10,9 @@
         xmlns:autocomplete="clr-namespace:Gaze.EyeTracker"
         KeyUp="Window_KeyUp"
         MouseLeftButtonUp="Window_MouseLeftButtonUp"
-        
+
         mc:Ignorable="d"
-        Title="HomePanel" Height="1080" Width="1920" WindowState="Maximized">
+        Title="Gaze Comm by Team Cozy" Height="1080" Width="1920" WindowState="Maximized">
 
     <Window.Resources>
         <Style TargetType="{x:Type localroot:GazableButton}" x:Key="SuggestionButtonStyle">

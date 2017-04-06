@@ -98,6 +98,7 @@
     <Compile Include="API\Model\TTS.cs" />
     <Compile Include="API\SendMessage.cs" />
     <Compile Include="API\SendTTS.cs" />
+    <Compile Include="API\WordsAPI.cs" />
     <Compile Include="HomePanel\HomePanelViewModel.cs" />
     <Compile Include="HomePanel\HomePanelWindow.xaml.cs" />
     <Compile Include="GazableButton.xaml.cs">

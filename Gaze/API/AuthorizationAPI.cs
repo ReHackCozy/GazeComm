@@ -1,13 +1,17 @@
 ﻿using RestSharp;
 using System;
+using System.Diagnostics;
+using System.Xml.Linq;
 using static Gaze.API.Model.Authorization;
+using static Gaze.API.Model.Authorization.SimpleAuthorizationResponse;
 
 namespace Gaze.API
 {
+    //fastlogin
     class AuthorizationAPI
     {
         //TODO: put somewhere proper app config maybe
-        private readonly String _simpleAuthorizationURL = "https://ompserver.tm.com.my/rest/fastlogin/" + SimpleAuthorizationHeader.Version;
+        private readonly String _simpleAuthorizationURL = "https://developer.tm.com.my:8443/CaasSBV1/Impl/ImplRS/fastlogin";
         //TODO: this shouldn't be here
         public String AccessToken { get; set; }
         private Action _forwardCall;
@@ -20,7 +24,12 @@ namespace Gaze.API
         public void OnAPICallback(string message, IRespondParameter parameters)
         {
             if(parameters is SimpleAuthorizationResponse) {
-                AccessToken = (parameters as SimpleAuthorizationResponse).access_token;
+                ResponseResult result = (parameters as SimpleAuthorizationResponse).responseResult;
+                String value = result.value;
+                RealResponse response = SimpleJson.DeserializeObject<RealResponse>(value);
+                AccessToken = response.access_token;
+                // temp fix
+                //AccessToken = (parameters as SimpleAuthorizationResponse).access_token;
             }
             Console.WriteLine(message);
             _forwardCall();
@@ -44,12 +53,32 @@ namespace Gaze.API
         {
             var request = new RestRequest(Method.POST);
             request.RequestFormat = DataFormat.Json;
-            request.AddQueryParameter("app_key", SimpleAuthorizationHeader.AppKey);
-            request.AddQueryParameter("username", SimpleAuthorizationHeader.Username);
-            request.AddQueryParameter("type", SimpleAuthorizationHeader.Type);
-            request.AddQueryParameter("format", SimpleAuthorizationHeader.Format);
-            request.AddHeader("Authorization", SimpleAuthorizationHeader.Authorization);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("APITokenId", SimpleAuthorizationHeader.APITokenId);
+            request.AddHeader("PartnerId", SimpleAuthorizationHeader.PartnerId);
+            request.AddHeader("PartnerTokenId", SimpleAuthorizationHeader.PartnerTokenId);
+            //request.AddQueryParameter("format", SimpleAuthorizationHeader.Format);
+            //request.AddHeader("Authorization", SimpleAuthorizationHeader.Authorization);
+            request.AddParameter("application/json", "{}", ParameterType.RequestBody);
+
+            //request.AddBody(new EmptyBody());
+            var sb = new System.Text.StringBuilder();
+            foreach (var param in request.Parameters)
+                {
+                sb.AppendFormat("{0}: {1}\r\n", param.Name, param.Value);
+                }
+            Debug.WriteLine("Request: " + sb.ToString());
+
             return request;
         }
+
+        internal class EmptyBody
+            {
+            public String dummy
+                {
+                get { return "dummy"; }
+                private set { }
+                }
+            }
     }
 }

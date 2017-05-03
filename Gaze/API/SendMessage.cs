@@ -11,7 +11,7 @@ namespace Gaze.API
     class SendMessage
     {
         //TODO: put somewhere proper app config maybe
-        private readonly String _sendMessageURL = "https://developer.tm.com.my:8443/SMSSBV1/SMSImpl/SMSImplRS/SendMessage";
+        private readonly String _sendMessageURL = "https://developer.tm.com.my:8443/SMSSBV1/SMSImpl/SMSImplRS/sendmsg";
 
         public void OnAPICallback(string message, IRespondParameter parameters)
         {

@@ -8,27 +8,28 @@ namespace Gaze.API.Model
 {
     class SMS
     {
-
         internal static class SMSHeader
         {
-            public static readonly String APITokenId = "A83NXDEnRCcwkd5k3KLp4qknuak=";
-            public static readonly String PartnerId = "x53cWqsrAJP3qaD8WAack/z/bRc=";
-            public static readonly String PartnerTokenId = "gc5aD4RFwCPvl6jfQicJbGCZszE=";
+            public static readonly String APITokenId = "bveSj3lV1cRULaxbbn/polMUxmk=";
+            public static readonly String PartnerId = "NhnvbjxtS/7eTCKl+L22OkA/Z7s=";
+            public static readonly String PartnerTokenId = "yb0qO3ysMhBih9db65ma1048Rlc=";
         }
 
         internal class SMSBody
         {
-            //hardcoded - TM's fault
-            public String username
-            {
-                get { return "ceo"; }
-                private set { }
-            }
-            public String password
-            {
-                get { return Utilities.Util.HashSHA1("ceotab"); }
-                private set { }
-            }
+      //hardcoded - TM's fault
+      private static String IBiD = "601546011016";
+      private static String IBPwd = "i5Os0vhR";
+      //public String username
+      //      {
+      //          get { return "ceo"; }
+      //          private set { }
+      //      }
+      //      public String password
+      //      {
+      //          get { return Utilities.Util.HashSHA1("ceotab"); }
+      //          private set { }
+      //      }
             public String msgtype
             {
                 get { return "text"; }
@@ -38,7 +39,7 @@ namespace Gaze.API.Model
             public String to { get; set; }
             public String hashkey
             {
-                get { return Utilities.Util.HashSHA1("ceoceotab" + to); }
+                get { return Utilities.Util.HashSHA1(IBiD + IBPwd + to); }
                 private set { }
             }
             public String filename

@@ -10,10 +10,15 @@ namespace Gaze.API.Model
     {
         internal class TTSRequestURL
         {
+            //old
             public static readonly String Version = "v1.0";
             public static readonly String AppKey = "fnuXeqWBp7Z18j8Y_qClin3mUFEa";
             public static readonly String Format = "json";
-        }
+            //new
+            public static readonly String APITokenId = "1B0VG7PaKrwZAmcNi6PoVz/b/0s=";
+            public static readonly String PartnerId = "NhnvbjxtS/7eTCKl+L22OkA/Z7s=";
+            public static readonly String PartnerTokenId = "yb0qO3ysMhBih9db65ma1048Rlc=";
+            }
 
         internal class TTSRequestBody
         {
@@ -25,6 +30,7 @@ namespace Gaze.API.Model
             public String calleeNbr { get; set; }
             public String languageType
             {
+                // 0 = english, 1 = chinese
                 get { return "0"; }
                 private set { }
             }

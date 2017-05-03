@@ -17,6 +17,9 @@ namespace Gaze.API
             System.Net.ServicePointManager.ServerCertificateValidationCallback = (senderX, certificate, chain, sslPolicyErrors) => { return true; };
 
             var handle = client.ExecuteAsync<T>(request, response => {
+
+
+  
                 callback(response.StatusCode.ToString(), response.Data as IRespondParameter);
             });
         }

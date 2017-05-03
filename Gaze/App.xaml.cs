@@ -24,7 +24,14 @@ namespace Gaze
             eyeXHost.Start();
         }
 
-        protected override void OnExit(ExitEventArgs e)
+    protected override void OnStartup(StartupEventArgs e)
+      {
+            base.OnStartup(e);
+            //check settings for language
+            //get language files from web service
+      }
+
+    protected override void OnExit(ExitEventArgs e)
         {
             base.OnExit(e);
             eyeXHost.Dispose();

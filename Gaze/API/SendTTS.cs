@@ -11,7 +11,7 @@ namespace Gaze.API
     class SendTTS
     {
         //TODO: put somewhere proper app config maybe
-        private readonly String _sendMessageURL = "https://ompserver.tm.com.my/rest/httpsessions/tts2Note/" + TTSRequestURL.Version;
+        private readonly String _sendMessageURL = "https://developer.tm.com.my:8443/CaasSBV1/Impl/ImplRS/TexttoSpeech";
 
         public void OnAPICallback(string message, IRespondParameter parameters)
         {
@@ -38,12 +38,23 @@ namespace Gaze.API
             var request = new RestRequest(Method.POST);
             request.RequestFormat = DataFormat.Json;
 
-            request.AddQueryParameter("app_key", TTSRequestURL.AppKey);
             request.AddQueryParameter("access_token", accessToken);
-            request.AddQueryParameter("format", TTSRequestURL.Format);
+            //request.AddQueryParameter("access_token", accessToken);
+            //request.AddQueryParameter("format", TTSRequestURL.Format);
+            //request.AddBody(createBody(message, to));
+            //return request;
+
+            addHeader(ref request);
             request.AddBody(createBody(message, to));
             return request;
-        }
+            }
+
+        private void addHeader(ref RestRequest request)
+            {
+            request.AddHeader("APITokenId", TTSRequestURL.APITokenId);
+            request.AddHeader("PartnerId", TTSRequestURL.PartnerId);
+            request.AddHeader("PartnerTokenId", TTSRequestURL.PartnerTokenId);
+            }
 
         private object createBody(String message, String to)
         {

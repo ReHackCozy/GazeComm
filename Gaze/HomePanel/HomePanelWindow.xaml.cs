@@ -96,15 +96,14 @@ namespace Gaze.HomePanel
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        private void OnEyeXActivate(object sender, RoutedEventArgs e)
+        private void OnEyeXActivateSuggestion(object sender, RoutedEventArgs e)
         {
             var element = e.Source as FrameworkElement;
             if (null == element) { return; }
 
-            var gazableButton = element.DataContext as GazableButton;
+            var gazableButton = element.DataContext as Button;
 
-            if (gazableButton.type == GazableButton.Type.Suggestion)
-                addWordToSendMessageTextFromButton(gazableButton.value);
+            addWordToSendMessageTextFromButton(gazableButton.Content.ToString());
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -141,12 +140,10 @@ namespace Gaze.HomePanel
 
             while (enumerate.MoveNext())
             {
-                var sugg = new GazableButton();
+                var sugg = new Button();
                 sugg.Height = 150;
                 sugg.Width = 150;
                 sugg.Content = (string)enumerate.Current;
-                sugg.value = (string)enumerate.Current;
-                sugg.type = GazableButton.Type.Suggestion;
                 sugg.FontSize = 50;
                 sugg.BorderThickness = new Thickness(0);
                 sugg.Style = this.FindResource("SuggestionButtonStyle") as Style;
@@ -154,8 +151,7 @@ namespace Gaze.HomePanel
                 //HACK, couldve done in XAML
                 sugg.Click += (o,s) => 
                 {
-                    if (sugg.type == GazableButton.Type.Suggestion)
-                        addWordToSendMessageTextFromButton(sugg.value);
+                        addWordToSendMessageTextFromButton((string)enumerate.Current);
                 } ;
 
                 vm.SuggestionsList.Add(sugg);
@@ -199,7 +195,7 @@ namespace Gaze.HomePanel
 
         private void OnVirtualKeyboardPressed(object sender, RoutedEventArgs e)
         {
-            var button = sender as GazableButton;
+            var button = sender as Button;
             vm.MessageToSend += button.Content;
 
             autocompleteInput.Focus();
@@ -218,7 +214,7 @@ namespace Gaze.HomePanel
 
         private void KeyboardButton_HasGazeChanged(object sender, RoutedEventArgs e)
         {
-            var button = sender as GazableButton;
+            var button = sender as Button;
 
             button.Focus();
 
@@ -231,7 +227,7 @@ namespace Gaze.HomePanel
             var element = e.Source as FrameworkElement;
             if (null == element) { return; }
 
-            var gazableButton = element.DataContext as GazableButton;
+            var gazableButton = element.DataContext as Button;
 
 
         }
@@ -240,7 +236,7 @@ namespace Gaze.HomePanel
 
         private void VK_BKSpace_Click(object sender, RoutedEventArgs e)
         {
-            var button = sender as GazableButton;
+            var button = sender as Button;
             if(vm.MessageToSend.Length > 0)
                 vm.MessageToSend = vm.MessageToSend.Remove(vm.MessageToSend.Length - 1);
 

@@ -15,7 +15,7 @@
         Title="Gaze Comm by Team Cozy" Height="1080" Width="1920" WindowState="Maximized">
 
     <Window.Resources>
-        <Style TargetType="{x:Type localroot:GazableButton}" x:Key="SuggestionButtonStyle">
+        <Style TargetType="{x:Type Button}" x:Key="SuggestionButtonStyle">
             <Setter Property="Background" Value="#F27360" />
             <Setter Property="Foreground" Value="White" />
             <Setter Property="FontSize" Value="15" />
@@ -53,7 +53,7 @@
             </Setter>
         </Style>
 
-        <Style TargetType="{x:Type localroot:GazableButton}" x:Key="KeyboardButton">
+        <Style TargetType="{x:Type Button}" x:Key="KeyboardButton">
             <Setter Property="Background" Value="#373737" />
             <Setter Property="Foreground" Value="White" />
             <Setter Property="FontSize" Value="15" />
@@ -175,7 +175,7 @@
                                 <Setter Property="Grid.RowSpan" Value="3" />
                                 <Setter Property="eyeX:Behavior.Activatable" Value="Default" />
                                 <Setter Property="eyeX:Behavior.GazeAware" Value="True"/>
-                                <EventSetter Event="eyeX:Behavior.Activate" Handler="OnEyeXActivate" />
+                                <EventSetter Event="eyeX:Behavior.Activate" Handler="OnEyeXActivateSuggestion" />
                                 <EventSetter Event="eyeX:Behavior.HasGazeChanged" Handler="SuggestionButton_HasGazeChanged"/>
                             </Style>
                         </ListView.ItemContainerStyle>
@@ -188,7 +188,7 @@
                     <!-- Keyboard UI START -->
                     <ItemsControl ItemsSource="{Binding KeyboardButtonList}" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <ItemsControl.Resources>
-                            <Style TargetType="{x:Type localroot:GazableButton}" BasedOn="{StaticResource KeyboardButton}">
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource KeyboardButton}">
                                 <Setter Property="Height" Value="150"/>
                                 <Setter Property="Width" Value="150"/>
                                 <Setter Property="Margin" Value="5,5,5,5"/>
@@ -217,9 +217,9 @@
                             <RadioButton GroupName="2" Content="PHRASE" Width="160" Height="120" Background="#6E6F71" Foreground="white" FontSize="30" FontWeight="Bold" Margin="2,2,2,2" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate"  Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged" Checked="RadioButton_Checked" IsChecked="{Binding IsActions, Mode=TwoWay}" Style="{StaticResource {x:Type ToggleButton}}"/>
                         </StackPanel>
                         <Separator Opacity="0" Width="40"/>
-                        <localroot:GazableButton Content="SPACE" Width="500" Height="120" Background="#6E6F71" Foreground="white" FontSize="30" FontWeight="Bold" Margin="2,2,2,2" Style="{StaticResource KeyboardButton}" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate"  Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged"/>
-                        <localroot:GazableButton Content="BACKSPACE"  Margin="2,2,2,2" Width="240" Height="120" Background="#F5A46C"  FontSize="30" Foreground="white" FontWeight="Bold"  Style="{StaticResource KeyboardButton}" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="VK_BKSpace_Click" Click="VK_BKSpace_Click" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="VK_BKSpace_HasGazeChanged"/>
-                        <localroot:GazableButton Content="CLEAR"  Margin="2,2,2,2" Width="240" Height="120" Background="#F27360" FontSize="30" Foreground="white" FontWeight="Bold"  Style="{StaticResource KeyboardButton}" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="Clr_Activate" Click="Clr_Activate"  eyeX:Behavior.GazeAware="True" />
+                        <Button Content="SPACE" Width="500" Height="120" Background="#6E6F71" Foreground="white" FontSize="30" FontWeight="Bold" Margin="2,2,2,2" Style="{StaticResource KeyboardButton}" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate"  Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged"/>
+                        <Button Content="BACKSPACE"  Margin="2,2,2,2" Width="240" Height="120" Background="#F5A46C"  FontSize="30" Foreground="white" FontWeight="Bold"  Style="{StaticResource KeyboardButton}" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="VK_BKSpace_Click" Click="VK_BKSpace_Click" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="VK_BKSpace_HasGazeChanged"/>
+                        <Button Content="CLEAR"  Margin="2,2,2,2" Width="240" Height="120" Background="#F27360" FontSize="30" Foreground="white" FontWeight="Bold"  Style="{StaticResource KeyboardButton}" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="Clr_Activate" Click="Clr_Activate"  eyeX:Behavior.GazeAware="True" />
                     </StackPanel>
 
                 </Grid>
@@ -236,7 +236,7 @@
                     <RowDefinition Height="200"/>
                 </Grid.RowDefinitions>
                 <TextBox x:Name="Status" Grid.Row="0" FontSize="40" FontWeight="Bold" Background="Transparent"/>
-                <localroot:GazableButton x:Name="SendTTS" Grid.Row="1" Content="Send TTS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SendTTS_Activate"  Click="SendTTS_Activate" eyeX:Behavior.GazeAware="True"/>
+                <Button x:Name="SendTTS" Grid.Row="1" Content="Send TTS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SendTTS_Activate"  Click="SendTTS_Activate" eyeX:Behavior.GazeAware="True"/>
                 <Button x:Name="SendSMS" Grid.Row="2" eyeX:Behavior.Activatable="Default" Content="Send SMS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activate="OnSendSMS" Click="OnSendSMS" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SendSMS_HasGazeChanged"/>
                 <Button Content="Speak" Grid.Row="3" FontSize="50" FontWeight="Bold" Name="PlayText" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="PlayText_Activate" Background="#F3C766" Click="PlayText_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="PlayText_HasGazeChanged"/>
             </Grid>

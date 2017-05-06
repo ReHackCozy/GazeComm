@@ -28,8 +28,8 @@ namespace Gaze.HomePanel
 
         private bool _isBlinked;
 
-        private ObservableCollection<GazableButton> _suggestionsList = new ObservableCollection<GazableButton>();
-        private ObservableCollection<GazableButton> _keyboardButtonList = new ObservableCollection<GazableButton>();
+        private ObservableCollection<Button> _suggestionsList = new ObservableCollection<Button>();
+        private ObservableCollection<Button> _keyboardButtonList = new ObservableCollection<Button>();
 
         #region keyboard data
 
@@ -92,7 +92,10 @@ namespace Gaze.HomePanel
             _keyboardButtonList.Clear();
             foreach (var i in list)
             {
-                _keyboardButtonList.Add(new GazableButton(i,i,GazableButton.Type.Word));
+                Button btn = new Button();
+                btn.Content = i;
+                
+                _keyboardButtonList.Add(btn);
             }
         }
 
@@ -228,7 +231,7 @@ namespace Gaze.HomePanel
             }
         }
 
-        public ObservableCollection<GazableButton> SuggestionsList
+        public ObservableCollection<Button> SuggestionsList
         {
             get
             {
@@ -240,17 +243,11 @@ namespace Gaze.HomePanel
                 if (_suggestionsList == value) return;
 
                 _suggestionsList = value;
-                
-                foreach (var sugg in _suggestionsList)
-                {
-                    sugg.type = GazableButton.Type.Suggestion;
-                }
-
                 OnPropertyChanged("SuggestionsList");
             }
         }
 
-        public ObservableCollection<GazableButton> KeyboardButtonList
+        public ObservableCollection<Button> KeyboardButtonList
         {
             get
             {

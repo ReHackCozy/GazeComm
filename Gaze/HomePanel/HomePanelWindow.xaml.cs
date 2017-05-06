@@ -16,6 +16,7 @@ using EyeXFramework.Wpf;
 using Gaze.EyeTracker;
 using Gaze.API;
 using System.Diagnostics;
+using System.Windows.Automation.Peers;
 
 namespace Gaze.HomePanel
 {
@@ -24,6 +25,9 @@ namespace Gaze.HomePanel
     /// </summary>
     public partial class HomePanelWindow : Window
     {
+        public  static string HighlightColor = "#FFE59400";
+        public static string OriginalColor = "#FF373737";
+
         HomePanelViewModel vm;
         public WpfEyeXHost eyeXHostRef;
         Stopwatch stopWatch;
@@ -216,8 +220,18 @@ namespace Gaze.HomePanel
         {
             var button = sender as Button;
 
-            button.Focus();
+            var bc = new BrushConverter();
 
+            if(button.Background.ToString() == HighlightColor)
+            {
+                button.Background = bc.ConvertFrom(OriginalColor) as Brush;
+            }
+            else
+            {
+                button.Background = bc.ConvertFrom(HighlightColor) as Brush;
+
+            }
+            
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////

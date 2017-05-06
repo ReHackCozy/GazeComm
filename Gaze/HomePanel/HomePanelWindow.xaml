@@ -26,7 +26,7 @@
             <Setter Property="MinWidth" Value="50"/>
             <Setter Property="eyeX:Behavior.Activatable" Value="Default"/>
             <Setter Property="eyeX:Behavior.GazeAware" Value="True"/>
-            
+
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -74,7 +74,6 @@
                                 <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
                             </Grid>
                         </Border>
-
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" Value="#E59400" />
@@ -162,6 +161,7 @@
                         <TextBlock Text="Suggestions" Foreground="White" FontSize="20" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </StackPanel>
 
+                    <!-- SUGGESTION START -->
 
                     <ListView Name="SuggestionBox" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding SuggestionsList}" Initialized="SuggestionBox_Initialized" Background="#9FC2BB" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" >
                         <ListView.ItemsPanel>
@@ -181,14 +181,17 @@
                         </ListView.ItemContainerStyle>
                     </ListView>
 
+                    <!-- SUGGESTION END -->
+                    <!-- KEYBOARD START -->
+
                     <StackPanel Grid.Row="2" Background="#485868">
                         <TextBlock Text="Virtual Keyboard" Foreground="White" FontSize="20" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </StackPanel>
 
                     <!-- Keyboard UI START -->
-                    <ItemsControl ItemsSource="{Binding KeyboardButtonList}" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <ItemsControl x:Name="KeyboardIC" ItemsSource="{Binding KeyboardButtonList}" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <ItemsControl.Resources>
-                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource KeyboardButton}">
+                            <Style x:Name="KeyboardStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource KeyboardButton}">
                                 <Setter Property="Height" Value="150"/>
                                 <Setter Property="Width" Value="150"/>
                                 <Setter Property="Margin" Value="5,5,5,5"/>
@@ -209,6 +212,9 @@
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
                     <!-- Keyboard UI ENDS -->
+                    
+                    <!-- KEYBOARD END -->
+                    <!-- SPECIAL KEY START -->
 
                     <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Stretch">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="8,5,5,5">
@@ -217,11 +223,13 @@
                             <RadioButton GroupName="2" Content="PHRASE" Width="160" Height="120" Background="#6E6F71" Foreground="white" FontSize="30" FontWeight="Bold" Margin="2,2,2,2" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate"  Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged" Checked="RadioButton_Checked" IsChecked="{Binding IsActions, Mode=TwoWay}" Style="{StaticResource {x:Type ToggleButton}}"/>
                         </StackPanel>
                         <Separator Opacity="0" Width="40"/>
-                        <Button Content="SPACE" Width="500" Height="120" Background="#6E6F71" Foreground="white" FontSize="30" FontWeight="Bold" Margin="2,2,2,2" Style="{StaticResource KeyboardButton}" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate"  Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged"/>
+                        <Button Content="SPACE" Width="500" Height="120" Background="#6E6F71" Foreground="white" FontSize="30" FontWeight="Bold" Margin="2,2,2,2" Style="{StaticResource KeyboardButton}" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate" Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged"/>
                         <Button Content="BACKSPACE"  Margin="2,2,2,2" Width="240" Height="120" Background="#F5A46C"  FontSize="30" Foreground="white" FontWeight="Bold"  Style="{StaticResource KeyboardButton}" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="VK_BKSpace_Click" Click="VK_BKSpace_Click" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="VK_BKSpace_HasGazeChanged"/>
                         <Button Content="CLEAR"  Margin="2,2,2,2" Width="240" Height="120" Background="#F27360" FontSize="30" Foreground="white" FontWeight="Bold"  Style="{StaticResource KeyboardButton}" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="Clr_Activate" Click="Clr_Activate"  eyeX:Behavior.GazeAware="True" />
                     </StackPanel>
 
+                    <!-- SPECIAL KEY END -->
+                    
                 </Grid>
 
             </Grid>

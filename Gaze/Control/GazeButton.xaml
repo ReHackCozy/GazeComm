@@ -1,0 +1,21 @@
+﻿<Button x:Class="Gaze.Control.GazeButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Gaze.Control"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="50">
+    <Button.Resources>
+        <Style x:Key="NormalStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#FF373737"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        
+        <Style x:Key="HighlightStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#FF373737"/>
+            <Setter Property="Foreground" Value="#FFE59400"/>
+        </Style>
+    </Button.Resources>
+
+</Button>

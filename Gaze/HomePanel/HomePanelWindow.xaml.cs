@@ -150,7 +150,11 @@ namespace Gaze.HomePanel
                 sugg.Content = (string)enumerate.Current;
                 sugg.FontSize = 50;
                 sugg.BorderThickness = new Thickness(0);
-                sugg.Style = this.FindResource("SuggestionButtonStyle") as Style;
+
+                var st = this.TryFindResource("SuggestionButtonStyle") as Style;
+
+                if(st != null)
+                    sugg.Style = this.TryFindResource("SuggestionButtonStyle") as Style;
 
                 //HACK, couldve done in XAML
                 sugg.Click += (o,s) => 
@@ -222,15 +226,11 @@ namespace Gaze.HomePanel
 
             var bc = new BrushConverter();
 
+            //[AH] Temporary solution
             if(button.Background.ToString() == HighlightColor)
-            {
                 button.Background = bc.ConvertFrom(OriginalColor) as Brush;
-            }
             else
-            {
                 button.Background = bc.ConvertFrom(HighlightColor) as Brush;
-
-            }
             
         }
 

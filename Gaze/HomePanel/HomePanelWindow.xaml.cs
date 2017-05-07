@@ -17,6 +17,8 @@ using Gaze.EyeTracker;
 using Gaze.API;
 using System.Diagnostics;
 using System.Windows.Automation.Peers;
+using System.Collections.Specialized;
+using System.Windows.Media.Animation;
 
 namespace Gaze.HomePanel
 {
@@ -25,8 +27,13 @@ namespace Gaze.HomePanel
     /// </summary>
     public partial class HomePanelWindow : Window
     {
-        public  static string HighlightColor = "#FFE59400";
-        public static string OriginalColor = "#FF373737";
+        public  static string KeyboardHighlightColor = "#FFE59400";
+        public static string KeyboardOriginalColor = "#FF373737";
+
+        public static int SuggestionButtonHeight = 100;
+        public static int SuggestionButtonWidth = 150;
+
+        public static double SuggestionBoxHeight = 120;
 
         HomePanelViewModel vm;
         public WpfEyeXHost eyeXHostRef;
@@ -95,6 +102,29 @@ namespace Gaze.HomePanel
 
         private void SuggestionBox_Initialized(object sender, EventArgs e)
         {
+            var st = this.TryFindResource("SuggestionButtonStyle") as Style;
+            SuggestionBox.Height = 0;
+
+            //            var setters = st.Setters;
+
+            //             foreach(var setter in setters)
+            //             {
+            //                 Setter curr = setter as Setter;
+            // 
+            //                 if (curr == null || curr.Property.ToString() != "Template")
+            //                     continue;
+            // 
+            //                 
+            //                 var s = curr.Value as ControlTemplate;
+            // 
+            //             }
+
+            ((INotifyCollectionChanged)SuggestionBox.Items).CollectionChanged += HomePanelWindow_CollectionChanged;
+
+        }
+
+        private void HomePanelWindow_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
 
         }
 
@@ -145,25 +175,64 @@ namespace Gaze.HomePanel
             while (enumerate.MoveNext())
             {
                 var sugg = new Button();
-                sugg.Height = 150;
-                sugg.Width = 150;
+                sugg.Height = SuggestionButtonHeight;
+                sugg.Width = SuggestionButtonWidth;
                 sugg.Content = (string)enumerate.Current;
                 sugg.FontSize = 50;
                 sugg.BorderThickness = new Thickness(0);
 
                 var st = this.TryFindResource("SuggestionButtonStyle") as Style;
 
-                if(st != null)
+                if (st != null)
                     sugg.Style = this.TryFindResource("SuggestionButtonStyle") as Style;
 
-                //HACK, couldve done in XAML
-                sugg.Click += (o,s) => 
+                sugg.Click += (o, s) =>
                 {
-                        addWordToSendMessageTextFromButton((string)enumerate.Current);
-                } ;
+                    addWordToSendMessageTextFromButton(sugg.Content.ToString());
+                };
 
                 vm.SuggestionsList.Add(sugg);
             }
+
+            //Grow Shrink animation
+            Storyboard myStoryboard = new Storyboard();
+            double animSpeed = 0.2;
+
+            if (vm.SuggestionsList.Count > 0)
+            {
+                if (SuggestionBox.Height != SuggestionBoxHeight)
+                {
+                    DoubleAnimation myDoubleAnimation = new DoubleAnimation();
+                    myDoubleAnimation.From = 0;
+                    myDoubleAnimation.To = SuggestionBoxHeight;
+                    myDoubleAnimation.Duration = new Duration(TimeSpan.FromSeconds(animSpeed));
+                    Storyboard.SetTargetName(myDoubleAnimation, SuggestionBox.Name);
+                    Storyboard.SetTargetProperty(myDoubleAnimation,
+                        new PropertyPath(Rectangle.HeightProperty));
+
+                    myStoryboard.Children.Add(myDoubleAnimation);
+                    myStoryboard.Begin(this);
+                }
+                //SuggestionBox.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                if(SuggestionBox.Height != 0)
+                {
+                    DoubleAnimation myDoubleAnimation = new DoubleAnimation();
+                    myDoubleAnimation.From = SuggestionBoxHeight;
+                    myDoubleAnimation.To = 0;
+                    myDoubleAnimation.Duration = new Duration(TimeSpan.FromSeconds(animSpeed));
+                    Storyboard.SetTargetName(myDoubleAnimation, SuggestionBox.Name);
+                    Storyboard.SetTargetProperty(myDoubleAnimation,
+                        new PropertyPath(Rectangle.HeightProperty));
+
+                    myStoryboard.Children.Add(myDoubleAnimation);
+                    myStoryboard.Begin(this);
+                }
+                //SuggestionBox.Visibility = Visibility.Collapsed;
+            }
+
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -227,10 +296,10 @@ namespace Gaze.HomePanel
             var bc = new BrushConverter();
 
             //[AH] Temporary solution
-            if(button.Background.ToString() == HighlightColor)
-                button.Background = bc.ConvertFrom(OriginalColor) as Brush;
+            if(button.Background.ToString() == KeyboardHighlightColor)
+                button.Background = bc.ConvertFrom(KeyboardOriginalColor) as Brush;
             else
-                button.Background = bc.ConvertFrom(HighlightColor) as Brush;
+                button.Background = bc.ConvertFrom(KeyboardHighlightColor) as Brush;
             
         }
 

@@ -99,6 +99,7 @@
     <Compile Include="API\SendMessage.cs" />
     <Compile Include="API\SendTTS.cs" />
     <Compile Include="API\WordsAPI.cs" />
+    <Compile Include="Control\ScrollAnimationBehavior.cs" />
     <Compile Include="Control\GazeButton.xaml.cs">
       <DependentUpon>GazeButton.xaml</DependentUpon>
     </Compile>

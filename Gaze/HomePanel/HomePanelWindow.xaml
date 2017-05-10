@@ -213,7 +213,7 @@
 
                         <!-- SUGGESTION START -->
 
-                        <ListView Name="SuggestionBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding SuggestionsList}" Initialized="SuggestionBox_Initialized" Height="120" Background="#83c7da" 
+                        <ListView Name="SuggestionBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding SuggestionsList}" Initialized="SuggestionBox_Initialized" Height="120" Background="LightBlue" 
                                   HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,0,0">
 
                             <ListView.ItemsPanel>
@@ -303,6 +303,7 @@
 
                 <Label x:Name="Brand" Height="auto" Grid.Row="0" FontSize="40" FontWeight="Bold" Background="White" Content="TechClutch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
+                
                 <Label x:Name="Status" Height="auto" Grid.Row="1" FontSize="40" FontWeight="Bold" Background="White" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
                 <Button x:Name="SendTTS" Height="200" Grid.Row="2" Content="Send TTS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" 
@@ -320,7 +321,8 @@
             <!--BODY END-->
 
             <!--FOOTER START-->
-            <autocomplete:AutoComplete Grid.Column="1" Grid.Row="2" Margin="0,0,0,0" x:Name="autocompleteInput" BorderThickness="0" Background="Wheat" TextChanged="autocompleteInput_TextChanged" Text="{Binding MessageToSend}" Initialized="autocompleteInput_Initialized" FontSize="50" VerticalContentAlignment="Center" />
+            <autocomplete:AutoComplete Grid.Column="1" Grid.Row="2" Margin="0,0,0,0" x:Name="autocompleteInput" BorderThickness="0" Background="Azure" 
+                                       TextChanged="autocompleteInput_TextChanged" Text="{Binding MessageToSend}" Initialized="autocompleteInput_Initialized" FontSize="50" VerticalContentAlignment="Center" />
             <!--FOOTER ENDS-->
 
         </Grid>

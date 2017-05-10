@@ -303,7 +303,7 @@
 
                 <Label x:Name="Brand" Height="auto" Grid.Row="0" FontSize="40" FontWeight="Bold" Background="White" Content="TechClutch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
-                <Label x:Name="Status" Height="auto" Grid.Row="1" FontSize="40" FontWeight="Bold" Background="White" Content="Status" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <Label x:Name="Status" Height="auto" Grid.Row="1" FontSize="40" FontWeight="Bold" Background="White" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 
                 <Button x:Name="SendTTS" Height="200" Grid.Row="2" Content="Send TTS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" 
                         eyeX:Behavior.Activate="SendTTS_Activate"  Click="SendTTS_Activate" eyeX:Behavior.GazeAware="True"/>

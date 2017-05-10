@@ -465,6 +465,7 @@ namespace Gaze.HomePanel
         {
             vm.SendTTS();
             Utilities.Util.Speak("TTS Sent", System.Speech.Synthesis.VoiceGender.Female);
+            Status.Content = "TTS sent";
             _startStatusTimer();
         }
 
@@ -474,6 +475,7 @@ namespace Gaze.HomePanel
         {
             Utilities.Util.Speak("SMS Sent", System.Speech.Synthesis.VoiceGender.Female);
             new SendMessage().Invoke(vm.MessageToSend, vm.PhoneNumber);
+            Status.Content = "SMS sent";
             _startStatusTimer();
         }
 
@@ -503,7 +505,7 @@ namespace Gaze.HomePanel
 
         private void statusTimer_Tick(object sender, EventArgs e)
         {
-
+            Status.Content = "";
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////

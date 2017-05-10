@@ -99,10 +99,18 @@
     <Compile Include="API\SendMessage.cs" />
     <Compile Include="API\SendTTS.cs" />
     <Compile Include="API\WordsAPI.cs" />
+    <Compile Include="Control\ScrollAnimationBehavior.cs" />
+    <Compile Include="Control\GazeButton.xaml.cs">
+      <DependentUpon>GazeButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="HomePanel\HomePanelViewModel.cs" />
     <Compile Include="HomePanel\HomePanelWindow.xaml.cs" />
     <Compile Include="Utilities\Util.cs" />
     <Compile Include="ViewModelMain\MainView.cs" />
+    <Page Include="Control\GazeButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="HomePanel\HomePanelWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

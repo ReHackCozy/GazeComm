@@ -16,6 +16,10 @@ using EyeXFramework.Wpf;
 using Gaze.EyeTracker;
 using Gaze.API;
 using System.Diagnostics;
+using System.Windows.Automation.Peers;
+using System.Collections.Specialized;
+using System.Windows.Media.Animation;
+using Gaze.Control;
 
 namespace Gaze.HomePanel
 {
@@ -24,6 +28,17 @@ namespace Gaze.HomePanel
     /// </summary>
     public partial class HomePanelWindow : Window
     {
+        public  static string KeyboardHighlightColor = "#FFE59400";
+        public static string KeyboardOriginalColor = "#FF373737";
+
+        public static int SuggestionButtonHeight = 100;
+        public static int SuggestionButtonWidth = 150;
+
+        public static double SuggestionBoxHeight = 120;
+
+        bool hasMiscPanelDownGazed = false;
+        bool hasMiscPanelUpGazed = false;
+
         HomePanelViewModel vm;
         public WpfEyeXHost eyeXHostRef;
         Stopwatch stopWatch;
@@ -37,7 +52,7 @@ namespace Gaze.HomePanel
         bool blinkTimerStarted = false;
         //HACK
         double fixationBeginTimeStamp = 0;
-        double fixationActivateDuration = 500; //In milisecond
+        double fixationActivateDuration = 750; //In milisecond
         bool fixationStart = false;
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -91,6 +106,29 @@ namespace Gaze.HomePanel
 
         private void SuggestionBox_Initialized(object sender, EventArgs e)
         {
+            var st = this.TryFindResource("SuggestionButtonStyle") as Style;
+            SuggestionBox.Height = 0;
+
+            //            var setters = st.Setters;
+
+            //             foreach(var setter in setters)
+            //             {
+            //                 Setter curr = setter as Setter;
+            // 
+            //                 if (curr == null || curr.Property.ToString() != "Template")
+            //                     continue;
+            // 
+            //                 
+            //                 var s = curr.Value as ControlTemplate;
+            // 
+            //             }
+
+            ((INotifyCollectionChanged)SuggestionBox.Items).CollectionChanged += HomePanelWindow_CollectionChanged;
+
+        }
+
+        private void HomePanelWindow_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
 
         }
 
@@ -108,6 +146,17 @@ namespace Gaze.HomePanel
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        private void Window_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.RightShift && !e.IsRepeat)
+            {
+                var currentApp = Application.Current as App;
+                if (currentApp != null) currentApp.eyeXHost.TriggerPanningBegin();
+            }
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.LeftShift)
@@ -116,16 +165,12 @@ namespace Gaze.HomePanel
                 if (currentApp != null)
                     eyeXHostRef.TriggerActivation();
             }
-        }
 
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        private void OnSendSMS(object sender, RoutedEventArgs e)
-        {
-            Utilities.Util.Speak(vm.MessageToSend, System.Speech.Synthesis.VoiceGender.Female);
-            new SendMessage().Invoke(vm.MessageToSend, vm.PhoneNumber);
-            Status.Text = "SMS sent";
-            _startStatusTimer();
+            else if (e.Key == Key.RightShift)
+            {
+                var currentApp = Application.Current as App;
+                if (currentApp != null) currentApp.eyeXHost.TriggerPanningEnd();
+            }
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -141,21 +186,82 @@ namespace Gaze.HomePanel
             while (enumerate.MoveNext())
             {
                 var sugg = new Button();
-                sugg.Height = 150;
-                sugg.Width = 150;
+                sugg.Height = SuggestionButtonHeight;
+                sugg.Width = SuggestionButtonWidth;
                 sugg.Content = (string)enumerate.Current;
                 sugg.FontSize = 50;
                 sugg.BorderThickness = new Thickness(0);
-                sugg.Style = this.FindResource("SuggestionButtonStyle") as Style;
 
-                //HACK, couldve done in XAML
-                sugg.Click += (o,s) => 
+                var st = this.TryFindResource("SuggestionButtonStyle") as Style;
+
+                if (st != null)
+                    sugg.Style = this.TryFindResource("SuggestionButtonStyle") as Style;
+
+                sugg.Click += (o, s) =>
                 {
-                        addWordToSendMessageTextFromButton((string)enumerate.Current);
-                } ;
+                    addWordToSendMessageTextFromButton(sugg.Content.ToString());
+                };
 
                 vm.SuggestionsList.Add(sugg);
             }
+
+            //Grow Shrink animation
+            Storyboard myStoryboard = new Storyboard();
+            double animSpeed = 0.2;
+
+            if (vm.SuggestionsList.Count > 0)
+            {
+                if (SuggestionBox.Height != SuggestionBoxHeight)
+                {
+                    DoubleAnimation myDoubleAnimation = new DoubleAnimation();
+                    myDoubleAnimation.From = 0;
+                    myDoubleAnimation.To = SuggestionBoxHeight;
+                    myDoubleAnimation.Duration = new Duration(TimeSpan.FromSeconds(animSpeed));
+                    Storyboard.SetTargetName(myDoubleAnimation, SuggestionBox.Name);
+                    Storyboard.SetTargetProperty(myDoubleAnimation,
+                        new PropertyPath(Rectangle.HeightProperty));
+
+                    myStoryboard.Children.Add(myDoubleAnimation);
+                    myStoryboard.Begin(this);
+                }
+            }
+            else
+            {
+                if(SuggestionBox.Height != 0)
+                {
+                    DoubleAnimation myDoubleAnimation = new DoubleAnimation();
+                    myDoubleAnimation.From = SuggestionBoxHeight;
+                    myDoubleAnimation.To = 0;
+                    myDoubleAnimation.Duration = new Duration(TimeSpan.FromSeconds(animSpeed));
+                    Storyboard.SetTargetName(myDoubleAnimation, SuggestionBox.Name);
+                    Storyboard.SetTargetProperty(myDoubleAnimation,
+                        new PropertyPath(Rectangle.HeightProperty));
+
+                    myStoryboard.Children.Add(myDoubleAnimation);
+                    myStoryboard.Begin(this);
+                }
+            }
+
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void GrowShrinkAnimator(string controlName, double from, double to)
+        {
+            //Grow Shrink animation
+            Storyboard myStoryboard = new Storyboard();
+            double animSpeed = 0.2;
+
+            DoubleAnimation myDoubleAnimation = new DoubleAnimation();
+            myDoubleAnimation.From = from;
+            myDoubleAnimation.To = to;
+            myDoubleAnimation.Duration = new Duration(TimeSpan.FromSeconds(animSpeed));
+            Storyboard.SetTargetName(myDoubleAnimation, controlName);
+            Storyboard.SetTargetProperty(myDoubleAnimation,
+                new PropertyPath(Rectangle.HeightProperty));
+
+            myStoryboard.Children.Add(myDoubleAnimation);
+            myStoryboard.Begin(this);
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -187,7 +293,6 @@ namespace Gaze.HomePanel
                 return;
 
             vm.PlayTTS();
-            Status.Text = "Text played";
             _startStatusTimer();
         }
 
@@ -216,8 +321,14 @@ namespace Gaze.HomePanel
         {
             var button = sender as Button;
 
-            button.Focus();
+            var bc = new BrushConverter();
 
+            //[AH] Temporary solution
+            if(button.Background.ToString() == KeyboardHighlightColor)
+                button.Background = bc.ConvertFrom(KeyboardOriginalColor) as Brush;
+            else
+                button.Background = bc.ConvertFrom(KeyboardHighlightColor) as Brush;
+            
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -328,9 +439,7 @@ namespace Gaze.HomePanel
                     }
                         
                 }
-                    
             }
-    
 
             if (e.EventType == Tobii.EyeX.Framework.FixationDataEventType.End)
             {
@@ -354,8 +463,16 @@ namespace Gaze.HomePanel
         private void SendTTS_Activate(object sender, RoutedEventArgs e)
         {
             vm.SendTTS();
-            vm.PlayTTS();
-            Status.Text = "TTS sent";
+            Utilities.Util.Speak("TTS Sent", System.Speech.Synthesis.VoiceGender.Female);
+            _startStatusTimer();
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void OnSendSMS(object sender, RoutedEventArgs e)
+        {
+            Utilities.Util.Speak("SMS Sent", System.Speech.Synthesis.VoiceGender.Female);
+            new SendMessage().Invoke(vm.MessageToSend, vm.PhoneNumber);
             _startStatusTimer();
         }
 
@@ -385,7 +502,158 @@ namespace Gaze.HomePanel
 
         private void statusTimer_Tick(object sender, EventArgs e)
         {
-            Status.Text = "";
+
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void ScrollUpMiscPanel()
+        {
+            // Get the border of the listview (first child of a listview)
+            Decorator border = VisualTreeHelper.GetChild(MiscPanelLV, 0) as Decorator;
+
+            MiscPanelLV.IsEnabled = false;
+
+            // Get scrollviewer
+            ScrollViewer scrollViewer = border.Child as ScrollViewer;
+
+            DoubleAnimation verticalAnimation = new DoubleAnimation();
+
+            double stepping = scrollViewer.ActualHeight - (scrollViewer.ActualHeight / 4);
+            double currHeight = scrollViewer.VerticalOffset;
+
+            if (currHeight == 0)
+            {
+                //return;
+            }
+
+            if (currHeight - stepping > 0)
+            {
+                //Bugged...some reason it will never go all the way top, work around is this
+                if(currHeight - stepping < scrollViewer.ActualHeight)
+                    currHeight = 0;
+                else
+                    currHeight -= stepping;
+            }
+            else
+            {
+                currHeight = 0;
+            }
+
+            verticalAnimation.From = scrollViewer.VerticalOffset;
+            verticalAnimation.To = currHeight;
+            verticalAnimation.Duration = TimeSpan.FromSeconds(0.5);
+            verticalAnimation.Completed += ScrollUpMiscPanelVerticalAnimation_Completed;
+
+            Storyboard storyboard = new Storyboard();
+
+            storyboard.Children.Add(verticalAnimation);
+            Storyboard.SetTarget(verticalAnimation, scrollViewer);
+            Storyboard.SetTargetProperty(verticalAnimation, new PropertyPath(ScrollAnimationBehavior.VerticalOffsetProperty)); // Attached dependency property
+            storyboard.Begin();
+        }
+
+        private void ScrollUpMiscPanelVerticalAnimation_Completed(object sender, EventArgs e)
+        {
+            if (hasMiscPanelUpGazed)
+            {
+                ScrollUpMiscPanel();
+            }
+
+            MiscPanelLV.IsEnabled = true;
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void ScrollDownMiscPanel()
+        {
+            // Get the border of the listview (first child of a listview)
+            Decorator border = VisualTreeHelper.GetChild(MiscPanelLV, 0) as Decorator;
+
+            MiscPanelLV.IsEnabled = false;
+
+            // Get scrollviewer
+            ScrollViewer scrollViewer = border.Child as ScrollViewer;
+
+            DoubleAnimation verticalAnimation = new DoubleAnimation();
+
+            double stepping = scrollViewer.ActualHeight - (scrollViewer.ActualHeight/4);
+            double totalHeight = scrollViewer.ScrollableHeight;
+            double currHeight = scrollViewer.VerticalOffset;
+
+            if (currHeight == totalHeight)
+            {
+                //return;
+            }
+
+            if (currHeight + stepping < totalHeight)
+            {
+                currHeight += stepping;
+            }
+            else
+            {
+                currHeight += (totalHeight - currHeight);
+            }
+
+            verticalAnimation.From = scrollViewer.VerticalOffset;
+            verticalAnimation.To = currHeight;
+            verticalAnimation.Duration = TimeSpan.FromSeconds(0.5);
+            verticalAnimation.Completed += ScrollDownMiscPanelVerticalAnimation_Completed;
+
+            Storyboard storyboard = new Storyboard();
+
+            storyboard.Children.Add(verticalAnimation);
+            Storyboard.SetTarget(verticalAnimation, scrollViewer);
+            Storyboard.SetTargetProperty(verticalAnimation, new PropertyPath(ScrollAnimationBehavior.VerticalOffsetProperty)); // Attached dependency property
+            storyboard.Begin();
+        }
+
+
+        private void ScrollDownMiscPanelVerticalAnimation_Completed(object sender, EventArgs e)
+        {
+            if (hasMiscPanelDownGazed)
+            {
+                ScrollDownMiscPanel();
+            }
+            MiscPanelLV.IsEnabled = true;
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void MiscPanelUp_Activate(object sender, RoutedEventArgs e)
+        {
+            ScrollUpMiscPanel();
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void MiscPanelDown_Activate(object sender, RoutedEventArgs e)
+        {
+            ScrollDownMiscPanel();
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void MiscPanelUp_HasGazeChanged(object sender, RoutedEventArgs e)
+        {
+            hasMiscPanelUpGazed = !hasMiscPanelUpGazed;
+
+            if(hasMiscPanelUpGazed)
+            {
+                ScrollUpMiscPanel();
+            }
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void MiscPanelDown_HasGazeChanged(object sender, RoutedEventArgs e)
+        {
+            hasMiscPanelDownGazed = !hasMiscPanelDownGazed;
+
+            if(hasMiscPanelDownGazed)
+            {
+                ScrollDownMiscPanel();
+            }
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////

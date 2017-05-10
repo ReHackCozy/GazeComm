@@ -57,7 +57,7 @@
         </Style>
 
         <Style TargetType="{x:Type Button}" x:Key="KeyboardButton">
-            <Setter Property="Background" Value="#373737" />
+            <Setter Property="Background" Value="#164e78" />
             <Setter Property="Foreground" Value="White" />
             <Setter Property="FontSize" Value="15" />
             <Setter Property="FontFamily" Value="./#Segoe UI" />
@@ -195,30 +195,27 @@
                         <!-- SPECIAL KEY START -->
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="Transparent" Height="130">
-                            <Button x:Name="SpaceBtn" Content="SPACE" Width="500" Height="120" Background="#6E6F71" Foreground="white" FontSize="30" FontWeight="Bold" Margin="2,2,2,2" Style="{StaticResource KeyboardButton}" 
-                                    eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate" Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged"/>
+                            <Button x:Name="SpaceBtn" Content="SPACE" Width="500" Height="120" Background="#002d49" Foreground="white" FontSize="30" FontWeight="Bold"  Style="{StaticResource KeyboardButton}" 
+                                    eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SpaceButton_Activate" Click="SpaceButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SpaceButton_HasGazeChanged"/>
 
                             <Separator Opacity="0" Width="40"/>
-                            <Button Content="BACKSPACE"  Margin="2,2,2,2" Width="240" Height="120" Background="#F5A46C"  FontSize="30" Foreground="white" FontWeight="Bold"  Style="{StaticResource KeyboardButton}" 
+                            <Button Content="BACKSPACE" Width="240" Height="120" Background="#F5A46C"  FontSize="30" Foreground="white" FontWeight="Bold"  Style="{StaticResource KeyboardButton}" 
                                     eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="VK_BKSpace_Click" Click="VK_BKSpace_Click" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="VK_BKSpace_HasGazeChanged"/>
 
                             <Separator Opacity="0" Width="40"/>
-                            <Button Content="CLEAR"  Margin="2,2,2,2" Width="240" Height="120" Background="#F27360" FontSize="30" Foreground="white" FontWeight="Bold"  Style="{StaticResource KeyboardButton}" 
+                            <Button Content="CLEAR" Width="240" Height="120" Background="#F27360" FontSize="30" Foreground="white" FontWeight="Bold"  Style="{StaticResource KeyboardButton}" 
                                     eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="Clr_Activate" Click="Clr_Activate"  eyeX:Behavior.GazeAware="True" />
                         </StackPanel>
 
                         <!-- SPECIAL KEY END -->
 
                         <Separator/>
-
-                        <!-- SUGGESTION START -->
-
-                        <ListView Name="SuggestionBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding SuggestionsList}" Initialized="SuggestionBox_Initialized" Height="120" Background="LightBlue" 
+                        <ListView x:Name="SuggestionBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding SuggestionsList}" Initialized="SuggestionBox_Initialized" Height="120" Background="LightBlue" 
                                   HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,0,0">
 
                             <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal"></StackPanel>
+                                    <StackPanel Orientation="Horizontal"/>
                                 </ItemsPanelTemplate>
                             </ListView.ItemsPanel>
                             <ListView.ItemContainerStyle>
@@ -232,6 +229,8 @@
                                 </Style>
                             </ListView.ItemContainerStyle>
                         </ListView>
+
+                        <!-- SUGGESTION START -->
 
                         <!-- SUGGESTION END -->
                     </StackPanel>
@@ -250,14 +249,25 @@
                     <RowDefinition Height="130"/>
                 </Grid.RowDefinitions>
 
-                <Button x:Name="MiscPanelUp" Height="auto" Grid.Row="0" Content="↑" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" Background="LightGray" Foreground="Gray"
-                        Click="MiscPanelUp_Activate" eyeX:Behavior.HasGazeChanged="MiscPanelUp_HasGazeChanged" eyeX:Behavior.GazeAware="True"/>
+                <Button x:Name="MiscPanelUp" Height="auto" Grid.Row="0" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" Background="#002d49" Foreground="LightBlue"
+                        Click="MiscPanelUp_Activate" eyeX:Behavior.HasGazeChanged="MiscPanelUp_HasGazeChanged" eyeX:Behavior.GazeAware="True">
+                    <StackPanel>
+                        <Image Source="/Resources/ArrowUp.png" Height="40"/>
+                    </StackPanel>
+                </Button>
 
-                <Border  Height="200" Grid.Row="1" HorizontalAlignment="Stretch" BorderThickness="0" Background="Azure"/>
-                <Image Source="/Resources/LogoSymbol.png" Grid.Row="1" Height="190"/>
-                
+                <Border  Height="200" Grid.Row="1" HorizontalAlignment="Stretch" BorderThickness="0" Background="Azure">
+                    <Image Source="/Resources/LogoSymbol.png" Height="190"/>
+                </Border>
+
+
                 <ListBox Name="MiscPanelLV" Grid.Row="2" Background="White" AttachedBehavior:ScrollAnimationBehavior.IsEnabled="True" 
                           HorizontalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="False">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Padding" Value="0"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
                     <ListBox.Resources>
                         <Style x:Key="EyeXAutoPannableStyle" TargetType="FrameworkElement">
                             <Setter Property="eyeX:Behavior.Pannable" Value="Default" />
@@ -267,16 +277,16 @@
                         </Style>
                     </ListBox.Resources>
                     <ListBox.Items>
-                        <RadioButton GroupName="2" Content="WORDS" Height="200" FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate" 
-                                     Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged" Checked="RadioButton_Checked" 
-                                     IsChecked="{Binding IsWords, Mode=TwoWay}" Style="{StaticResource {x:Type ToggleButton}}"/>
+                        <RadioButton GroupName="2" Content="WORDS" Height="200" FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SpaceButton_Activate" 
+                                     Click="SpaceButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SpaceButton_HasGazeChanged" Checked="RadioButton_Checked" 
+                                     IsChecked="{Binding IsWords, Mode=TwoWay}" Style="{StaticResource {x:Type ToggleButton}}" />
 
-                        <RadioButton GroupName="2" Content="LETTERS" Height="200"  FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate" 
-                                     Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged" Checked="RadioButton_Checked"  IsChecked="{Binding IsLetters, Mode=TwoWay}" 
+                        <RadioButton GroupName="2" Content="LETTERS" Height="200"  FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SpaceButton_Activate" 
+                                     Click="SpaceButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SpaceButton_HasGazeChanged" Checked="RadioButton_Checked"  IsChecked="{Binding IsLetters, Mode=TwoWay}" 
                                      Style="{StaticResource {x:Type ToggleButton}}"/>
 
-                        <RadioButton GroupName="2" Content="PHRASE" Height="200"  FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate" 
-                                     Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged" Checked="RadioButton_Checked" IsChecked="{Binding IsActions, Mode=TwoWay}" 
+                        <RadioButton GroupName="2" Content="PHRASE" Height="200"  FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SpaceButton_Activate" 
+                                     Click="SpaceButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SpaceButton_HasGazeChanged" Checked="RadioButton_Checked" IsChecked="{Binding IsActions, Mode=TwoWay}" 
                                      Style="{StaticResource {x:Type ToggleButton}}"/>
 
                         <Button x:Name="Settings" Height="200" eyeX:Behavior.Activatable="Default" Content="Settings" FontSize="40" FontWeight="Bold"  eyeX:Behavior.GazeAware="True" />
@@ -284,16 +294,21 @@
                     </ListBox.Items>
                 </ListBox>
 
-                <Button x:Name="MiscPanelDown" Height="auto" Grid.Row="3" Content="↓" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" Background="LightGray" Foreground="Gray"
-                         Click="MiscPanelDown_Activate" eyeX:Behavior.HasGazeChanged="MiscPanelDown_HasGazeChanged" eyeX:Behavior.GazeAware="True"/>
+                <Button x:Name="MiscPanelDown" Height="auto" Grid.Row="3" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" Background="#002d49" Foreground="LightBlue"
+                         Click="MiscPanelDown_Activate" eyeX:Behavior.HasGazeChanged="MiscPanelDown_HasGazeChanged" eyeX:Behavior.GazeAware="True">
+                    <StackPanel>
+                        <Image Source="/Resources/ArrowDown.png" Height="40"/>
+                    </StackPanel>
+                </Button>
 
             </Grid>
             <!--Left Panel End-->
 
             <!--Right Panel Start-->
-            <Grid Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Background="DarkGray" Margin="0,0,8,0">
+            <Grid Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Background="Azure" Margin="0,0,8,0">
 
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="100"/>
                     <RowDefinition Height="200"/>
@@ -301,18 +316,20 @@
                     <RowDefinition Height="130"/>
                 </Grid.RowDefinitions>
 
-                <Label x:Name="Brand" Height="auto" Grid.Row="0" FontSize="40" FontWeight="Bold" Background="White" Content="TechClutch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <Image Source="/Resources/LogoTextSmall.png" Grid.Row="0" Margin="10,0,10,0"/>
 
-                
-                <Label x:Name="Status" Height="auto" Grid.Row="1" FontSize="40" FontWeight="Bold" Background="White" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <StackPanel Orientation="Vertical" Grid.Row="2"  Background="White" >
+                    <Separator Height="5"/>
+                    <Label x:Name="Status" Height="auto"  FontSize="40" FontWeight="Bold" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                </StackPanel>
 
-                <Button x:Name="SendTTS" Height="200" Grid.Row="2" Content="Send TTS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" 
+                <Button x:Name="SendTTS" Height="200" Grid.Row="3" Content="Send TTS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" 
                         eyeX:Behavior.Activate="SendTTS_Activate"  Click="SendTTS_Activate" eyeX:Behavior.GazeAware="True"/>
 
-                <Button x:Name="SendSMS" Height="200" Grid.Row="3" eyeX:Behavior.Activatable="Default" Content="Send SMS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activate="OnSendSMS" 
+                <Button x:Name="SendSMS" Height="200" Grid.Row="4" eyeX:Behavior.Activatable="Default" Content="Send SMS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activate="OnSendSMS" 
                         Click="OnSendSMS" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SendSMS_HasGazeChanged"/>
 
-                <Button Content="Speak" Grid.Row="4" Height="auto" FontSize="50" FontWeight="Bold" Name="PlayText" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="PlayText_Activate" Background="#F3C766" 
+                <Button Content="Speak" Grid.Row="5" Height="auto" FontSize="50" FontWeight="Bold" Name="PlayText" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="PlayText_Activate" Background="#F3C766" 
                         Click="PlayText_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="PlayText_HasGazeChanged"/>
 
             </Grid>

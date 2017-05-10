@@ -28,9 +28,13 @@ namespace Gaze.HomePanel
     /// </summary>
     public partial class HomePanelWindow : Window
     {
+        //Colorings
         public  static string KeyboardHighlightColor = "#FFE59400";
-        public static string KeyboardOriginalColor = "#FF373737";
+        public static string KeyboardOriginalColor = "#164e78";
 
+        public static string BGMiscPanelScrollButtonOriginalColor = "#002d49";
+
+        //Others
         public static int SuggestionButtonHeight = 100;
         public static int SuggestionButtonWidth = 150;
 
@@ -294,6 +298,9 @@ namespace Gaze.HomePanel
                 return;
 
             vm.PlayTTS();
+            Status.Opacity = 0;
+            Status.Content = "Text Spoken";
+            FadeIn(Status);
             _startStatusTimer();
         }
 
@@ -321,15 +328,8 @@ namespace Gaze.HomePanel
         private void KeyboardButton_HasGazeChanged(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-
             var bc = new BrushConverter();
-
-            //[AH] Temporary solution
-            if(button.Background.ToString() == KeyboardHighlightColor)
-                button.Background = bc.ConvertFrom(KeyboardOriginalColor) as Brush;
-            else
-                button.Background = bc.ConvertFrom(KeyboardHighlightColor) as Brush;
-            
+            HandleButtonGazeHighlightColor(button, KeyboardOriginalColor, KeyboardHighlightColor);
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -340,8 +340,6 @@ namespace Gaze.HomePanel
             if (null == element) { return; }
 
             var gazableButton = element.DataContext as Button;
-
-
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -379,7 +377,7 @@ namespace Gaze.HomePanel
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        private void GazableButton_Activate(object sender, RoutedEventArgs e)
+        private void SpaceButton_Activate(object sender, RoutedEventArgs e)
         {
             var rad_btn = sender as RadioButton;
 
@@ -389,15 +387,13 @@ namespace Gaze.HomePanel
             autocompleteInput.Focus();
             autocompleteInput.CaretIndex = autocompleteInput.Text.Length;
 
-           
-
             if(rad_btn != null)
                 rad_btn.IsChecked = true;
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        private void GazableButton_HasGazeChanged(object sender, RoutedEventArgs e)
+        private void SpaceButton_HasGazeChanged(object sender, RoutedEventArgs e)
         {
 
         }
@@ -465,7 +461,9 @@ namespace Gaze.HomePanel
         {
             vm.SendTTS();
             Utilities.Util.Speak("TTS Sent", System.Speech.Synthesis.VoiceGender.Female);
+            Status.Opacity = 0;
             Status.Content = "TTS sent";
+            FadeIn(Status);
             _startStatusTimer();
         }
 
@@ -475,7 +473,9 @@ namespace Gaze.HomePanel
         {
             Utilities.Util.Speak("SMS Sent", System.Speech.Synthesis.VoiceGender.Female);
             new SendMessage().Invoke(vm.MessageToSend, vm.PhoneNumber);
+            Status.Opacity = 0;
             Status.Content = "SMS sent";
+            FadeIn(Status);
             _startStatusTimer();
         }
 
@@ -505,7 +505,7 @@ namespace Gaze.HomePanel
 
         private void statusTimer_Tick(object sender, EventArgs e)
         {
-            Status.Content = "";
+            FadeOut(Status);
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -564,6 +564,55 @@ namespace Gaze.HomePanel
             }
 
             MiscPanelLV.IsEnabled = true;
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void FadeOut(System.Windows.Controls.Control control)
+        {
+
+            var a = new DoubleAnimation
+            {
+                From = 1.0,
+                To = 0.0,
+                FillBehavior = FillBehavior.Stop,
+                BeginTime = TimeSpan.FromSeconds(0),
+                Duration = new Duration(TimeSpan.FromSeconds(0.5))
+            };
+            var storyboard = new Storyboard();
+
+            storyboard.Children.Add(a);
+            Storyboard.SetTarget(a, control);
+            Storyboard.SetTargetProperty(a, new PropertyPath(OpacityProperty));
+            storyboard.Completed += (s, e) =>
+            {
+                control.Opacity = 0.0;
+            };
+            storyboard.Begin();
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void FadeIn(System.Windows.Controls.Control control)
+        {
+            var a = new DoubleAnimation
+            {
+                From = 0,
+                To = 1.0,
+                FillBehavior = FillBehavior.Stop,
+                BeginTime = TimeSpan.FromSeconds(0),
+                Duration = new Duration(TimeSpan.FromSeconds(0.5))
+            };
+            var storyboard = new Storyboard();
+
+            storyboard.Children.Add(a);
+            Storyboard.SetTarget(a, control);
+            Storyboard.SetTargetProperty(a, new PropertyPath(OpacityProperty));
+            storyboard.Completed += (s, e) =>
+            {
+                control.Opacity = 1.0;
+            };
+            storyboard.Begin();
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -639,9 +688,11 @@ namespace Gaze.HomePanel
 
         private void MiscPanelUp_HasGazeChanged(object sender, RoutedEventArgs e)
         {
-            hasMiscPanelUpGazed = !hasMiscPanelUpGazed;
+            var button = sender as Button;
+            HandleButtonGazeHighlightColor(button, BGMiscPanelScrollButtonOriginalColor, KeyboardHighlightColor);
 
-            if(hasMiscPanelUpGazed)
+            hasMiscPanelUpGazed = !hasMiscPanelUpGazed;
+            if (hasMiscPanelUpGazed)
             {
                 ScrollUpMiscPanel();
             }
@@ -651,6 +702,9 @@ namespace Gaze.HomePanel
 
         private void MiscPanelDown_HasGazeChanged(object sender, RoutedEventArgs e)
         {
+            var button = sender as Button;
+            HandleButtonGazeHighlightColor(button, BGMiscPanelScrollButtonOriginalColor, KeyboardHighlightColor);
+
             hasMiscPanelDownGazed = !hasMiscPanelDownGazed;
 
             if(hasMiscPanelDownGazed)
@@ -660,6 +714,16 @@ namespace Gaze.HomePanel
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //[AH] Temporary solution
+        private void HandleButtonGazeHighlightColor(System.Windows.Controls.Control control, string originalColor, string highlightColor)
+        {
+            var bc = new BrushConverter();
+            if (control.Background.ToString() == highlightColor)
+                control.Background = bc.ConvertFrom(originalColor) as Brush;
+            else
+                control.Background = bc.ConvertFrom(highlightColor) as Brush;
+        }
 
         #region BlinkTracker
 

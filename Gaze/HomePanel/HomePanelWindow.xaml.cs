@@ -76,7 +76,7 @@ namespace Gaze.HomePanel
             var eyePositionStream = eyeXHostRef.CreateEyePositionDataStream();
             eyePositionStream.Next += (s,e) => 
             {
-
+                #region BlinkTracker
                 //if (!activationReady)
                 //    return;
 
@@ -84,7 +84,7 @@ namespace Gaze.HomePanel
                 //{
                 //    if (!blinkTimerStarted)
                 //        _startBlinkTimer();
-                    
+
                 //    //Try make it work
                 //    //vm.IsBlinked = true; //setting this to True will call OnGazeActivateButton() but not false;
 
@@ -94,6 +94,7 @@ namespace Gaze.HomePanel
                 //    if (blinkTimerStarted)
                 //        _stopBlinkTimer();
                 //}
+                #endregion
 
             };
 
@@ -658,6 +659,8 @@ namespace Gaze.HomePanel
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        #region BlinkTracker
+
         //private void _startBlinkTimer()
         //{
         //    blinkTimerStarted = true;
@@ -700,6 +703,8 @@ namespace Gaze.HomePanel
         //{
         //    activationReady = true;
         //}
+
+        #endregion
 
     }
 }

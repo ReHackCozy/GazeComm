@@ -95,10 +95,10 @@
     </Window.Resources>
 
     <Grid>
-
         <Grid Background="#9AAABA">
 
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="300"/>
             </Grid.ColumnDefinitions>
@@ -110,7 +110,7 @@
             </Grid.RowDefinitions>
 
             <!-- HEADER START -->
-            <Grid Name="HeaderLeft" Grid.Row="0" Grid.Column="0" Background="#485868">
+            <Grid Name="HeaderLeft" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"  Background="#485868">
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -149,14 +149,13 @@
             <!-- HEADER END -->
 
             <!--BODY START-->
-            <Grid Grid.Row="1" Grid.Column="0">
+            <Grid Grid.Row="1" Grid.Column="1">
 
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="5"/>
                         <RowDefinition Height="auto"/>
-                        
                     </Grid.RowDefinitions>
 
                     <!-- KEYBOARD START -->
@@ -195,16 +194,17 @@
                     <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#9FC2BB">
                         <!-- SPECIAL KEY START -->
 
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#9FC2BB" Height="130">
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="8,5,5,5">
-                                <RadioButton GroupName="2" Content="WORDS" Width="160" Height="120" Background="#6E6F71" Foreground="white" FontSize="30" FontWeight="Bold" Margin="2,2,2,2" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate"  Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged" Checked="RadioButton_Checked" IsChecked="{Binding IsWords, Mode=TwoWay}" Style="{StaticResource {x:Type ToggleButton}}"/>
-                                <RadioButton GroupName="2" Content="LETTERS" Width="160" Height="120" Background="#6E6F71" Foreground="white" FontSize="30" FontWeight="Bold" Margin="2,2,2,2" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate"  Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged" Checked="RadioButton_Checked"  IsChecked="{Binding IsLetters, Mode=TwoWay}" Style="{StaticResource {x:Type ToggleButton}}"/>
-                                <RadioButton GroupName="2" Content="PHRASE" Width="160" Height="120" Background="#6E6F71" Foreground="white" FontSize="30" FontWeight="Bold" Margin="2,2,2,2" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate"  Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged" Checked="RadioButton_Checked" IsChecked="{Binding IsActions, Mode=TwoWay}" Style="{StaticResource {x:Type ToggleButton}}"/>
-                            </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="#9FC2BB" Height="130">
+                            <Button x:Name="SpaceBtn" Content="SPACE" Width="500" Height="120" Background="#6E6F71" Foreground="white" FontSize="30" FontWeight="Bold" Margin="2,2,2,2" Style="{StaticResource KeyboardButton}" 
+                                    eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate" Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged"/>
+                            
                             <Separator Opacity="0" Width="40"/>
-                            <Button x:Name="SpaceBtn" Content="SPACE" Width="500" Height="120" Background="#6E6F71" Foreground="white" FontSize="30" FontWeight="Bold" Margin="2,2,2,2" Style="{StaticResource KeyboardButton}" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate" Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged"/>
-                            <Button Content="BACKSPACE"  Margin="2,2,2,2" Width="240" Height="120" Background="#F5A46C"  FontSize="30" Foreground="white" FontWeight="Bold"  Style="{StaticResource KeyboardButton}" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="VK_BKSpace_Click" Click="VK_BKSpace_Click" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="VK_BKSpace_HasGazeChanged"/>
-                            <Button Content="CLEAR"  Margin="2,2,2,2" Width="240" Height="120" Background="#F27360" FontSize="30" Foreground="white" FontWeight="Bold"  Style="{StaticResource KeyboardButton}" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="Clr_Activate" Click="Clr_Activate"  eyeX:Behavior.GazeAware="True" />
+                            <Button Content="BACKSPACE"  Margin="2,2,2,2" Width="240" Height="120" Background="#F5A46C"  FontSize="30" Foreground="white" FontWeight="Bold"  Style="{StaticResource KeyboardButton}" 
+                                    eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="VK_BKSpace_Click" Click="VK_BKSpace_Click" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="VK_BKSpace_HasGazeChanged"/>
+                            
+                            <Separator Opacity="0" Width="40"/>
+                            <Button Content="CLEAR"  Margin="2,2,2,2" Width="240" Height="120" Background="#F27360" FontSize="30" Foreground="white" FontWeight="Bold"  Style="{StaticResource KeyboardButton}" 
+                                    eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="Clr_Activate" Click="Clr_Activate"  eyeX:Behavior.GazeAware="True" />
                         </StackPanel>
 
                         <!-- SPECIAL KEY END -->
@@ -213,7 +213,9 @@
 
                         <!-- SUGGESTION START -->
 
-                        <ListView Name="SuggestionBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding SuggestionsList}" Initialized="SuggestionBox_Initialized" Height="120" Background="#9FC2BB" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,0,0">
+                        <ListView Name="SuggestionBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding SuggestionsList}" Initialized="SuggestionBox_Initialized" Height="120" Background="#9FC2BB" 
+                                  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,0,0">
+                            
                             <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel Orientation="Horizontal"></StackPanel>
@@ -238,8 +240,9 @@
 
             </Grid>
 
-            <!--Right Panel-->
-            <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Background="DarkGray" Margin="0,0,8,0">
+            <!--Left Panel Start-->
+
+            <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Background="DarkGray" Margin="0,0,8,0">
                 <Grid.Resources>
                     <Style x:Key="EyeXAutoPannableStyle" TargetType="FrameworkElement">
                         <Setter Property="eyeX:Behavior.Pannable" Value="Default" />
@@ -250,45 +253,74 @@
                 </Grid.Resources>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="130"/>
                     <RowDefinition Height="100"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="100"/>
                     <RowDefinition Height="130"/>
                 </Grid.RowDefinitions>
 
                 <Button x:Name="MiscPanelUp" Height="auto" Grid.Row="0" Content="↑" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" Background="LightGray" Foreground="Gray"
                         Click="MiscPanelUp_Activate" eyeX:Behavior.HasGazeChanged="MiscPanelUp_HasGazeChanged" eyeX:Behavior.GazeAware="True"/>
 
-                <Label x:Name="Brand" Height="100" Grid.Row="1" FontSize="40" FontWeight="Bold" Background="White" Content="TechClutch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <Label Content="Misc" Height="100" Grid.Row="1" FontSize="40" FontWeight="Bold" Background="White" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
-                <ListView Grid.Row="2" Name="MiscPanelLV" Style="{StaticResource EyeXAutoPannableStyle}" Background="White" AttachedBehavior:ScrollAnimationBehavior.IsEnabled="True" 
+                <ListBox Name="MiscPanelLV" Grid.Row="2" Style="{StaticResource EyeXAutoPannableStyle}" Background="White" AttachedBehavior:ScrollAnimationBehavior.IsEnabled="True" 
                           HorizontalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="false">
-                    <ListView.Items>
-                        <Button x:Name="SendTTS" Height="200" Grid.Row="1" Content="Send TTS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SendTTS_Activate"  Click="SendTTS_Activate" eyeX:Behavior.GazeAware="True"/>
-                        <Button x:Name="SendSMS" Height="200" eyeX:Behavior.Activatable="Default" Content="Send SMS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activate="OnSendSMS" Click="OnSendSMS" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SendSMS_HasGazeChanged"/>
+                    <ListBox.Items>
+                        <RadioButton GroupName="2" Content="WORDS" Height="200" FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate" 
+                                     Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged" Checked="RadioButton_Checked" 
+                                     IsChecked="{Binding IsWords, Mode=TwoWay}" Style="{StaticResource {x:Type ToggleButton}}"/>
+
+                        <RadioButton GroupName="2" Content="LETTERS" Height="200"  FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate" 
+                                     Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged" Checked="RadioButton_Checked"  IsChecked="{Binding IsLetters, Mode=TwoWay}" 
+                                     Style="{StaticResource {x:Type ToggleButton}}"/>
+
+                        <RadioButton GroupName="2" Content="PHRASE" Height="200"  FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazableButton_Activate" 
+                                     Click="GazableButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="GazableButton_HasGazeChanged" Checked="RadioButton_Checked" IsChecked="{Binding IsActions, Mode=TwoWay}" 
+                                     Style="{StaticResource {x:Type ToggleButton}}"/>
+
                         <Button x:Name="Settings" Height="200" eyeX:Behavior.Activatable="Default" Content="Settings" FontSize="40" FontWeight="Bold"  eyeX:Behavior.GazeAware="True" />
                         <Button x:Name="PhoneBook" Height="200" eyeX:Behavior.Activatable="Default" Content="Phone Book" FontSize="40" FontWeight="Bold"  eyeX:Behavior.GazeAware="True" />
-
-                    </ListView.Items>
-                </ListView>
+                    </ListBox.Items>
+                </ListBox>
 
                 <Button x:Name="MiscPanelDown" Height="auto" Grid.Row="3" Content="↓" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" Background="LightGray" Foreground="Gray"
                          Click="MiscPanelDown_Activate" eyeX:Behavior.HasGazeChanged="MiscPanelDown_HasGazeChanged" eyeX:Behavior.GazeAware="True"/>
-                
-                <Button Content="Speak" Grid.Row="4" Height="130" FontSize="50" FontWeight="Bold" Name="PlayText" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="PlayText_Activate" Background="#F3C766" Click="PlayText_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="PlayText_HasGazeChanged"/>
 
             </Grid>
-            <!--Right Panel-->
+            <!--Left Panel End-->
+
+            <!--Right Panel Start-->
+            <Grid Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Background="DarkGray" Margin="0,0,8,0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="200"/>
+                    <RowDefinition Height="200"/>
+                    <RowDefinition Height="130"/>
+                </Grid.RowDefinitions>
+
+                <Label x:Name="Brand" Height="auto" Grid.Row="0" FontSize="40" FontWeight="Bold" Background="White" Content="TechClutch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+                <Label x:Name="Status" Height="auto" Grid.Row="1" FontSize="40" FontWeight="Bold" Background="White" Content="Status" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                
+                <Button x:Name="SendTTS" Height="200" Grid.Row="2" Content="Send TTS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" 
+                        eyeX:Behavior.Activate="SendTTS_Activate"  Click="SendTTS_Activate" eyeX:Behavior.GazeAware="True"/>
+                
+                <Button x:Name="SendSMS" Height="200" Grid.Row="3" eyeX:Behavior.Activatable="Default" Content="Send SMS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activate="OnSendSMS" 
+                        Click="OnSendSMS" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SendSMS_HasGazeChanged"/>
+                
+                <Button Content="Speak" Grid.Row="4" Height="auto" FontSize="50" FontWeight="Bold" Name="PlayText" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="PlayText_Activate" Background="#F3C766" 
+                        Click="PlayText_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="PlayText_HasGazeChanged"/>
+
+            </Grid>
+            <!--Right Panel End-->
 
             <!--BODY END-->
 
             <!--FOOTER START-->
-            <autocomplete:AutoComplete Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" Margin="0,0,0,0"  x:Name="autocompleteInput" BorderThickness="0" Background="Wheat" TextChanged="autocompleteInput_TextChanged" Text="{Binding MessageToSend}" Initialized="autocompleteInput_Initialized" FontSize="50" VerticalContentAlignment="Center" />
-            <!--<Grid Name="Footer" Grid.Row="2" Grid.ColumnSpan="1">
-                <autocomplete:AutoComplete Grid.Column="0" x:Name="autocompleteInput" BorderThickness="0" Background="Wheat" TextChanged="autocompleteInput_TextChanged" Text="{Binding MessageToSend}" Initialized="autocompleteInput_Initialized" FontSize="50" VerticalContentAlignment="Center" Margin="10,3,10,3" Grid.ColumnSpan="2" />
-            </Grid>-->
-
+            <autocomplete:AutoComplete Grid.Column="1" Grid.Row="2" Margin="0,0,0,0" x:Name="autocompleteInput" BorderThickness="0" Background="Wheat" TextChanged="autocompleteInput_TextChanged" Text="{Binding MessageToSend}" Initialized="autocompleteInput_Initialized" FontSize="50" VerticalContentAlignment="Center" />
             <!--FOOTER ENDS-->
 
         </Grid>

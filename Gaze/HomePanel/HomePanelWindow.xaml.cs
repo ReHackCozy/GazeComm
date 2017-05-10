@@ -505,7 +505,10 @@ namespace Gaze.HomePanel
 
         private void statusTimer_Tick(object sender, EventArgs e)
         {
-            FadeOut(Status);
+            if(Status.Opacity != 0)
+                FadeOut(Status);
+
+            statusTimer.Stop();
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////

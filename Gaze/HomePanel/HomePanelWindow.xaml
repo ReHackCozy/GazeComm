@@ -243,10 +243,10 @@
 
             <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Background="DarkGray">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="130"/>
-                    <RowDefinition Height="200"/>
+                    <RowDefinition Height="180"/>
+                    <RowDefinition Height="80"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="130"/>
+                    <RowDefinition Height="180"/>
                 </Grid.RowDefinitions>
 
                 <Button x:Name="MiscPanelUp" Height="auto" Grid.Row="0" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" Background="#002d49" Foreground="LightBlue"
@@ -256,10 +256,11 @@
                     </StackPanel>
                 </Button>
 
-                <Border  Height="200" Grid.Row="1" HorizontalAlignment="Stretch" BorderThickness="0" Background="Azure">
+                <!--<Border  Height="200" Grid.Row="1" HorizontalAlignment="Stretch" BorderThickness="0" Background="Azure">
                     <Image Source="/Resources/LogoSymbol.png" Height="190"/>
-                </Border>
+                </Border>-->
 
+                <Label Content="Options" Height="80" Grid.Row="1" FontSize="40" FontWeight="Bold" Background="Azure" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
                 <ListBox Name="MiscPanelLV" Grid.Row="2" Background="White" AttachedBehavior:ScrollAnimationBehavior.IsEnabled="True" 
                           HorizontalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="False">
@@ -277,15 +278,15 @@
                         </Style>
                     </ListBox.Resources>
                     <ListBox.Items>
-                        <RadioButton GroupName="2" Content="WORDS" Height="200" FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SpaceButton_Activate" 
-                                     Click="SpaceButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SpaceButton_HasGazeChanged" Checked="RadioButton_Checked" 
+                        <RadioButton GroupName="2" Content="WORDS" Height="180" FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SpaceButton_Activate" 
+                                     Click="SpaceButton_Activate" eyeX:Behavior.HasGazeChanged="SpaceButton_HasGazeChanged" Checked="RadioButton_Checked" 
                                      IsChecked="{Binding IsWords, Mode=TwoWay}" Style="{StaticResource {x:Type ToggleButton}}" />
 
-                        <RadioButton GroupName="2" Content="LETTERS" Height="200"  FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SpaceButton_Activate" 
+                        <RadioButton GroupName="2" Content="LETTERS" Height="180" FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SpaceButton_Activate" 
                                      Click="SpaceButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SpaceButton_HasGazeChanged" Checked="RadioButton_Checked"  IsChecked="{Binding IsLetters, Mode=TwoWay}" 
                                      Style="{StaticResource {x:Type ToggleButton}}"/>
 
-                        <RadioButton GroupName="2" Content="PHRASE" Height="200"  FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SpaceButton_Activate" 
+                        <RadioButton GroupName="2" Content="PHRASE" Height="180"  FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SpaceButton_Activate" 
                                      Click="SpaceButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SpaceButton_HasGazeChanged" Checked="RadioButton_Checked" IsChecked="{Binding IsActions, Mode=TwoWay}" 
                                      Style="{StaticResource {x:Type ToggleButton}}"/>
 
@@ -305,31 +306,34 @@
             <!--Left Panel End-->
 
             <!--Right Panel Start-->
-            <Grid Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Background="Azure" Margin="0,0,8,0">
+            <Grid Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Background="Azure">
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="80"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="100"/>
-                    <RowDefinition Height="200"/>
-                    <RowDefinition Height="200"/>
-                    <RowDefinition Height="130"/>
+                    <RowDefinition Height="180"/>
+                    <RowDefinition Height="180"/>
+                    <RowDefinition Height="180"/>
                 </Grid.RowDefinitions>
 
-                <Image Source="/Resources/LogoTextSmall.png" Grid.Row="0" Margin="10,0,10,0"/>
+                <StackPanel Orientation="Vertical" Grid.Row="0" Background="Azure" >
+                    <Image Source="/Resources/LogoSymbol.png" Margin="10,0,10,0" Height="75"/>
+                    <Separator Height="5"/>
+                </StackPanel>
 
                 <StackPanel Orientation="Vertical" Grid.Row="2"  Background="White" >
                     <Separator Height="5"/>
                     <Label x:Name="Status" Height="auto"  FontSize="40" FontWeight="Bold" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 </StackPanel>
 
-                <Button x:Name="SendTTS" Height="200" Grid.Row="3" Content="Send TTS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" 
+                <Button x:Name="SendTTS" Height="180" Grid.Row="3" Content="Send TTS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" 
                         eyeX:Behavior.Activate="SendTTS_Activate"  Click="SendTTS_Activate" eyeX:Behavior.GazeAware="True"/>
 
-                <Button x:Name="SendSMS" Height="200" Grid.Row="4" eyeX:Behavior.Activatable="Default" Content="Send SMS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activate="OnSendSMS" 
+                <Button x:Name="SendSMS" Height="180" Grid.Row="4" eyeX:Behavior.Activatable="Default" Content="Send SMS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activate="OnSendSMS" 
                         Click="OnSendSMS" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SendSMS_HasGazeChanged"/>
 
-                <Button Content="Speak" Grid.Row="5" Height="auto" FontSize="50" FontWeight="Bold" Name="PlayText" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="PlayText_Activate" Background="#F3C766" 
+                <Button Content="Speak" Grid.Row="5" Height="180" FontSize="50" FontWeight="Bold" Name="PlayText" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="PlayText_Activate" Background="#F3C766" 
                         Click="PlayText_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="PlayText_HasGazeChanged"/>
 
             </Grid>

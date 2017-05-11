@@ -1,4 +1,4 @@
-﻿using System; 
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -7,54 +7,56 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using Gaze.API;
+using Gaze.Data;
+using System.IO;
+using RestSharp;
+using static Gaze.HomePanel.HomePanelViewModel;
 
 namespace Gaze.HomePanel
 {
-    public class HomePanelViewModel : INotifyPropertyChanged
-    {
+    public class HomePanelViewModel : INotifyPropertyChanged, IKeyboardUpdated
+        {
         //panic implementation, this probably shouldnt be here.
         private AuthorizationAPI _authorizationAPI;
 
-        private string _name;
-        private string _phoneNumber;
-        private bool _genderMale;
-        private bool _genderFemale;
-        private int _age;
         private string _messageToSend;
-
-        private bool _isLetters;
-        private bool _isWords;
-        private bool _isActions;
+        private String _name;
+        private String _phoneNumber;
 
         private bool _isBlinked;
+        private UserData userDataRef;
+        private KeyboardManager keyboardManager;
 
         private ObservableCollection<Button> _suggestionsList = new ObservableCollection<Button>();
         private ObservableCollection<Button> _keyboardButtonList = new ObservableCollection<Button>();
 
-        #region keyboard data
-
-        private IList<String> _lettersKeyboard = new List<string> { "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Z", "X", "C", "V", "B", "N", "M" };
-        private IList<String> _wordsKeyboard = new List<string> {"You ", "Help ", "Give ", "Try ", "Me ", "Near ", "Far ", "Height ", "Width ", "Sorry ", "Sure ", "Goodbye ", "Possible ", "Impossible ", "Meal ", "Hello ", "Yes ", "No ", "Maybe ", "Make ", "Good ", "Bad ", "Okay ", "Meh ", "Opss " , "Hoorah "};
-        private IList<String> _actionsKeyboard = new List<string> { "Thank You ", "You're welcome ", "I'm hungry ", "I love you ", "I don't know ", "You're beautiful ", "I need a hug ", "I'm tired ", "Good job ", "I agree ", "I disagree ", "I think so ", "I'm happy ", "I'm sad ", "See you soon! ", "Happy birthday! ", "I'm sorry ", "You're brilliant ", "The cake is a lie ", "That's fantastic ", "I know ", "Game is hard ", "My apologies ", "LOL that's funny ", "OMG ", "The end " };
-
-        #endregion
-
         public HomePanelViewModel()
         {
-            _name = "Pak Ali";
-            _phoneNumber = "0196031591";
-            _genderMale = true;
-            _genderFemale = false;
-            _age = 30;
+            var currentApp = System.Windows.Application.Current as App;
+            userDataRef = currentApp.userData;
+            userDataRef.UpdateDataDelegate += OnDataUpdated;
+
+            keyboardManager = new KeyboardManager(this);
+
+            _name = "";
+            _phoneNumber = "";
             _messageToSend = "";
             _isBlinked = false;
-
-            _isLetters = false;
-            _isWords = false;
-            _isActions = true;
             UpdateKeyboard();
             _authorizationAPI = new AuthorizationAPI(SendTTS);
         }
+
+        public void LoadNextKeyboard()
+            {
+            _keyboardButtonList.Clear();
+            _keyboardButtonList.AddRange(keyboardManager.GetNextKeyboardList());
+            }
+
+        public void LoadPreviousKeyboard()
+            {
+            _keyboardButtonList.Clear();
+            _keyboardButtonList.AddRange(keyboardManager.GetPreviousKeyboardList());
+            }
 
         public void SendTTS()
         {
@@ -64,112 +66,65 @@ namespace Gaze.HomePanel
                 _authorizationAPI.Invoke();
             } else
             {
-                var number = "+6" + _phoneNumber;
+                //todo verify format
+                var number = "+6" + userDataRef.PhoneNumber;
                 new SendTTS().Invoke(_messageToSend, number, _authorizationAPI.AccessToken);
             }
         }
 
         public void PlayTTS()
         {
-            Utilities.Util.Speak(_messageToSend, _genderMale ? System.Speech.Synthesis.VoiceGender.Male : System.Speech.Synthesis.VoiceGender.Female, _age);
+            Utilities.Util.Speak(_messageToSend, userDataRef.GenderMale ? System.Speech.Synthesis.VoiceGender.Male : System.Speech.Synthesis.VoiceGender.Female, userDataRef.Age);
         }
 
         public void UpdateKeyboard()
         {
-            if(_isLetters)
-            {
-                PopulateKeyboardList(_lettersKeyboard);
-            } else if (_isWords)
-            {
-                PopulateKeyboardList(_wordsKeyboard);
-            } else {
-                PopulateKeyboardList(_actionsKeyboard);
-            }
+            if(keyboardManager != null)
+                {
+                _keyboardButtonList.Clear();
+                _keyboardButtonList.AddRange(keyboardManager.GetKeyboardList());
+                }
         }
-
-        private void PopulateKeyboardList(IList<String> list)
-        {
-            _keyboardButtonList.Clear();
-            foreach (var i in list)
+        
+        private void OnDataUpdated()
             {
-                Button btn = new Button();
-                btn.Content = i;
-                
-                _keyboardButtonList.Add(btn);
+            Name = userDataRef.Name;
+            PhoneNumber = userDataRef.PhoneNumber;
             }
-        }
 
         #region Setters Getters
 
         public string Name
-        {
-            get
             {
+            get
+                {
                 return _name;
-            }
+                }
 
             set
-            {
+                {
                 if (_name == value) return;
 
                 _name = value;
                 OnPropertyChanged("Name");
+                }
             }
-        }
 
         public string PhoneNumber
-        {
-            get
             {
+            get
+                {
                 return _phoneNumber;
-            }
+                }
 
             set
-            {
+                {
                 if (_phoneNumber == value) return;
 
                 _phoneNumber = value;
                 OnPropertyChanged("PhoneNumber");
+                }
             }
-        }
-
-        
-        public bool GenderMale
-        {
-            get { return _genderMale; }
-            set
-            {
-                if (_genderMale == value) return;
-
-                _genderMale = value;
-                OnPropertyChanged("GenderMale");
-            }
-        }
-
-        
-        public bool GenderFemale
-        {
-            get { return _genderFemale; }
-            set
-            {
-                if (_genderFemale == value) return;
-
-                _genderFemale = value;
-                OnPropertyChanged("GenderFemale");
-            }
-        }
-
-        public int Age
-        {
-            get { return _age; }
-            set
-            {
-                if (_age == value) return;
-
-                _age = value;
-                OnPropertyChanged("Age");
-            }
-        }
 
         public string MessageToSend
         {
@@ -196,12 +151,12 @@ namespace Gaze.HomePanel
 
         public bool IsLetters
         {
-            get { return _isLetters; }
+            get { return keyboardManager.IsLetters; }
             set
             {
-                if (_isLetters == value) return;
+                if (keyboardManager.IsLetters == value) return;
 
-                _isLetters = value;
+                keyboardManager.IsLetters = value;
                 OnPropertyChanged("IsLetters");
             }
         }
@@ -209,24 +164,24 @@ namespace Gaze.HomePanel
 
         public bool IsWords
         {
-            get { return _isWords; }
+            get { return keyboardManager.IsWords; }
             set
             {
-                if (_isWords == value) return;
+                if (keyboardManager.IsWords == value) return;
 
-                _isWords = value;
+                keyboardManager.IsWords = value;
                 OnPropertyChanged("IsWords");
             }
         }
 
         public bool IsActions
         {
-            get { return _isActions; }
+            get { return keyboardManager.IsActions; }
             set
             {
-                if (_isActions == value) return;
+                if (keyboardManager.IsActions == value) return;
 
-                _isActions = value;
+                keyboardManager.IsActions = value;
                 OnPropertyChanged("IsActions");
             }
         }
@@ -278,5 +233,34 @@ namespace Gaze.HomePanel
 
         #endregion
 
+        #region IKeyboardUpdated
+
+        public interface IKeyboardUpdated
+            {
+            void onKeyboardUpdated();
+            }
+
+        public void onKeyboardUpdated()
+            {
+            UpdateKeyboard();
+            }
+
+        #endregion
+
+        }
     }
-}
+
+#region extension method
+
+public static class CollectionExtensions
+    {
+    public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> newItems)
+        {
+        foreach (T item in newItems)
+            {
+            collection.Add(item);
+            }
+        }
+    }
+
+#endregion

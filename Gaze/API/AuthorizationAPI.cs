@@ -61,24 +61,7 @@ namespace Gaze.API
             //request.AddHeader("Authorization", SimpleAuthorizationHeader.Authorization);
             request.AddParameter("application/json", "{}", ParameterType.RequestBody);
 
-            //request.AddBody(new EmptyBody());
-            var sb = new System.Text.StringBuilder();
-            foreach (var param in request.Parameters)
-                {
-                sb.AppendFormat("{0}: {1}\r\n", param.Name, param.Value);
-                }
-            Debug.WriteLine("Request: " + sb.ToString());
-
             return request;
         }
-
-        internal class EmptyBody
-            {
-            public String dummy
-                {
-                get { return "dummy"; }
-                private set { }
-                }
-            }
     }
 }

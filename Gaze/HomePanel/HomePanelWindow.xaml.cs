@@ -20,6 +20,8 @@ using System.Windows.Automation.Peers;
 using System.Collections.Specialized;
 using System.Windows.Media.Animation;
 using Gaze.Control;
+using Gaze.Data;
+using Gaze.UserPanel;
 
 namespace Gaze.HomePanel
 {
@@ -309,10 +311,22 @@ namespace Gaze.HomePanel
         private void OnVirtualKeyboardPressed(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            vm.MessageToSend += button.Content;
 
-            autocompleteInput.Focus();
-            autocompleteInput.CaretIndex = autocompleteInput.Text.Length;
+            if(button.Tag.Equals("next"))
+                {
+                vm.LoadNextKeyboard();
+                }
+            else if (button.Tag.Equals("back"))
+                {
+                vm.LoadPreviousKeyboard();
+                }
+            else
+                {
+                vm.MessageToSend += button.Content;
+
+                autocompleteInput.Focus();
+                autocompleteInput.CaretIndex = autocompleteInput.Text.Length;
+                }
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -772,5 +786,16 @@ namespace Gaze.HomePanel
 
         #endregion
 
-    }
+        private void MenuItemNew_Click(object sender, RoutedEventArgs e)
+            {
+            UserWindow userPanel = new UserWindow();
+            userPanel.ShowDialog();
+            }
+
+        private void MenuItemExit_Click(object sender, RoutedEventArgs e)
+            {
+            this.Close();
+            Application.Current.Shutdown();
+            }
+        }
 }

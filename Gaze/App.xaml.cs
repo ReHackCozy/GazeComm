@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using EyeXFramework.Wpf;
+using Gaze.Data;
 
 namespace Gaze
 {
@@ -17,11 +18,13 @@ namespace Gaze
     public partial class App : Application
     {
         public WpfEyeXHost eyeXHost;
+        public UserData userData;
 
         public App()
         {
             eyeXHost = new WpfEyeXHost();
             eyeXHost.Start();
+            userData = new UserData();
         }
 
     protected override void OnStartup(StartupEventArgs e)

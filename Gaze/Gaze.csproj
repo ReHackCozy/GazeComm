@@ -103,8 +103,14 @@
     <Compile Include="Control\GazeButton.xaml.cs">
       <DependentUpon>GazeButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Data\UserData.cs" />
+    <Compile Include="Data\Words.cs" />
     <Compile Include="HomePanel\HomePanelViewModel.cs" />
     <Compile Include="HomePanel\HomePanelWindow.xaml.cs" />
+    <Compile Include="HomePanel\KeyboardManager.cs" />
+    <Compile Include="UserPanel\UserWindow.xaml.cs">
+      <DependentUpon>UserWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\Util.cs" />
     <Compile Include="ViewModelMain\MainView.cs" />
     <Page Include="Control\GazeButton.xaml">
@@ -130,6 +136,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UserPanel\UserWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -155,6 +165,25 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <Compile Include="UserPanel\UserPanelViewModel.cs" />
+    <Content Include="Resources\actions_en.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\actions_my.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\letters_en.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\letters_my.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\words_en.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\words_my.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Resources\libel-suit-rg.ttf" />
   </ItemGroup>
   <ItemGroup>
@@ -202,6 +231,11 @@
     <PostBuildEvent>copy "$(ProjectDir)Feature\autocompleteInput.txt" "$(TargetDir)"
 </PostBuildEvent>
   </PropertyGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties Resources_4actions_3my_1json__JSONSchema="http://json.schemastore.org/csslintrc" />
+    </VisualStudio>
+  </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

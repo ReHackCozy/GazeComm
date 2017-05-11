@@ -95,6 +95,7 @@
     </Window.Resources>
 
     <Grid>
+
         <Grid Background="#9edbf2">
 
             <Grid.ColumnDefinitions>
@@ -104,13 +105,23 @@
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="130"/>
             </Grid.RowDefinitions>
 
+            <!--Menu-->
+            <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+                <MenuItem Header="_File">
+                    <MenuItem Header="_New" Click="MenuItemNew_Click"/>
+                    <Separator />
+                    <MenuItem Header="_Exit" Click="MenuItemExit_Click"/>
+                </MenuItem>
+            </Menu>
+
             <!-- HEADER START -->
-            <Grid Name="HeaderLeft" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"  Background="#485868">
+            <Grid Name="HeaderLeft" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"  Background="#485868">
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -125,31 +136,20 @@
                     </Grid>
 
                     <Grid Grid.Column="1" Margin="1,2,1,2">
-                        <TextBox Text="{Binding PhoneNumber}" Foreground="White" FontWeight="Bold" FontSize="20" Margin="5,0,0,0" Background="Transparent" BorderThickness="0"/>
-                    </Grid>
-
-                    <Grid Grid.Column="2">
-                        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2"  >
-                            <RadioButton GroupName="1" Foreground="White" FontWeight="Bold" FontSize="20" Margin="5,0,0,0" DockPanel.Dock="Top" VerticalContentAlignment="Center" IsChecked="{Binding Path=GenderMale, Mode=TwoWay}">Male</RadioButton>
-                            <RadioButton GroupName="1" Foreground="White" FontWeight="Bold" FontSize="20" Margin="10,0,0,0" DockPanel.Dock="Top" VerticalContentAlignment="Center" IsChecked="{Binding Path=GenderFemale, Mode=TwoWay}" >Female</RadioButton>
-                        </StackPanel>
-                    </Grid>
-
-                    <Grid Grid.Column="3" Margin="1,2,1,2">
-                        <xctk:IntegerUpDown FormatString="N0" Increment="1" Minimum="1" Maximum="120" Text="{Binding Age}" Foreground="White" FontWeight="Bold" FontSize="20" Margin="5,0,0,0" Background="Transparent" BorderThickness="0"/>
+                        <TextBox Text="{Binding PhoneNumber}" Foreground="White" FontWeight="Bold" FontSize="20" Margin="5,0,0,0"/>
                     </Grid>
 
                 </Grid>
 
             </Grid>
 
-            <Grid Name="HeaderRight" Grid.Row="0" Grid.Column="1" Background="#485868">
+            <Grid Name="HeaderRight" Grid.Row="1" Grid.Column="1" Background="#485868">
                 <TextBlock Text="Gaze" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="20" Foreground="White"/>
             </Grid>
             <!-- HEADER END -->
 
             <!--BODY START-->
-            <Grid Grid.Row="1" Grid.Column="1">
+            <Grid Grid.Row="2" Grid.Column="1">
 
                 <Grid>
                     <Grid.RowDefinitions>
@@ -241,7 +241,7 @@
 
             <!--Left Panel Start-->
 
-            <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Background="DarkGray">
+            <Grid Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Background="DarkGray">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="130"/>
                     <RowDefinition Height="200"/>
@@ -305,7 +305,7 @@
             <!--Left Panel End-->
 
             <!--Right Panel Start-->
-            <Grid Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Background="Azure" Margin="0,0,8,0">
+            <Grid Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" Background="Azure" Margin="0,0,8,0">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"/>
@@ -338,7 +338,7 @@
             <!--BODY END-->
 
             <!--FOOTER START-->
-            <autocomplete:AutoComplete Grid.Column="1" Grid.Row="2" Margin="0,0,0,0" x:Name="autocompleteInput" BorderThickness="0" Background="Azure" 
+            <autocomplete:AutoComplete Grid.Column="1" Grid.Row="3" Margin="0,0,0,0" x:Name="autocompleteInput" BorderThickness="0" Background="Azure" 
                                        TextChanged="autocompleteInput_TextChanged" Text="{Binding MessageToSend}" Initialized="autocompleteInput_Initialized" FontSize="50" VerticalContentAlignment="Center" />
             <!--FOOTER ENDS-->
 

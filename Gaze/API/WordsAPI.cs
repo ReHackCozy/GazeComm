@@ -10,6 +10,10 @@ namespace Gaze.API
     {
 
 
+        public void invoke()
+            {
+
+            }
 
     }
   }

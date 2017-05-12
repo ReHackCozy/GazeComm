@@ -208,7 +208,7 @@
                                                 <Grid>
                                                     <Path x:Name="PathIcon" Width="15" Height="25" Stretch="Fill" Fill="#4C87B3" HorizontalAlignment="Left" Margin="17,0,0,0" />
                                                     <TextBlock Text="{TemplateBinding Content}" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Center" 
-                                                               VerticalAlignment="Center" TextAlignment="Center"/>
+                                                               VerticalAlignment="Center" TextAlignment="Center" Padding="2,2,2,2"/>
                                                    
                                                 </Grid>
                                             </Border>

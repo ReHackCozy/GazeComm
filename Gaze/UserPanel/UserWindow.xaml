@@ -9,6 +9,7 @@
         WindowStartupLocation="CenterScreen"
         FontSize="25"
         Title="UserWindow" Height="744.809" Width="1226.381" WindowStyle="None" ResizeMode="NoResize" WindowState="Maximized"
+        FontFamily="Arial rounded MT bold" 
         FocusManager.FocusedElement="{Binding ElementName=textBox}">
     <Window.Background>
         <ImageBrush ImageSource="/Resources/BackgroundPoly.jpg" Stretch="Uniform" Opacity="0.4"/>
@@ -56,8 +57,8 @@
             </Grid.Background>
             <Image x:Name="image" HorizontalAlignment="Left" Height="100" Margin="234,10,0,0" VerticalAlignment="Top" Width="100" Source="/Gaze;component/Resources/LogoSymbol.png"/>
             <Image x:Name="image1" HorizontalAlignment="Left" Height="39" Margin="167,115,0,0" VerticalAlignment="Top" Width="259" Source="/Gaze;component/Resources/LogoTextSmall.png"/>
-            <TextBlock x:Name="label" Text="Gaze Communicator" HorizontalAlignment="Center" TextAlignment="Center" Margin="0,178,0,0" VerticalAlignment="Top" Height="82" Width="586" FontSize="56" FontWeight="Bold"/>
-            <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="73,390,0,0" TextWrapping="Wrap" LineHeight="40" TextAlignment="Center" Text="Before you can start controlling things with your eyes, we would need to get some information from you. Don't worry, we don't store any data, we just need them to improve the user experience. Have fun!" VerticalAlignment="Top" Height="300" Width="418"/>
+            <TextBlock x:Name="label" Text="Gaze Communicator" HorizontalAlignment="Center"  TextAlignment="Center" Margin="0,178,0,0" VerticalAlignment="Top" Height="82" Width="586" FontSize="56" FontWeight="Bold"/>
+            <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="73,390,0,0" TextWrapping="Wrap" LineHeight="40" TextAlignment="Justify" Text="Before you can start controlling things with your eyes, we would need to get some information from you. Don't worry, we don't store any data, we just need them to improve the user experience. Have fun!" VerticalAlignment="Top" Height="300" Width="418"/>
             <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="205,312,0,0" TextWrapping="Wrap" Text="Hello there!" VerticalAlignment="Top"/>
 
         </Grid>

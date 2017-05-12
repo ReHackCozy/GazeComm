@@ -233,7 +233,7 @@
                         </StackPanel.Background>
                         <!-- SPECIAL KEY START -->
 
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" Height="130" Margin="0,5,0,0">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" Height="130">
                             <Button x:Name="SpaceBtn" Content="SPACE" Width="500" Height="120" Foreground="white" FontSize="30" FontWeight="Bold"
                                     eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SpaceButton_Activate" Click="SpaceButton_Activate" eyeX:Behavior.GazeAware="True" 
                                     eyeX:Behavior.HasGazeChanged="SpaceButton_HasGazeChanged" FontFamily="Arial rounded MT bold">
@@ -257,7 +257,7 @@
                                 </Button.Style>
                             </Button>
 
-                            <Separator Opacity="0" Width="40"/>
+                            <Separator Opacity="0" Width="100"/>
                             <Button Content="BACKSPACE" Width="240" Height="120" FontSize="30" Foreground="white" FontWeight="Bold"
                                     eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="VK_BKSpace_Click" Click="VK_BKSpace_Click" eyeX:Behavior.GazeAware="True" 
                                     eyeX:Behavior.HasGazeChanged="VK_BKSpace_HasGazeChanged" FontFamily="Arial rounded MT bold">
@@ -281,12 +281,11 @@
                                 </Button.Style>
                             </Button>
 
-                            <Separator Opacity="0" Width="40"/>
                         </StackPanel>
 
                         <!-- SPECIAL KEY END -->
 
-                        <Separator/>
+
                         <ListView x:Name="SuggestionBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding SuggestionsList}" Initialized="SuggestionBox_Initialized" Height="120" Background="LightBlue" 
                                   HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,0,0">
 
@@ -428,9 +427,8 @@
                               FontFamily="Arial rounded MT bold" Foreground="Black" Background="#17af29">
                 </Button>
 
-                <StackPanel Orientation="Vertical" Grid.Row="2"  Background="White" VerticalAlignment="Center">
-                    <Separator Height="5"/>
-                    <Label x:Name="Status" Content="" Height="auto"  FontSize="40" FontWeight="Bold" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <StackPanel Orientation="Vertical" Grid.Row="2" Background="White" VerticalAlignment="Stretch">
+                    <Label x:Name="Status" Content="" Height="100" FontSize="40" FontWeight="Bold"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 </StackPanel>
 
                 <Button x:Name="SendTTS" Height="180" Grid.Row="3" Content="Send TTS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" 

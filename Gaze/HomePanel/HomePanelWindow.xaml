@@ -12,6 +12,7 @@
         xmlns:autocomplete="clr-namespace:Gaze.EyeTracker"
         WindowStyle="None"   
         KeyDown="Window_OnKeyDown"
+        Icon="/Resources/TechClutchIcon.ico"
         KeyUp="Window_KeyUp"
         MouseLeftButtonUp="Window_MouseLeftButtonUp"
         mc:Ignorable="d" FontFamily="Arial rounded MT bold"

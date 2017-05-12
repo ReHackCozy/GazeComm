@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Gaze.UserPanel"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
+        Icon="/Resources/TechClutchIcon.ico"
         WindowStartupLocation="CenterScreen"
         FontSize="25"
         Title="UserWindow" Height="744.809" Width="1226.381" WindowStyle="None" ResizeMode="NoResize" WindowState="Maximized"

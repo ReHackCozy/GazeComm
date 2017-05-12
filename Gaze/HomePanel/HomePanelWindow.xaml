@@ -358,6 +358,8 @@
                         </Style>
                     </ListBox.Resources>
                     <ListBox.Items>
+                        <Label Content="Keyset" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="25" Foreground="White" Background="#164e78"  Width="auto" />
+
                         <RadioButton GroupName="2" Content="WORDS" Height="180" FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SpaceButton_Activate" 
                                      Click="SpaceButton_Activate" eyeX:Behavior.HasGazeChanged="SpaceButton_HasGazeChanged" Checked="RadioButton_Checked" eyeX:Behavior.GazeAware="True"
                                      IsChecked="{Binding IsWords, Mode=TwoWay}" Style="{StaticResource TogButton}"/>
@@ -370,6 +372,8 @@
                                      Click="SpaceButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SpaceButton_HasGazeChanged" Checked="RadioButton_Checked"
                                      IsChecked="{Binding IsActions, Mode=TwoWay}" Style="{StaticResource TogButton}"/>
 
+                        <Label Content="Other" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="25" Foreground="White" Background="#164e78"  Width="auto" />
+                        
                         <Button Content="CLR" Height="180" FontSize="30" Foreground="white" FontWeight="Bold"
                                     eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="Clr_Activate" Click="Clr_Activate" eyeX:Behavior.GazeAware="True">
                             <Button.Style>
@@ -416,14 +420,14 @@
                 </StackPanel>
 
                 <!-- TEMP -->
-                <Button x:Name="EyeEnabler" Content="Keyboard ON" Grid.Row="1" FontSize="30" Height="auto" Width="auto" FontWeight="Bold" 
+                <Button x:Name="EyeEnabler" Content="Gazeraction ON" Grid.Row="1" FontSize="30" Height="auto" Width="auto" FontWeight="Bold" 
                                     eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="EyeEnabler_Checked" Click='EyeEnabler_Checked' eyeX:Behavior.GazeAware="True"
                               FontFamily="Arial rounded MT bold" Foreground="Black" Background="#17af29">
                 </Button>
 
-                <StackPanel Orientation="Vertical" Grid.Row="2"  Background="White" >
+                <StackPanel Orientation="Vertical" Grid.Row="2"  Background="White" VerticalAlignment="Center">
                     <Separator Height="5"/>
-                    <Label x:Name="Status" Height="auto"  FontSize="40" FontWeight="Bold" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label x:Name="Status" Content="" Height="auto"  FontSize="40" FontWeight="Bold" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 </StackPanel>
 
                 <Button x:Name="SendTTS" Height="180" Grid.Row="3" Content="Send TTS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" 

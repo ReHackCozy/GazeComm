@@ -240,11 +240,7 @@
     <PostBuildEvent>copy "$(ProjectDir)Feature\autocompleteInput.txt" "$(TargetDir)"
 </PostBuildEvent>
   </PropertyGroup>
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties Resources_4actions_3my_1json__JSONSchema="http://json.schemastore.org/csslintrc" />
-    </VisualStudio>
-  </ProjectExtensions>
+  <ProjectExtensions />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

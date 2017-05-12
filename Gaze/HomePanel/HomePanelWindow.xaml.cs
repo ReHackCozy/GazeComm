@@ -373,7 +373,10 @@ namespace Gaze.HomePanel
             var button = sender as Button;
             if (vm.MessageToSend.Length > 0)
             {
-                vm.MessageToSend = strcut(vm.MessageToSend);
+                if(!vm.IsLetters)
+                    vm.MessageToSend = strcut(vm.MessageToSend);
+                else
+                    vm.MessageToSend = vm.MessageToSend.Remove(vm.MessageToSend.Length - 1);
             }
 
             autocompleteInput.Focus();
@@ -832,6 +835,7 @@ namespace Gaze.HomePanel
             UserWindow userPanel = new UserWindow();
             userPanel.ShowDialog();
             }
+
 		//HACK, lazy to do
         private void EyeEnabler_Checked(object sender, RoutedEventArgs e)
         {
@@ -840,12 +844,12 @@ namespace Gaze.HomePanel
             var bc = new BrushConverter();
             if (IsKeyboardGazable)
             {
-                EyeEnabler.Content = "Keyboard ON";
+                EyeEnabler.Content = "Gazeraction ON";
                 EyeEnabler.Background = bc.ConvertFrom("#17af29") as Brush;
             }
             else
             {
-                EyeEnabler.Content = "Keyboard OFF";
+                EyeEnabler.Content = "Gazeraction OFF";
                 EyeEnabler.Background = bc.ConvertFrom("#e85151") as Brush;
             }
                 
@@ -855,7 +859,7 @@ namespace Gaze.HomePanel
         {
 
         }
-	}
+    }
 
     public static class CustomCommands
         {

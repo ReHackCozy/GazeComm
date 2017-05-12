@@ -21,7 +21,9 @@ namespace Gaze.UserPanel
     public partial class UserWindow : Window
         {
         private UserPanelViewModel vm;
-        private String configurationPath = @"C:\Program Files (x86)\Tobii\Tobii EyeX Config\Tobii.EyeX.Configuration.exe";
+        //private String configurationPath = @"C:\Program Files (x86)\Tobii\Tobii EyeX Config\Tobii.EyeX.Configuration.exe";
+        private String configurationPath = @"C:\Program Files (x86)\Tobii\Tobii EyeX Interaction\Tobii.EyeX.Interaction.TestEyeTracking.exe";
+
 
         public UserWindow()
             {

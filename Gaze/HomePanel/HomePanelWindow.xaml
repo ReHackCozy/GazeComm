@@ -117,7 +117,7 @@
 
         <Grid>
             <Grid.Background>
-                <ImageBrush ImageSource="/Resources/BackgroundPoly.jpg" Stretch="Uniform" Opacity="1"/>
+                <ImageBrush ImageSource="/Resources/BackgroundPoly.jpg" Stretch="Uniform" Opacity="0.4"/>
             </Grid.Background>
             
             <Grid.ColumnDefinitions>
@@ -220,7 +220,7 @@
                     <!-- KEYBOARD END -->
                     <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <StackPanel.Background>
-                            <SolidColorBrush Color="Black" Opacity="0.3"/>
+                            <SolidColorBrush Color="#002d49" Opacity="0.3"/>
                         </StackPanel.Background>
                         <!-- SPECIAL KEY START -->
 
@@ -393,7 +393,7 @@
             <!--Left Panel End-->
 
             <!--Right Panel Start-->
-            <Grid Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" Background="Azure" Margin="0,0,8,0">
+            <Grid Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" Background="Azure" >
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="80"/>

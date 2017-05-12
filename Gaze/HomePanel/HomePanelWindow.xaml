@@ -10,10 +10,10 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:AttachedBehavior="clr-namespace:Gaze.Control"
         xmlns:autocomplete="clr-namespace:Gaze.EyeTracker"
+        WindowStyle="None"   
         KeyDown="Window_OnKeyDown"
         KeyUp="Window_KeyUp"
         MouseLeftButtonUp="Window_MouseLeftButtonUp"
-
         mc:Ignorable="d"
         Title="Gaze Comm by Team Cozy" Height="1080" Width="1920" WindowState="Maximized">
 

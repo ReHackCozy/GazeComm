@@ -30,12 +30,6 @@ namespace Gaze.HomePanel
     /// </summary>
     public partial class HomePanelWindow : Window
     {
-        //Colorings
-        public  static string KeyboardHighlightColor = "#FFE59400";
-        public static string KeyboardOriginalColor = "#164e78";
-
-        public static string BGMiscPanelScrollButtonOriginalColor = "#002d49";
-
         //Others
         public static int SuggestionButtonHeight = 100;
         public static int SuggestionButtonWidth = 150;
@@ -342,9 +336,7 @@ namespace Gaze.HomePanel
 
         private void KeyboardButton_HasGazeChanged(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            var bc = new BrushConverter();
-            HandleButtonGazeHighlightColor(button, KeyboardOriginalColor, KeyboardHighlightColor);
+
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -706,9 +698,6 @@ namespace Gaze.HomePanel
 
         private void MiscPanelUp_HasGazeChanged(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            HandleButtonGazeHighlightColor(button, BGMiscPanelScrollButtonOriginalColor, KeyboardHighlightColor);
-
             hasMiscPanelUpGazed = !hasMiscPanelUpGazed;
             if (hasMiscPanelUpGazed)
             {
@@ -720,9 +709,6 @@ namespace Gaze.HomePanel
 
         private void MiscPanelDown_HasGazeChanged(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            HandleButtonGazeHighlightColor(button, BGMiscPanelScrollButtonOriginalColor, KeyboardHighlightColor);
-
             hasMiscPanelDownGazed = !hasMiscPanelDownGazed;
 
             if(hasMiscPanelDownGazed)
@@ -732,16 +718,6 @@ namespace Gaze.HomePanel
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        //[AH] Temporary solution
-        private void HandleButtonGazeHighlightColor(System.Windows.Controls.Control control, string originalColor, string highlightColor)
-        {
-            var bc = new BrushConverter();
-            if (control.Background.ToString() == highlightColor)
-                control.Background = bc.ConvertFrom(originalColor) as Brush;
-            else
-                control.Background = bc.ConvertFrom(highlightColor) as Brush;
-        }
 
         #region BlinkTracker
 

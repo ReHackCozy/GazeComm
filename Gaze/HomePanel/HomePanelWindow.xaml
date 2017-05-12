@@ -14,11 +14,17 @@
         KeyDown="Window_OnKeyDown"
         KeyUp="Window_KeyUp"
         MouseLeftButtonUp="Window_MouseLeftButtonUp"
-        mc:Ignorable="d"
+        mc:Ignorable="d" FontFamily="Arial rounded MT bold"
         Title="Gaze Comm by Team Cozy" Height="1080" Width="1920" WindowState="Maximized">
+
 
     <Window.Resources>
         <Style TargetType="{x:Type Button}" x:Key="SuggestionButtonStyle">
+            <Style.Triggers>
+                <Trigger Property="eyeX:Behavior.HasGaze" Value="True">
+                    <Setter Property="Button.Background" Value="#E59400"/>
+                </Trigger>
+            </Style.Triggers>
             <Setter Property="Background" Value="#F27360" />
             <Setter Property="Foreground" Value="White" />
             <Setter Property="FontSize" Value="15" />
@@ -39,7 +45,6 @@
                                 <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
                             </Grid>
                         </Border>
-
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" Value="#E59400" />
@@ -57,8 +62,11 @@
         </Style>
 
         <Style TargetType="{x:Type Button}" x:Key="KeyboardButton">
-            <Setter Property="Background" Value="#164e78" />
-            <Setter Property="Foreground" Value="White" />
+            <Style.Triggers>
+                <Trigger Property="eyeX:Behavior.HasGaze" Value="True">
+                    <Setter Property="Button.Background" Value="#E59400"/>
+                </Trigger>
+            </Style.Triggers>
             <Setter Property="FontSize" Value="15" />
             <Setter Property="FontFamily" Value="./#Segoe UI" />
             <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -67,11 +75,10 @@
             <Setter Property="MinWidth" Value="50"/>
             <Setter Property="eyeX:Behavior.Activatable" Value="Default"/>
             <Setter Property="eyeX:Behavior.GazeAware" Value="True"/>
-
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border CornerRadius="10" Background="{TemplateBinding Background}">
+                        <Border Background="{TemplateBinding Background}">
                             <Grid>
                                 <Path x:Name="PathIcon" Width="15" Height="25" Stretch="Fill" Fill="#4C87B3" HorizontalAlignment="Left" Margin="17,0,0,0" />
                                 <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
@@ -92,12 +99,27 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="TogButton" TargetType="{x:Type RadioButton}" BasedOn="{StaticResource {x:Type ToggleButton}}">
+            <Style.Triggers>
+                <Trigger Property="eyeX:Behavior.HasGaze" Value="True">
+                    <Setter Property="Button.Background" Value="#E59400"/>
+                </Trigger>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Foreground" Value="#E59400" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
     </Window.Resources>
 
     <Grid>
 
-        <Grid Background="#9edbf2">
-
+        <Grid>
+            <Grid.Background>
+                <ImageBrush ImageSource="/Resources/BackgroundPoly.jpg" Stretch="Uniform" Opacity="1"/>
+            </Grid.Background>
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="300"/>
                 <ColumnDefinition Width="*"/>
@@ -163,13 +185,28 @@
                     <!-- Keyboard UI START -->
                     <ItemsControl x:Name="KeyboardIC" ItemsSource="{Binding KeyboardButtonList}" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <ItemsControl.Resources>
-                            <Style x:Name="KeyboardStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource KeyboardButton}">
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource KeyboardButton}">
+                                <Setter Property="Background" Value="#164e78"/>
+                                <Setter Property="Foreground" Value="White"/>
                                 <Setter Property="Height" Value="150"/>
                                 <Setter Property="Width" Value="150"/>
+                                <Setter Property="FontFamily" Value="Arial rounded MT bold"/>
                                 <Setter Property="Margin" Value="5,5,5,5"/>
                                 <EventSetter Event="eyeX:Behavior.Activate" Handler="OnVirtualKeyboardPressed" />
                                 <EventSetter Event="Click" Handler="OnVirtualKeyboardPressed" />
                                 <EventSetter Event="eyeX:Behavior.HasGazeChanged" Handler="KeyboardButton_HasGazeChanged"/>
+                                <Setter Property="Template" x:Name="ControlTemplate">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border CornerRadius="10" Background="{TemplateBinding Background}">
+                                                <Grid>
+                                                    <Path x:Name="PathIcon" Width="15" Height="25" Stretch="Fill" Fill="#4C87B3" HorizontalAlignment="Left" Margin="17,0,0,0" />
+                                                    <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                                                </Grid>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
                             </Style>
                         </ItemsControl.Resources>
                         <ItemsControl.ItemsPanel>
@@ -181,25 +218,61 @@
                     <!-- Keyboard UI ENDS -->
 
                     <!-- KEYBOARD END -->
-
-                    <StackPanel Grid.Row="1" Background="#129fd9"  >
-
-                    </StackPanel>
-
-                    <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#83c7da">
+                    <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <StackPanel.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.3"/>
+                        </StackPanel.Background>
                         <!-- SPECIAL KEY START -->
 
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="Transparent" Height="130">
-                            <Button x:Name="SpaceBtn" Content="SPACE" Width="500" Height="120" Background="#002d49" Foreground="white" FontSize="30" FontWeight="Bold"  Style="{StaticResource KeyboardButton}" 
-                                    eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SpaceButton_Activate" Click="SpaceButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SpaceButton_HasGazeChanged"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" Height="130" Margin="0,5,0,0">
+                            <Button x:Name="SpaceBtn" Content="SPACE" Width="500" Height="120" Foreground="white" FontSize="30" FontWeight="Bold"
+                                    eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SpaceButton_Activate" Click="SpaceButton_Activate" eyeX:Behavior.GazeAware="True" 
+                                    eyeX:Behavior.HasGazeChanged="SpaceButton_HasGazeChanged" FontFamily="Arial rounded MT bold">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource KeyboardButton}">
+                                        <Setter Property="Background" Value="#002d49"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="Template" x:Name="ControlTemplate">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type Button}">
+                                                    <Border CornerRadius="10" Background="{TemplateBinding Background}">
+                                                        <Grid>
+                                                            <Path x:Name="PathIcon" Width="15" Height="25" Stretch="Fill" Fill="#4C87B3" HorizontalAlignment="Left" Margin="17,0,0,0" />
+                                                            <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                                                        </Grid>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
 
                             <Separator Opacity="0" Width="40"/>
-                            <Button Content="BACKSPACE" Width="240" Height="120" Background="#F5A46C"  FontSize="30" Foreground="white" FontWeight="Bold"  Style="{StaticResource KeyboardButton}" 
-                                    eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="VK_BKSpace_Click" Click="VK_BKSpace_Click" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="VK_BKSpace_HasGazeChanged"/>
+                            <Button Content="BACKSPACE" Width="240" Height="120" FontSize="30" Foreground="white" FontWeight="Bold"
+                                    eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="VK_BKSpace_Click" Click="VK_BKSpace_Click" eyeX:Behavior.GazeAware="True" 
+                                    eyeX:Behavior.HasGazeChanged="VK_BKSpace_HasGazeChanged" FontFamily="Arial rounded MT bold">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource KeyboardButton}">
+                                        <Setter Property="Background" Value="#F27360"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="Template" x:Name="ControlTemplate">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type Button}">
+                                                    <Border CornerRadius="10" Background="{TemplateBinding Background}">
+                                                        <Grid>
+                                                            <Path x:Name="PathIcon" Width="15" Height="25" Stretch="Fill" Fill="#4C87B3" HorizontalAlignment="Left" Margin="17,0,0,0" />
+                                                            <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                                                        </Grid>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
 
                             <Separator Opacity="0" Width="40"/>
-                            <Button Content="CLEAR" Width="240" Height="120" Background="#F27360" FontSize="30" Foreground="white" FontWeight="Bold"  Style="{StaticResource KeyboardButton}" 
-                                    eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="Clr_Activate" Click="Clr_Activate"  eyeX:Behavior.GazeAware="True" />
                         </StackPanel>
 
                         <!-- SPECIAL KEY END -->
@@ -244,8 +317,14 @@
                     <RowDefinition Height="180"/>
                 </Grid.RowDefinitions>
 
-                <Button x:Name="MiscPanelUp" Height="auto" Grid.Row="0" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" Background="#002d49" Foreground="LightBlue"
-                        Click="MiscPanelUp_Activate" eyeX:Behavior.HasGazeChanged="MiscPanelUp_HasGazeChanged" eyeX:Behavior.GazeAware="True">
+                <Button x:Name="MiscPanelUp" Height="auto" Grid.Row="0" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" 
+                        Click="MiscPanelUp_Activate" eyeX:Behavior.HasGazeChanged="MiscPanelUp_HasGazeChanged" eyeX:Behavior.GazeAware="True" >
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource KeyboardButton}">
+                            <Setter Property="Background" Value="#002d49"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Style>
+                    </Button.Style>
                     <StackPanel>
                         <Image Source="/Resources/ArrowUp.png" Height="40"/>
                     </StackPanel>
@@ -274,25 +353,38 @@
                     </ListBox.Resources>
                     <ListBox.Items>
                         <RadioButton GroupName="2" Content="WORDS" Height="180" FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SpaceButton_Activate" 
-                                     Click="SpaceButton_Activate" eyeX:Behavior.HasGazeChanged="SpaceButton_HasGazeChanged" Checked="RadioButton_Checked" 
-                                     IsChecked="{Binding IsWords, Mode=TwoWay}" Style="{StaticResource {x:Type ToggleButton}}" />
+                                     Click="SpaceButton_Activate" eyeX:Behavior.HasGazeChanged="SpaceButton_HasGazeChanged" Checked="RadioButton_Checked" eyeX:Behavior.GazeAware="True"
+                                     IsChecked="{Binding IsWords, Mode=TwoWay}" Style="{StaticResource TogButton}"/>
 
                         <RadioButton GroupName="2" Content="LETTERS" Height="180" FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SpaceButton_Activate" 
-                                     Click="SpaceButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SpaceButton_HasGazeChanged" Checked="RadioButton_Checked"  IsChecked="{Binding IsLetters, Mode=TwoWay}" 
-                                     Style="{StaticResource {x:Type ToggleButton}}"/>
+                                     Click="SpaceButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SpaceButton_HasGazeChanged" Checked="RadioButton_Checked" 
+                                     IsChecked="{Binding IsLetters, Mode=TwoWay}" Style="{StaticResource TogButton}"/>
 
                         <RadioButton GroupName="2" Content="PHRASE" Height="180"  FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SpaceButton_Activate" 
-                                     Click="SpaceButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SpaceButton_HasGazeChanged" Checked="RadioButton_Checked" IsChecked="{Binding IsActions, Mode=TwoWay}" 
-                                     Style="{StaticResource {x:Type ToggleButton}}"/>
+                                     Click="SpaceButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SpaceButton_HasGazeChanged" Checked="RadioButton_Checked"
+                                     IsChecked="{Binding IsActions, Mode=TwoWay}" Style="{StaticResource TogButton}"/>
 
-                        <Button x:Name="Settings" Height="200" eyeX:Behavior.Activatable="Default" Content="Settings" FontSize="40" FontWeight="Bold"  eyeX:Behavior.GazeAware="True" />
-                        <Button x:Name="PhoneBook" Height="200" eyeX:Behavior.Activatable="Default" Content="Phone Book" FontSize="40" FontWeight="Bold"  eyeX:Behavior.GazeAware="True" />
+                        <Button Content="CLEAR TEXTS" Height="180" FontSize="30" Foreground="white" FontWeight="Bold"
+                                    eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="Clr_Activate" Click="Clr_Activate" eyeX:Behavior.GazeAware="True">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource KeyboardButton}">
+                                    <Setter Property="Background" Value="IndianRed"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Style>
+                            </Button.Style>
+                        </Button>
                     </ListBox.Items>
                 </ListBox>
 
-                <Button x:Name="MiscPanelDown" Height="auto" Grid.Row="3" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" Background="#002d49" Foreground="LightBlue"
+                <Button x:Name="MiscPanelDown" Height="auto" Grid.Row="3" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default"
                          Click="MiscPanelDown_Activate" eyeX:Behavior.HasGazeChanged="MiscPanelDown_HasGazeChanged" eyeX:Behavior.GazeAware="True">
-                    <StackPanel>
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource KeyboardButton}">
+                                <Setter Property="Background" Value="#002d49"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Style>
+                        </Button.Style>
+                        <StackPanel>
                         <Image Source="/Resources/ArrowDown.png" Height="40"/>
                     </StackPanel>
                 </Button>
@@ -313,7 +405,7 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel Orientation="Vertical" Grid.Row="0" Background="Azure" >
-                    <Image Source="/Resources/LogoSymbol.png" Margin="10,0,10,0" Height="75"/>
+                    <Image Source="/Resources/LogoSmall.png" Margin="10,0,10,0" Height="75"/>
                     <Separator Height="5"/>
                 </StackPanel>
 
@@ -323,13 +415,47 @@
                 </StackPanel>
 
                 <Button x:Name="SendTTS" Height="180" Grid.Row="3" Content="Send TTS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" 
-                        eyeX:Behavior.Activate="SendTTS_Activate"  Click="SendTTS_Activate" eyeX:Behavior.GazeAware="True"/>
+                        eyeX:Behavior.Activate="SendTTS_Activate"  Click="SendTTS_Activate" eyeX:Behavior.GazeAware="True">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Style.Triggers>
+                                <Trigger Property="eyeX:Behavior.HasGaze" Value="True">
+                                    <Setter Property="Button.Background" Value="#E59400"/>
+                                </Trigger>
+                            </Style.Triggers>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Style>
+                    </Button.Style>
+                </Button>
 
                 <Button x:Name="SendSMS" Height="180" Grid.Row="4" eyeX:Behavior.Activatable="Default" Content="Send SMS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activate="OnSendSMS" 
-                        Click="OnSendSMS" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SendSMS_HasGazeChanged"/>
+                        Click="OnSendSMS" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SendSMS_HasGazeChanged">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Style.Triggers>
+                                <Trigger Property="eyeX:Behavior.HasGaze" Value="True">
+                                    <Setter Property="Button.Background" Value="#E59400"/>
+                                </Trigger>
+                            </Style.Triggers>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Style>
+                    </Button.Style>
+                </Button>
 
-                <Button Content="Speak" Grid.Row="5" Height="180" FontSize="50" FontWeight="Bold" Name="PlayText" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="PlayText_Activate" Background="#F3C766" 
-                        Click="PlayText_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="PlayText_HasGazeChanged"/>
+                <Button Content="Speak" Grid.Row="5" Height="180" FontSize="50" FontWeight="Bold" Name="PlayText" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="PlayText_Activate"
+                        Click="PlayText_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="PlayText_HasGazeChanged">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Style.Triggers>
+                                <Trigger Property="eyeX:Behavior.HasGaze" Value="True">
+                                    <Setter Property="Button.Background" Value="#E59400"/>
+                                </Trigger>
+                            </Style.Triggers>
+                            <Setter Property="Background" Value="#F3C766"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Style>
+                    </Button.Style>
+                </Button>
 
             </Grid>
             <!--Right Panel End-->

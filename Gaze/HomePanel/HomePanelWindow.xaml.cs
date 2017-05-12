@@ -58,7 +58,7 @@ namespace Gaze.HomePanel
         bool blinkTimerStarted = false;
         //HACK
         double fixationBeginTimeStamp = 0;
-        double fixationActivateDuration = 750; //In milisecond
+        double fixationActivateDuration = 500; //In milisecond
         bool fixationStart = false;
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -519,7 +519,10 @@ namespace Gaze.HomePanel
 
         private void statusTimer_Tick(object sender, EventArgs e)
         {
-            FadeOut(Status);
+            if(Status.Opacity != 0)
+                FadeOut(Status);
+
+            statusTimer.Stop();
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -11,6 +11,8 @@ using Gaze.Data;
 using System.IO;
 using RestSharp;
 using static Gaze.HomePanel.HomePanelViewModel;
+using System.Windows.Threading;
+using System.Windows;
 
 namespace Gaze.HomePanel
 {
@@ -23,7 +25,7 @@ namespace Gaze.HomePanel
         private String _name;
         private String _phoneNumber;
 
-        private bool _isBlinked;
+        //private bool _isBlinked;
         private UserData userDataRef;
         private KeyboardManager keyboardManager;
 
@@ -41,21 +43,27 @@ namespace Gaze.HomePanel
             _name = "";
             _phoneNumber = "";
             _messageToSend = "";
-            _isBlinked = false;
+            //_isBlinked = false;
             UpdateKeyboard();
             _authorizationAPI = new AuthorizationAPI(SendTTS);
         }
 
+        //AH] TODO crash on gaze bug
         public void LoadNextKeyboard()
-            {
-            _keyboardButtonList.Clear();
-            _keyboardButtonList.AddRange(keyboardManager.GetNextKeyboardList());
-            }
+        {
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => 
+            { _keyboardButtonList.Clear();
+                _keyboardButtonList.AddRange(keyboardManager.GetNextKeyboardList());
+            }));
+        }
 
         public void LoadPreviousKeyboard()
             {
-            _keyboardButtonList.Clear();
-            _keyboardButtonList.AddRange(keyboardManager.GetPreviousKeyboardList());
+                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+                {
+                    _keyboardButtonList.Clear();
+                    _keyboardButtonList.AddRange(keyboardManager.GetPreviousKeyboardList());
+                }));
             }
 
         public void SendTTS()
@@ -81,9 +89,12 @@ namespace Gaze.HomePanel
         {
             if(keyboardManager != null)
                 {
-                _keyboardButtonList.Clear();
-                _keyboardButtonList.AddRange(keyboardManager.GetKeyboardList());
-                }
+                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+                {
+                    _keyboardButtonList.Clear();
+                    _keyboardButtonList.AddRange(keyboardManager.GetKeyboardList());
+                }));
+            }
         }
         
         private void OnDataUpdated()

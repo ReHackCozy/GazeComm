@@ -54,8 +54,9 @@ namespace Gaze.HomePanel
 
         System.Windows.Threading.DispatcherTimer statusTimer = new System.Windows.Threading.DispatcherTimer();
 
-        System.Windows.Threading.DispatcherTimer blinkTimer = new System.Windows.Threading.DispatcherTimer();
-        bool blinkTimerStarted = false;
+        //System.Windows.Threading.DispatcherTimer blinkTimer = new System.Windows.Threading.DispatcherTimer();
+        //bool blinkTimerStarted = false;
+
         //HACK
         double fixationBeginTimeStamp = 0;
         double fixationActivateDuration = 500; //In milisecond

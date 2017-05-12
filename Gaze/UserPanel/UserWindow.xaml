@@ -8,9 +8,11 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         FontSize="25"
-        Background="#80FFFFFF"
         Title="UserWindow" Height="744.809" Width="1226.381" WindowStyle="None" ResizeMode="NoResize" WindowState="Maximized"
         FocusManager.FocusedElement="{Binding ElementName=textBox}">
+    <Window.Background>
+        <ImageBrush ImageSource="/Resources/BackgroundPoly.jpg" Stretch="Uniform" Opacity="0.4"/>
+    </Window.Background>
 
     <Grid Background="#9edbf2" Height="744.809" Width="1226.381">
         <Grid HorizontalAlignment="Left" Height="726" Margin="619,10,0,0" VerticalAlignment="Top" Width="589">
@@ -48,7 +50,10 @@
             </Grid>
             <Separator Margin="0,390,0,0" Height="23" VerticalAlignment="Top" />
         </Grid>
-        <Grid HorizontalAlignment="Left" Height="726" Margin="10,10,0,0" VerticalAlignment="Top" Width="586" Background="White">
+        <Grid HorizontalAlignment="Left" Height="726" Margin="10,10,0,0" VerticalAlignment="Top" Width="586">
+            <Grid.Background>
+                <ImageBrush ImageSource="/Resources/BackgroundPoly.jpg" Stretch="UniformToFill" Opacity="0.2"/>
+            </Grid.Background>
             <Image x:Name="image" HorizontalAlignment="Left" Height="100" Margin="234,10,0,0" VerticalAlignment="Top" Width="100" Source="/Gaze;component/Resources/LogoSymbol.png"/>
             <Image x:Name="image1" HorizontalAlignment="Left" Height="39" Margin="167,115,0,0" VerticalAlignment="Top" Width="259" Source="/Gaze;component/Resources/LogoTextSmall.png"/>
             <TextBlock x:Name="label" Text="Gaze Communicator" HorizontalAlignment="Center" TextAlignment="Center" Margin="0,178,0,0" VerticalAlignment="Top" Height="82" Width="586" FontSize="56" FontWeight="Bold"/>

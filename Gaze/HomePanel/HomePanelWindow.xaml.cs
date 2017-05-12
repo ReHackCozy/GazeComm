@@ -276,6 +276,9 @@ namespace Gaze.HomePanel
 
         private void addWordToSendMessageTextFromButton(string text)
         {
+            if (!IsKeyboardGazable)
+                return;
+
             var tmp_msg_list = vm.MessageToSend.Split(' ').ToList();
             tmp_msg_list.Remove(tmp_msg_list.Last());
 

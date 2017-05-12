@@ -290,7 +290,7 @@
                                 </ItemsPanelTemplate>
                             </ListView.ItemsPanel>
                             <ListView.ItemContainerStyle>
-                                <Style>
+                                <Style >
                                     <Setter Property="Grid.ColumnSpan" Value="2" />
                                     <Setter Property="Grid.RowSpan" Value="3" />
                                     <Setter Property="eyeX:Behavior.Activatable" Value="Default" />

@@ -17,6 +17,9 @@
         mc:Ignorable="d" FontFamily="Arial rounded MT bold"
         Title="Gaze Comm by Team Cozy" Height="1080" Width="1920" WindowState="Maximized">
 
+    <Window.CommandBindings>
+        <CommandBinding Command="local:CustomCommands.NewUser" CanExecute="NewUser_CanExecute" Executed="NewUser_Executed" />
+    </Window.CommandBindings>
 
     <Window.Resources>
         <Style TargetType="{x:Type Button}" x:Key="SuggestionButtonStyle">
@@ -137,7 +140,7 @@
             </Grid.RowDefinitions>
 
             <!--Menu-->
-            <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+            <Menu x:Name="menu" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
                 <MenuItem Header="_File">
                     <MenuItem Header="_New" Click="MenuItemNew_Click"/>
                     <Separator />

@@ -8,43 +8,52 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         FontSize="25"
-        Background="#9edbf2"
-        Title="UserWindow" Height="776.809" Width="1226.381">
+        Background="#80FFFFFF"
+        Title="UserWindow" Height="744.809" Width="1226.381" WindowStyle="None" ResizeMode="NoResize" WindowState="Maximized"
+        FocusManager.FocusedElement="{Binding ElementName=textBox}">
 
-    <Grid>
+    <Grid Background="#9edbf2" Height="744.809" Width="1226.381">
         <Grid HorizontalAlignment="Left" Height="726" Margin="619,10,0,0" VerticalAlignment="Top" Width="589">
-            <Grid Margin="10,70,10,177">
-                <TextBox x:Name="textBox" Height="40" Margin="206,10,646,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding Name}"/>
-                <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top" Width="194"/>
-                <TextBox x:Name="textBox_Copy" Height="40" Margin="206,88,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding PhoneNumber}" HorizontalAlignment="Left" Width="346"/>
-                <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="7,88,0,0" TextWrapping="Wrap" Text="Phone Number" VerticalAlignment="Top" Width="194"/>
-                <TextBlock x:Name="textBlock_Copy1" Margin="10,133,-3,0" TextWrapping="Wrap" Text="We will use this number to send SMS and TTS" VerticalAlignment="Top" FontSize="18"/>
+            <Separator Margin="0,188,0,0" Height="23" VerticalAlignment="Top" />
+            <Grid Margin="10,20,10,552">
+                <TextBox x:Name="textBox" Height="40" Margin="213,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding Name}" HorizontalAlignment="Left" Width="346"/>
+                <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,17,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top" Width="194"/>
+                <TextBox x:Name="textBox_Copy" Height="40" Margin="213,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding PhoneNumber}" HorizontalAlignment="Left" Width="346"/>
+                <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="10,72,0,0" TextWrapping="Wrap" Text="Mobile Number" VerticalAlignment="Top" Width="194"/>
+                <TextBlock x:Name="textBlock_Copy1" Margin="10,120,-3,0" TextWrapping="Wrap" Text="We will use this number to send SMS and TTS" VerticalAlignment="Top" FontSize="18"/>
             </Grid>
-            <Grid Margin="10,244,10,0" Height="237" VerticalAlignment="Top">
-                <xctk:IntegerUpDown FormatString="N0" Increment="1" Minimum="1" Maximum="120" Text="{Binding Age}" Margin="213,10,0,0" Background="Transparent" BorderThickness="0" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" Width="341"/>
+
+            <Grid Margin="10,223,10,0" Height="163" VerticalAlignment="Top">
+                <xctk:IntegerUpDown FormatString="N0" Increment="1" Minimum="1" Maximum="120" Text="{Binding Age}" Margin="213,6,255,0" Background="Transparent" BorderThickness="0" Height="40" VerticalAlignment="Top"/>
                 <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Age" VerticalAlignment="Top" Width="198"/>
-                <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="7,51,0,0" TextWrapping="Wrap" Text="Gender" VerticalAlignment="Top" Width="201"/>
+                <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="10,58,0,0" TextWrapping="Wrap" Text="Gender" VerticalAlignment="Top" Width="201"/>
                 <StackPanel Orientation="Horizontal" Margin="213,55,0,0" HorizontalAlignment="Left" Width="341" Height="40" VerticalAlignment="Top">
                     <RadioButton GroupName="1" Foreground="Black" Margin="15,0,0,0" DockPanel.Dock="Top" VerticalContentAlignment="Center" IsChecked="{Binding GenderMale, Mode=TwoWay}" Content="Male"/>
                     <RadioButton GroupName="1" Foreground="Black" Margin="20,0,0,0" DockPanel.Dock="Top" VerticalContentAlignment="Center" IsChecked="{Binding GenderFemale, Mode=TwoWay}" Content="Female" />
                 </StackPanel>
-                <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="7,100,0,0" TextWrapping="Wrap" Text="Optional. Will be used to determine the voice type." VerticalAlignment="Top" Width="547" Height="73" FontSize="18"/>
+                <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="10,100,0,0" TextWrapping="Wrap" Text="Optional. Will be used to determine the voice type." VerticalAlignment="Top" Width="547" Height="32" FontSize="18"/>
             </Grid>
-            <Grid Margin="10,0,10,163" Height="164" VerticalAlignment="Bottom">
-                <StackPanel Orientation="Horizontal" Margin="232,21,0,0" Height="39" VerticalAlignment="Top"  >
+            <Grid Margin="10,0,10,134" Height="164" VerticalAlignment="Bottom">
+                <StackPanel Orientation="Horizontal" Margin="222,21,10,0" Height="39" VerticalAlignment="Top"  >
                     <RadioButton GroupName="2" Margin="5,-4,0,4" DockPanel.Dock="Top" VerticalContentAlignment="Center" IsChecked="{Binding EnglishLanguage, Mode=TwoWay}" Content="English"/>
-                    <RadioButton GroupName="2" Margin="10,-4,0,4" DockPanel.Dock="Top" VerticalContentAlignment="Center" IsChecked="{Binding MalayLanguage, Mode=TwoWay}" Content="Malay" />
+                    <RadioButton GroupName="2" Margin="10,-4,0,4" VerticalContentAlignment="Center" IsChecked="{Binding MalayLanguage, Mode=TwoWay}" Content="Malay" />
                 </StackPanel>
-                <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="7,9,0,0" TextWrapping="Wrap" Text="Language Preference" VerticalAlignment="Top" Width="189"/>
-                <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="7,81,0,0" TextWrapping="Wrap" Text="We do not store any data collected here. This is just for demo purposes." VerticalAlignment="Top" FontSize="18"/>
+                <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="10,9,0,0" TextWrapping="Wrap" Text="Language Preference" VerticalAlignment="Top" Width="189"/>
+                <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="7,81,0,0" TextWrapping="Wrap" Text="We do not store any data collected here. This is just for demo purposes." VerticalAlignment="Top" FontSize="18" Width="552"/>
             </Grid>
-            <Grid Margin="10,600,10,10">
+            <Grid Margin="10,646,10,-8" Height="88" VerticalAlignment="Top">
                 <Button x:Name="buttonCalibrate" Content="Calibrate" HorizontalAlignment="Left" Margin="192,0,0,-1" VerticalAlignment="Top" Width="180" Height="80" Click="buttonCalibrate_Click" Background="#164E78" Foreground="White"/>
                 <Button x:Name="buttonCancel" Content="Cancel" HorizontalAlignment="Left" Margin="0,-1,0,0" VerticalAlignment="Top" Width="180" Height="80" Click="buttonCancel_Click" Background="#164E78" Foreground="White"/>
                 <Button x:Name="buttonOK" Content="OK" HorizontalAlignment="Left" Margin="384,-1,0,0" VerticalAlignment="Top" Width="180" Height="80" Click="buttonOK_Click" Background="#164E78" Foreground="White"/>
             </Grid>
+            <Separator Margin="0,390,0,0" Height="23" VerticalAlignment="Top" />
         </Grid>
-        <Grid HorizontalAlignment="Left" Height="726" Margin="10,10,0,0" VerticalAlignment="Top" Width="586" Background="#164E78">
+        <Grid HorizontalAlignment="Left" Height="726" Margin="10,10,0,0" VerticalAlignment="Top" Width="586" Background="White">
+            <Image x:Name="image" HorizontalAlignment="Left" Height="100" Margin="234,10,0,0" VerticalAlignment="Top" Width="100" Source="/Gaze;component/Resources/LogoSymbol.png"/>
+            <Image x:Name="image1" HorizontalAlignment="Left" Height="39" Margin="167,115,0,0" VerticalAlignment="Top" Width="259" Source="/Gaze;component/Resources/LogoTextSmall.png"/>
+            <TextBlock x:Name="label" Text="Gaze Communicator" HorizontalAlignment="Center" TextAlignment="Center" Margin="0,178,0,0" VerticalAlignment="Top" Height="82" Width="586" FontSize="56" FontWeight="Bold"/>
+            <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="73,390,0,0" TextWrapping="Wrap" LineHeight="40" TextAlignment="Center" Text="Before you can start controlling things with your eyes, we would need to get some information from you. Don't worry, we don't store any data, we just need them to improve the user experience. Have fun!" VerticalAlignment="Top" Height="300" Width="418"/>
+            <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="205,312,0,0" TextWrapping="Wrap" Text="Hello there!" VerticalAlignment="Top"/>
 
         </Grid>
     </Grid>

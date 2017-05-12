@@ -104,8 +104,7 @@ namespace Gaze.HomePanel
 
             var fixationStream = eyeXHostRef.CreateFixationDataStream(Tobii.EyeX.Framework.FixationDataMode.Sensitive);
             fixationStream.Next += OnFixatedGaze;
-
-        }
+            }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -823,7 +822,17 @@ namespace Gaze.HomePanel
             Application.Current.Shutdown();
             }
 
-        //HACK, lazy to do
+        private void NewUser_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+            {
+            e.CanExecute = true;
+            }
+
+        private void NewUser_Executed(object sender, ExecutedRoutedEventArgs e)
+            {
+            UserWindow userPanel = new UserWindow();
+            userPanel.ShowDialog();
+            }
+		//HACK, lazy to do
         private void EyeEnabler_Checked(object sender, RoutedEventArgs e)
         {
             IsKeyboardGazable = !IsKeyboardGazable;
@@ -846,5 +855,21 @@ namespace Gaze.HomePanel
         {
 
         }
+	}
+
+    public static class CustomCommands
+        {
+        public static readonly RoutedUICommand NewUser = new RoutedUICommand
+                (
+                        "New",
+                        "New",
+                        typeof(CustomCommands),
+                        new InputGestureCollection()
+                        {
+                                        new KeyGesture(Key.N, ModifierKeys.Control)
+                        }
+                );
+
+        }
     }
-}
+

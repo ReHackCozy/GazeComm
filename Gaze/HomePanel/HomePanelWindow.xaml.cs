@@ -22,6 +22,7 @@ using System.Windows.Media.Animation;
 using Gaze.Control;
 using Gaze.Data;
 using Gaze.UserPanel;
+using System.Windows.Controls.Primitives;
 
 namespace Gaze.HomePanel
 {
@@ -30,6 +31,8 @@ namespace Gaze.HomePanel
     /// </summary>
     public partial class HomePanelWindow : Window
     {
+        bool IsKeyboardGazable = true;
+
         //Others
         public static int SuggestionButtonHeight = 100;
         public static int SuggestionButtonWidth = 150;
@@ -138,6 +141,9 @@ namespace Gaze.HomePanel
 
         private void OnEyeXActivateSuggestion(object sender, RoutedEventArgs e)
         {
+            if (!IsKeyboardGazable)
+                return;
+
             var element = e.Source as FrameworkElement;
             if (null == element) { return; }
 
@@ -291,6 +297,9 @@ namespace Gaze.HomePanel
 
         private void PlayText_Activate(object sender, RoutedEventArgs e)
         {
+            if (!IsKeyboardGazable)
+                return;
+
             if (vm.MessageToSend.Length == 0)
                 return;
 
@@ -305,6 +314,9 @@ namespace Gaze.HomePanel
 
         private void OnVirtualKeyboardPressed(object sender, RoutedEventArgs e)
         {
+            if (!IsKeyboardGazable)
+                return;
+
             var button = sender as Button;
 
             if(button.Tag.Equals("next"))
@@ -353,6 +365,9 @@ namespace Gaze.HomePanel
 
         private void VK_BKSpace_Click(object sender, RoutedEventArgs e)
         {
+            if (!IsKeyboardGazable)
+                return;
+
             var button = sender as Button;
             if (vm.MessageToSend.Length > 0)
             {
@@ -401,6 +416,9 @@ namespace Gaze.HomePanel
 
         private void SpaceButton_Activate(object sender, RoutedEventArgs e)
         {
+            if (!IsKeyboardGazable)
+                return;
+
             var rad_btn = sender as RadioButton;
 
             if(rad_btn == null)
@@ -481,6 +499,9 @@ namespace Gaze.HomePanel
 
         private void SendTTS_Activate(object sender, RoutedEventArgs e)
         {
+            if (!IsKeyboardGazable)
+                return;
+
             vm.SendTTS();
             Utilities.Util.Speak("TTS Sent", System.Speech.Synthesis.VoiceGender.Female);
             Status.Opacity = 0;
@@ -493,6 +514,9 @@ namespace Gaze.HomePanel
 
         private void OnSendSMS(object sender, RoutedEventArgs e)
         {
+            if (!IsKeyboardGazable)
+                return;
+
             Utilities.Util.Speak("SMS Sent", System.Speech.Synthesis.VoiceGender.Female);
             new SendMessage().Invoke(vm.MessageToSend, vm.PhoneNumber);
             Status.Opacity = 0;
@@ -505,6 +529,9 @@ namespace Gaze.HomePanel
 
         private void Clr_Activate(object sender, RoutedEventArgs e)
         {
+            if (!IsKeyboardGazable)
+                return;
+
             vm.MessageToSend = "";
             autocompleteInput.Focus();
         }
@@ -792,5 +819,29 @@ namespace Gaze.HomePanel
             this.Close();
             Application.Current.Shutdown();
             }
+
+        //HACK, lazy to do
+        private void EyeEnabler_Checked(object sender, RoutedEventArgs e)
+        {
+            IsKeyboardGazable = !IsKeyboardGazable;
+
+            var bc = new BrushConverter();
+            if (IsKeyboardGazable)
+            {
+                EyeEnabler.Content = "Keyboard ON";
+                EyeEnabler.Background = bc.ConvertFrom("#17af29") as Brush;
+            }
+            else
+            {
+                EyeEnabler.Content = "Keyboard OFF";
+                EyeEnabler.Background = bc.ConvertFrom("#e85151") as Brush;
+            }
+                
         }
+
+        private void EyeEnabler_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+    }
 }

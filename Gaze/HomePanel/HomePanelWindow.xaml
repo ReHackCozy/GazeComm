@@ -412,6 +412,12 @@
                     <Separator Height="5"/>
                 </StackPanel>
 
+                <!-- TEMP -->
+                <Button x:Name="EyeEnabler" Content="Keyboard ON" Grid.Row="1" FontSize="30" Height="auto" Width="auto" FontWeight="Bold" 
+                                    eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="EyeEnabler_Checked" Click='EyeEnabler_Checked' eyeX:Behavior.GazeAware="True"
+                              FontFamily="Arial rounded MT bold" Foreground="Black" Background="#17af29">
+                </Button>
+
                 <StackPanel Orientation="Vertical" Grid.Row="2"  Background="White" >
                     <Separator Height="5"/>
                     <Label x:Name="Status" Height="auto"  FontSize="40" FontWeight="Bold" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>

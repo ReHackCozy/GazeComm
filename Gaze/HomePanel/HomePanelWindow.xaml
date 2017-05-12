@@ -172,11 +172,6 @@
                                 <EventSetter Event="eyeX:Behavior.HasGazeChanged" Handler="KeyboardButton_HasGazeChanged"/>
                             </Style>
                         </ItemsControl.Resources>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <!--<Image Source="{Binding Image}" Height="100"/> Something to try with-->
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel/>

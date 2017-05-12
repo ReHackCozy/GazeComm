@@ -56,7 +56,7 @@ namespace Gaze.HomePanel
         bool blinkTimerStarted = false;
         //HACK
         double fixationBeginTimeStamp = 0;
-        double fixationActivateDuration = 750; //In milisecond
+        double fixationActivateDuration = 500; //In milisecond
         bool fixationStart = false;
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////

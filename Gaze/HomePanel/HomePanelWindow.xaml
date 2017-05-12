@@ -105,6 +105,9 @@
                 <Trigger Property="eyeX:Behavior.HasGaze" Value="True">
                     <Setter Property="Button.Background" Value="#E59400"/>
                 </Trigger>
+                <Trigger Property="IsMouseOver"  Value="True">
+                    <Setter Property="Button.Background" Value="#E59400"/>
+                </Trigger>
                 <Trigger Property="IsChecked" Value="True">
                     <Setter Property="Foreground" Value="#E59400" />
                 </Trigger>
@@ -364,7 +367,7 @@
                                      Click="SpaceButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SpaceButton_HasGazeChanged" Checked="RadioButton_Checked"
                                      IsChecked="{Binding IsActions, Mode=TwoWay}" Style="{StaticResource TogButton}"/>
 
-                        <Button Content="CLEAR TEXTS" Height="180" FontSize="30" Foreground="white" FontWeight="Bold"
+                        <Button Content="CLR" Height="180" FontSize="30" Foreground="white" FontWeight="Bold"
                                     eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="Clr_Activate" Click="Clr_Activate" eyeX:Behavior.GazeAware="True">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource KeyboardButton}">

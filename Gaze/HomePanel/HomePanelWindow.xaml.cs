@@ -354,11 +354,26 @@ namespace Gaze.HomePanel
         private void VK_BKSpace_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            if(vm.MessageToSend.Length > 0)
-                vm.MessageToSend = vm.MessageToSend.Remove(vm.MessageToSend.Length - 1);
+            if (vm.MessageToSend.Length > 0)
+            {
+                vm.MessageToSend = strcut(vm.MessageToSend);
+            }
 
             autocompleteInput.Focus();
             autocompleteInput.CaretIndex = autocompleteInput.Text.Length;
+        }
+
+        private string strcut(string str)
+        {
+            string[] a = str.Trim().Split(' ');
+            string str1 = string.Empty;
+            for (int i = 0; i < a.Count() - 1; i++)
+            {
+                str1 = str1 + a[i];
+                if (a.Count() - 2 != i)
+                { str1 += " "; }
+            }
+            return str1;
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////

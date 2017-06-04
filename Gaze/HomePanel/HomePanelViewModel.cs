@@ -46,6 +46,9 @@ namespace Gaze.HomePanel
             //_isBlinked = false;
             UpdateKeyboard();
             _authorizationAPI = new AuthorizationAPI(SendTTS);
+
+            IsFixationGazeActivate = true;
+            IsBlinkEyesGazeActivate = false;
         }
 
         //AH] TODO crash on gaze bug
@@ -157,6 +160,32 @@ namespace Gaze.HomePanel
 
                 
                 OnPropertyChanged("MessageToSend");
+            }
+        }
+
+        private bool _isFixationGazeActivate;
+        public bool IsFixationGazeActivate
+        {
+            get { return _isFixationGazeActivate; }
+            set
+            {
+                if (_isFixationGazeActivate == value) return;
+
+                _isFixationGazeActivate = value;
+                OnPropertyChanged("IsFixationGazeActivate");
+            }
+        }
+
+        private bool _isBlinkEyesGazeActivate;
+        public bool IsBlinkEyesGazeActivate
+        {
+            get { return _isBlinkEyesGazeActivate; }
+            set
+            {
+                if (_isBlinkEyesGazeActivate == value) return;
+
+                _isBlinkEyesGazeActivate = value;
+                OnPropertyChanged("IsBlinkEyesGazeActivate");
             }
         }
 

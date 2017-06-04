@@ -84,14 +84,17 @@ namespace Gaze.HomePanel
             var eyePositionStream = eyeXHostRef.CreateEyePositionDataStream();
             eyePositionStream.Next += (s,e) => 
             {
-                //If both eyes blinked
-                if (!e.LeftEye.IsValid && !e.RightEye.IsValid && !rightEyeBlinked)
+                if (vm.IsBlinkEyesGazeActivate)
                 {
-                    rightEyeBlinked = true;
+                    //If both eyes blinked
+                    if (!e.LeftEye.IsValid && !e.RightEye.IsValid && !rightEyeBlinked)
+                    {
+                        rightEyeBlinked = true;
 
-                    EyeBlinkCooldownTimer.Start();
+                        EyeBlinkCooldownTimer.Start();
 
-                    eyeXHostRef.TriggerActivation();
+                        eyeXHostRef.TriggerActivation();
+                    }
                 }
             };
 
@@ -401,36 +404,52 @@ namespace Gaze.HomePanel
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        private void SpaceButton_Activate(object sender, RoutedEventArgs e)
+        private void FocusOnInputText(object sender, RoutedEventArgs e)
+        {
+            if (!IsKeyboardGazable)
+                return;
+
+            vm.MessageToSend += " ";
+
+            autocompleteInput.Focus();
+            autocompleteInput.CaretIndex = autocompleteInput.Text.Length;
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void OnSpaceBtn_Acctivate(object sender, RoutedEventArgs e)
+        {
+            if (!IsKeyboardGazable)
+                return;
+
+            vm.MessageToSend += " ";
+
+            autocompleteInput.Focus();
+            autocompleteInput.CaretIndex = autocompleteInput.Text.Length;
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void KeysetButton_Activate(object sender, RoutedEventArgs e)
         {
             if (!IsKeyboardGazable)
                 return;
 
             var rad_btn = sender as RadioButton;
 
-            if(rad_btn == null)
-                vm.MessageToSend += " ";
-
             autocompleteInput.Focus();
             autocompleteInput.CaretIndex = autocompleteInput.Text.Length;
 
-            if(rad_btn != null)
+            if (rad_btn != null)
                 rad_btn.IsChecked = true;
-        }
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        private void SpaceButton_HasGazeChanged(object sender, RoutedEventArgs e)
-        {
-
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public void OnGazeActivateButton()
         {
-            //[AH][For Fixation]
-            //eyeXHostRef.TriggerActivation();
+            if(vm.IsFixationGazeActivate)
+                eyeXHostRef.TriggerActivation();
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -516,9 +535,37 @@ namespace Gaze.HomePanel
             autocompleteInput.Focus();
         }
 
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void KeysetRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             vm.UpdateKeyboard();
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void GazeActivationMode_Checked(object sender, RoutedEventArgs e)
+        {
+            //[AH]TODO
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void GazeActivationMode_Activate(object sender, RoutedEventArgs e)
+        {
+            if (!IsKeyboardGazable)
+                return;
+
+            var rad_btn = sender as RadioButton;
+
+            if (rad_btn == null)
+                vm.MessageToSend += " ";
+
+            autocompleteInput.Focus();
+            autocompleteInput.CaretIndex = autocompleteInput.Text.Length;
+
+            if (rad_btn != null)
+                rad_btn.IsChecked = true;
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////

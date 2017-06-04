@@ -235,8 +235,8 @@
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" Height="130">
                             <Button x:Name="SpaceBtn" Content="SPACE" Width="500" Height="120" Foreground="white" FontSize="30" FontWeight="Bold"
-                                    eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SpaceButton_Activate" Click="SpaceButton_Activate" eyeX:Behavior.GazeAware="True" 
-                                    eyeX:Behavior.HasGazeChanged="SpaceButton_HasGazeChanged" FontFamily="Arial rounded MT bold">
+                                    eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="OnSpaceBtn_Acctivate" Click="OnSpaceBtn_Acctivate" eyeX:Behavior.GazeAware="True" 
+                                    FontFamily="Arial rounded MT bold">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource KeyboardButton}">
                                         <Setter Property="Background" Value="#002d49"/>
@@ -362,17 +362,27 @@
                     <ListBox.Items>
                         <Label Content="Keyset" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="25" Foreground="White" Background="#164e78"  Width="auto" />
 
-                        <RadioButton GroupName="2" Content="WORDS" Height="180" FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SpaceButton_Activate" 
-                                     Click="SpaceButton_Activate" eyeX:Behavior.HasGazeChanged="SpaceButton_HasGazeChanged" Checked="RadioButton_Checked" eyeX:Behavior.GazeAware="True"
+                        <RadioButton GroupName="2" Content="WORDS" Height="180" FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="KeysetButton_Activate" 
+                                     Click="KeysetButton_Activate" Checked="KeysetRadioButton_Checked" eyeX:Behavior.GazeAware="True"
                                      IsChecked="{Binding IsWords, Mode=TwoWay}" Style="{StaticResource TogButton}"/>
 
-                        <RadioButton GroupName="2" Content="LETTERS" Height="180" FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SpaceButton_Activate" 
-                                     Click="SpaceButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SpaceButton_HasGazeChanged" Checked="RadioButton_Checked" 
+                        <RadioButton GroupName="2" Content="LETTERS" Height="180" FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="KeysetButton_Activate" 
+                                     Click="KeysetButton_Activate" eyeX:Behavior.GazeAware="True" Checked="KeysetRadioButton_Checked" 
                                      IsChecked="{Binding IsLetters, Mode=TwoWay}" Style="{StaticResource TogButton}"/>
 
-                        <RadioButton GroupName="2" Content="PHRASE" Height="180"  FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="SpaceButton_Activate" 
-                                     Click="SpaceButton_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SpaceButton_HasGazeChanged" Checked="RadioButton_Checked"
+                        <RadioButton GroupName="2" Content="PHRASE" Height="180"  FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="KeysetButton_Activate" 
+                                     Click="KeysetButton_Activate" eyeX:Behavior.GazeAware="True" Checked="KeysetRadioButton_Checked"
                                      IsChecked="{Binding IsActions, Mode=TwoWay}" Style="{StaticResource TogButton}"/>
+
+                        <Label Content="Gaze Activation Mode" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="25" Foreground="White" Background="#164e78"  Width="auto" />
+
+                        <RadioButton GroupName="3" Content="Fixation" Height="180" FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazeActivationMode_Activate"
+                                     Click="GazeActivationMode_Activate" eyeX:Behavior.GazeAware="True" Checked="GazeActivationMode_Checked" 
+                                     IsChecked="{Binding IsFixationGazeActivate, Mode=TwoWay}" Style="{StaticResource TogButton}"/>
+
+                        <RadioButton GroupName="3" Content="Blink" Height="180"  FontSize="30" FontWeight="Bold" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="GazeActivationMode_Activate"
+                                     Click="GazeActivationMode_Activate" eyeX:Behavior.GazeAware="True" Checked="GazeActivationMode_Checked"
+                                     IsChecked="{Binding IsBlinkEyesGazeActivate, Mode=TwoWay}" Style="{StaticResource TogButton}"/>
 
                         <Label Content="Other" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="25" Foreground="White" Background="#164e78"  Width="auto" />
                         

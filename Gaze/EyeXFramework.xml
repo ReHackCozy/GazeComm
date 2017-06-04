@@ -519,6 +519,11 @@
             Event raised when gaze tracking has changed.
             </summary>
         </member>
+        <member name="E:EyeXFramework.EyeXHost.ConfigurationStatusChanged">
+            <summary>
+            Event raised when configuration status has changed
+            </summary>
+        </member>
         <member name="P:EyeXFramework.EyeXHost.ScreenBounds">
             <summary>
             Gets the engine state: Screen bounds in pixels.
@@ -542,6 +547,11 @@
         <member name="P:EyeXFramework.EyeXHost.GazeTracking">
             <summary>
             Gets the engine state: Gaze tracking.
+            </summary>
+        </member>
+        <member name="P:EyeXFramework.EyeXHost.ConfigurationStatus">
+            <summary>
+            Gets the engine state: Configuraton status
             </summary>
         </member>
         <member name="P:EyeXFramework.EyeXHost.IsStarted">

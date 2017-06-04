@@ -82,6 +82,7 @@ namespace Gaze.HomePanel
             EyeBlinkCooldownTimer.Interval = new TimeSpan(0, 0, 0, 1);
 
             var eyePositionStream = eyeXHostRef.CreateEyePositionDataStream();
+
             eyePositionStream.Next += (s,e) => 
             {
                 if (vm.IsBlinkEyesGazeActivate)

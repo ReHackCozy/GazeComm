@@ -35,10 +35,19 @@ namespace Gaze.UserPanel
 
         private void buttonCalibrate_Click(object sender, RoutedEventArgs e)
             {
-            using (Process calibrate = Process.Start(configurationPath))
-                {
-                calibrate.WaitForExit();
-                }
+                var currentApp = Application.Current as App;
+                var eyeXHost = currentApp.eyeXHost;
+
+                if (eyeXHost == null)
+                    Console.WriteLine("EyeX is NULL @ HomePanelWindow");
+
+                eyeXHost.LaunchRecalibration();
+
+            //Do we still need it??
+            //using (Process calibrate = Process.Start(configurationPath))
+            //    {
+            //    calibrate.WaitForExit();
+            //    }
 
             vm.onUserPanelClosed();
             this.Close();

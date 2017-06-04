@@ -44,20 +44,17 @@ namespace Gaze.HomePanel
 
         HomePanelViewModel vm;
         public WpfEyeXHost eyeXHostRef;
-        Stopwatch stopWatch;
-
-        System.Windows.Threading.DispatcherTimer activationCoolDown = new System.Windows.Threading.DispatcherTimer();
-        //bool activationReady = true;
 
         System.Windows.Threading.DispatcherTimer statusTimer = new System.Windows.Threading.DispatcherTimer();
 
-        //System.Windows.Threading.DispatcherTimer blinkTimer = new System.Windows.Threading.DispatcherTimer();
-        //bool blinkTimerStarted = false;
-
         //HACK
         double fixationBeginTimeStamp = 0;
-        double fixationActivateDuration = 500; //In milisecond
+        double fixationActivateDuration = 400; //In milisecond
         bool fixationStart = false;
+
+        //Blink
+        private bool rightEyeBlinked = false;
+        System.Windows.Threading.DispatcherTimer EyeBlinkCooldownTimer = new System.Windows.Threading.DispatcherTimer();
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -71,36 +68,34 @@ namespace Gaze.HomePanel
             var currentApp = Application.Current as App;
             eyeXHostRef = currentApp.eyeXHost;
 
-            stopWatch = new Stopwatch();
-
             if (eyeXHostRef == null)
                 Console.WriteLine("EyeX is NULL @ HomePanelWindow");
 
+            #region BlinkTracker
+
+            EyeBlinkCooldownTimer.Tick += (s,e) =>
+            {
+                EyeBlinkCooldownTimer.Stop();
+                rightEyeBlinked = false;
+            };
+
+            EyeBlinkCooldownTimer.Interval = new TimeSpan(0, 0, 0, 1);
 
             var eyePositionStream = eyeXHostRef.CreateEyePositionDataStream();
             eyePositionStream.Next += (s,e) => 
             {
-                #region BlinkTracker
-                //if (!activationReady)
-                //    return;
+                //If both eyes blinked
+                if (!e.LeftEye.IsValid && !e.RightEye.IsValid && !rightEyeBlinked)
+                {
+                    rightEyeBlinked = true;
 
-                //    if (!e.LeftEye.IsValid && !e.RightEye.IsValid)
-                //{
-                //    if (!blinkTimerStarted)
-                //        _startBlinkTimer();
+                    EyeBlinkCooldownTimer.Start();
 
-                //    //Try make it work
-                //    //vm.IsBlinked = true; //setting this to True will call OnGazeActivateButton() but not false;
-
-                //}
-                //else
-                //{
-                //    if (blinkTimerStarted)
-                //        _stopBlinkTimer();
-                //}
-                #endregion
-
+                    eyeXHostRef.TriggerActivation();
+                }
             };
+
+            #endregion
 
             var fixationStream = eyeXHostRef.CreateFixationDataStream(Tobii.EyeX.Framework.FixationDataMode.Sensitive);
             fixationStream.Next += OnFixatedGaze;
@@ -112,20 +107,6 @@ namespace Gaze.HomePanel
         {
             var st = this.TryFindResource("SuggestionButtonStyle") as Style;
             SuggestionBox.Height = 0;
-
-            //            var setters = st.Setters;
-
-            //             foreach(var setter in setters)
-            //             {
-            //                 Setter curr = setter as Setter;
-            // 
-            //                 if (curr == null || curr.Property.ToString() != "Template")
-            //                     continue;
-            // 
-            //                 
-            //                 var s = curr.Value as ControlTemplate;
-            // 
-            //             }
 
             ((INotifyCollectionChanged)SuggestionBox.Items).CollectionChanged += HomePanelWindow_CollectionChanged;
 
@@ -148,7 +129,8 @@ namespace Gaze.HomePanel
 
             var gazableButton = element.DataContext as Button;
 
-            addWordToSendMessageTextFromButton(gazableButton.Content.ToString());
+            if(gazableButton != null)
+                addWordToSendMessageTextFromButton(gazableButton.Content.ToString());
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -447,20 +429,14 @@ namespace Gaze.HomePanel
 
         public void OnGazeActivateButton()
         {
-   
-            eyeXHostRef.TriggerActivation();
-
-            //_startActivationCooldown();
+            //[AH][For Fixation]
+            //eyeXHostRef.TriggerActivation();
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private void OnFixatedGaze(object sender, EyeXFramework.FixationEventArgs e)
         {
-
-            //if (!activationReady)
-            //    return;
-
             if (e.EventType == Tobii.EyeX.Framework.FixationDataEventType.Begin)
             {
                 fixationStart = true;
@@ -479,7 +455,6 @@ namespace Gaze.HomePanel
                         OnGazeActivateButton();
                         fixationStart = false;
                     }
-                        
                 }
             }
 
@@ -765,53 +740,6 @@ namespace Gaze.HomePanel
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        #region BlinkTracker
-
-        //private void _startBlinkTimer()
-        //{
-        //    blinkTimerStarted = true;
-        //    blinkTimer.Tick += new EventHandler(blinkTimer_Tick);
-        //    blinkTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
-        //    blinkTimer.Start();
-        //}
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        //private void _stopBlinkTimer()
-        //{
-        //    blinkTimer.Stop();
-        //    blinkTimerStarted = false;
-        //}
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        //private void blinkTimer_Tick(object sender, EventArgs e)
-        //{
-        //    blinkTimerStarted = false;
-        //    if(activationReady)
-        //        OnGazeActivateButton();
-        //    //Really close long enough, unsure which action to trigger
-        //}
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        //private void _startActivationCooldown()
-        //{
-        //    activationReady = false;
-        //    activationCoolDown.Tick += new EventHandler(_activationCooldownTick);
-        //    activationCoolDown.Interval = new TimeSpan(0, 0, 0, 0, 1000);
-        //    activationCoolDown.Start();
-        //}
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        //private void _activationCooldownTick(object sender, EventArgs e)
-        //{
-        //    activationReady = true;
-        //}
-
-        #endregion
 
         private void MenuItemNew_Click(object sender, RoutedEventArgs e)
             {

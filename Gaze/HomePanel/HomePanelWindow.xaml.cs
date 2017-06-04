@@ -53,7 +53,7 @@ namespace Gaze.HomePanel
         bool fixationStart = false;
 
         //Blink
-        private bool rightEyeBlinked = false;
+        private bool EyesBlinked = false;
         System.Windows.Threading.DispatcherTimer EyeBlinkCooldownTimer = new System.Windows.Threading.DispatcherTimer();
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,11 +76,11 @@ namespace Gaze.HomePanel
             EyeBlinkCooldownTimer.Tick += (s,e) =>
             {
                 EyeBlinkCooldownTimer.Stop();
-                rightEyeBlinked = false;
+                EyesBlinked = false;
             };
 
+            var userPresence = eyeXHostRef.UserPresence;
             EyeBlinkCooldownTimer.Interval = new TimeSpan(0, 0, 0, 1);
-
             var eyePositionStream = eyeXHostRef.CreateEyePositionDataStream();
 
             eyePositionStream.Next += (s,e) => 
@@ -88,9 +88,9 @@ namespace Gaze.HomePanel
                 if (vm.IsBlinkEyesGazeActivate)
                 {
                     //If both eyes blinked
-                    if (!e.LeftEye.IsValid && !e.RightEye.IsValid && !rightEyeBlinked)
+                    if (userPresence.IsValid && !e.LeftEye.IsValid && !e.RightEye.IsValid && !EyesBlinked)
                     {
-                        rightEyeBlinked = true;
+                        EyesBlinked = true;
 
                         EyeBlinkCooldownTimer.Start();
 

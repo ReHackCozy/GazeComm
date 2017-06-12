@@ -10,7 +10,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:AttachedBehavior="clr-namespace:Gaze.Control"
         xmlns:autocomplete="clr-namespace:Gaze.EyeTracker"
-        WindowStyle="None"   
+        WindowStyle="None"      
         KeyDown="Window_OnKeyDown"
         Icon="/Resources/TechClutchIcon.ico"
         KeyUp="Window_KeyUp"
@@ -231,6 +231,33 @@
                         <StackPanel.Background>
                             <SolidColorBrush Color="#002d49" Opacity="0.3"/>
                         </StackPanel.Background>
+
+                        <!-- SUGGESTION START -->
+
+                        <ListView x:Name="SuggestionBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding SuggestionsList}" Initialized="SuggestionBox_Initialized" Height="120" Background="LightBlue" 
+                                  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,0,0">
+
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemContainerStyle>
+                                <Style >
+                                    <Setter Property="Grid.ColumnSpan" Value="2" />
+                                    <Setter Property="Grid.RowSpan" Value="3" />
+                                    <Setter Property="eyeX:Behavior.Activatable" Value="Default" />
+                                    <Setter Property="eyeX:Behavior.GazeAware" Value="True"/>
+                                    <EventSetter Event="eyeX:Behavior.Activate" Handler="OnEyeXActivateSuggestion" />
+                                    <EventSetter Event="eyeX:Behavior.HasGazeChanged" Handler="SuggestionButton_HasGazeChanged"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
+
+
+
+                        <!-- SUGGESTION END -->
+
                         <!-- SPECIAL KEY START -->
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" Height="130">
@@ -284,31 +311,6 @@
                         </StackPanel>
 
                         <!-- SPECIAL KEY END -->
-
-
-                        <ListView x:Name="SuggestionBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding SuggestionsList}" Initialized="SuggestionBox_Initialized" Height="120" Background="LightBlue" 
-                                  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,0,0">
-
-                            <ListView.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal"/>
-                                </ItemsPanelTemplate>
-                            </ListView.ItemsPanel>
-                            <ListView.ItemContainerStyle>
-                                <Style >
-                                    <Setter Property="Grid.ColumnSpan" Value="2" />
-                                    <Setter Property="Grid.RowSpan" Value="3" />
-                                    <Setter Property="eyeX:Behavior.Activatable" Value="Default" />
-                                    <Setter Property="eyeX:Behavior.GazeAware" Value="True"/>
-                                    <EventSetter Event="eyeX:Behavior.Activate" Handler="OnEyeXActivateSuggestion" />
-                                    <EventSetter Event="eyeX:Behavior.HasGazeChanged" Handler="SuggestionButton_HasGazeChanged"/>
-                                </Style>
-                            </ListView.ItemContainerStyle>
-                        </ListView>
-
-                        <!-- SUGGESTION START -->
-
-                        <!-- SUGGESTION END -->
                     </StackPanel>
 
                 </Grid>

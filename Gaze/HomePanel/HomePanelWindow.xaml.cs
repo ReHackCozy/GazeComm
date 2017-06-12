@@ -18,6 +18,7 @@ using Gaze.API;
 using System.Diagnostics;
 using System.Windows.Automation.Peers;
 using System.Collections.Specialized;
+using System.Media;
 using System.Windows.Media.Animation;
 using Gaze.Control;
 using Gaze.Data;
@@ -129,11 +130,14 @@ namespace Gaze.HomePanel
                 return;
 
             var element = e.Source as FrameworkElement;
+
             if (null == element) { return; }
 
             var gazableButton = element.DataContext as Button;
 
-            if(gazableButton != null)
+            ColorFadeOut(gazableButton);
+
+            if (gazableButton != null)
                 addWordToSendMessageTextFromButton(gazableButton.Content.ToString());
         }
 
@@ -291,6 +295,8 @@ namespace Gaze.HomePanel
             if (vm.MessageToSend.Length == 0)
                 return;
 
+            ColorFadeOut(sender as Button);
+
             vm.PlayTTS();
             Status.Opacity = 0;
             Status.Content = "Text Spoken";
@@ -307,7 +313,9 @@ namespace Gaze.HomePanel
 
             var button = sender as Button;
 
-            if(button.Tag.Equals("next"))
+            ColorFadeOut(button);
+
+            if (button.Tag.Equals("next"))
                 {
                 vm.LoadNextKeyboard();
                 }
@@ -357,6 +365,9 @@ namespace Gaze.HomePanel
                 return;
 
             var button = sender as Button;
+
+            ColorFadeOut(button);
+
             if (vm.MessageToSend.Length > 0)
             {
                 if(!vm.IsLetters)
@@ -422,6 +433,8 @@ namespace Gaze.HomePanel
         {
             if (!IsKeyboardGazable)
                 return;
+
+            ColorFadeOut(sender as Button);
 
             vm.MessageToSend += " ";
 
@@ -812,7 +825,9 @@ namespace Gaze.HomePanel
             userPanel.ShowDialog();
             }
 
-		//HACK, lazy to do
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //HACK, lazy to do
         private void EyeEnabler_Checked(object sender, RoutedEventArgs e)
         {
             IsKeyboardGazable = !IsKeyboardGazable;
@@ -831,11 +846,38 @@ namespace Gaze.HomePanel
                 
         }
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         private void EyeEnabler_Click(object sender, RoutedEventArgs e)
         {
 
         }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void ColorFadeOut(System.Windows.Controls.Control control)
+        {
+            //Uri uri = new Uri("Resources/ClickSound.mp3", UriKind.Relative);
+            //var player = new MediaPlayer();
+            //player.Open(uri);
+            //player.Play();
+
+            var oriColor = control.Background.Clone() as SolidColorBrush;
+ 
+            ColorAnimation ca = new ColorAnimation(Colors.Red, oriColor.Color, new Duration(TimeSpan.FromSeconds(1)));
+            Storyboard.SetTarget(ca, control);
+            Storyboard.SetTargetProperty(ca, new PropertyPath("Background.Color"));
+
+            Storyboard stb = new Storyboard();
+            stb.Children.Add(ca);
+            stb.Begin();
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static class CustomCommands
         {

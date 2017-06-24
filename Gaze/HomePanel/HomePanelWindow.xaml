@@ -69,8 +69,10 @@
             <Style.Triggers>
                 <Trigger Property="eyeX:Behavior.HasGaze" Value="True">
                     <Setter Property="Button.Background" Value="#E59400"/>
+
                 </Trigger>
             </Style.Triggers>
+            <EventSetter Event="eyeX:Behavior.HasGazeChanged" Handler="EventSetter_OnHandler"/>
             <Setter Property="FontSize" Value="15" />
             <Setter Property="FontFamily" Value="./#Segoe UI" />
             <Setter Property="SnapsToDevicePixels" Value="True" />

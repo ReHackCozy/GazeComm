@@ -27,6 +27,13 @@ using System.Windows.Controls.Primitives;
 
 namespace Gaze.HomePanel
 {
+    public partial class ButtonTag : Button
+    {
+        public bool onLook = false;
+    }
+
+
+
     /// <summary>
     /// Interaction logic for HomePanel.xaml
     /// </summary>
@@ -55,6 +62,7 @@ namespace Gaze.HomePanel
 
         //Blink
         private bool EyesBlinked = false;
+        private bool CanBlinkActivate = false; // TODO
         System.Windows.Threading.DispatcherTimer EyeBlinkCooldownTimer = new System.Windows.Threading.DispatcherTimer();
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -135,7 +143,7 @@ namespace Gaze.HomePanel
 
             var gazableButton = element.DataContext as Button;
 
-            ColorFadeOut(gazableButton);
+            ActivationColorFadeOut(gazableButton);
 
             if (gazableButton != null)
                 addWordToSendMessageTextFromButton(gazableButton.Content.ToString());
@@ -295,7 +303,7 @@ namespace Gaze.HomePanel
             if (vm.MessageToSend.Length == 0)
                 return;
 
-            ColorFadeOut(sender as Button);
+            ActivationColorFadeOut(sender as Button);
 
             vm.PlayTTS();
             Status.Opacity = 0;
@@ -313,7 +321,7 @@ namespace Gaze.HomePanel
 
             var button = sender as Button;
 
-            ColorFadeOut(button);
+            ActivationColorFadeOut(button);
 
             if (button.Tag.Equals("next"))
                 {
@@ -366,7 +374,7 @@ namespace Gaze.HomePanel
 
             var button = sender as Button;
 
-            ColorFadeOut(button);
+            ActivationColorFadeOut(button);
 
             if (vm.MessageToSend.Length > 0)
             {
@@ -434,7 +442,7 @@ namespace Gaze.HomePanel
             if (!IsKeyboardGazable)
                 return;
 
-            ColorFadeOut(sender as Button);
+            ActivationColorFadeOut(sender as Button);
 
             vm.MessageToSend += " ";
 
@@ -855,16 +863,11 @@ namespace Gaze.HomePanel
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        private void ColorFadeOut(System.Windows.Controls.Control control)
+        private void ActivationColorFadeOut(System.Windows.Controls.Control control)
         {
-            //Uri uri = new Uri("Resources/ClickSound.mp3", UriKind.Relative);
-            //var player = new MediaPlayer();
-            //player.Open(uri);
-            //player.Play();
-
             var oriColor = control.Background.Clone() as SolidColorBrush;
  
-            ColorAnimation ca = new ColorAnimation(Colors.Red, oriColor.Color, new Duration(TimeSpan.FromSeconds(1)));
+            ColorAnimation ca = new ColorAnimation(Colors.Red, oriColor.Color, new Duration(TimeSpan.FromSeconds(0.1)));
             Storyboard.SetTarget(ca, control);
             Storyboard.SetTargetProperty(ca, new PropertyPath("Background.Color"));
 
@@ -875,6 +878,40 @@ namespace Gaze.HomePanel
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        private void ActivationColorFadeIn(System.Windows.Controls.Control control)
+        {
+            var oriColor = control.Background.Clone() as SolidColorBrush;
+
+            ColorAnimation ca = new ColorAnimation(oriColor.Color, Colors.Red, new Duration(TimeSpan.FromSeconds(1)));
+            Storyboard.SetTarget(ca, control);
+            Storyboard.SetTargetProperty(ca, new PropertyPath("Background.Color"));
+
+            Storyboard stb = new Storyboard();
+            stb.Children.Add(ca);
+            stb.Begin();
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void EventSetter_OnHandler(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Controls.Control control = sender as System.Windows.Controls.Control;
+
+            Button btn = control as Button;
+
+            if (btn != null)
+            {
+                if (btn.GetHasGaze())
+                {
+                    ActivationColorFadeIn(control);
+                }
+                else
+                {
+                    ActivationColorFadeOut(control);
+                }
+            }
+
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -23,12 +23,24 @@
     </Window.CommandBindings>
 
     <Window.Resources>
+
+        <Style TargetType="{x:Type Button}" x:Key="GenericGazeButtonStyle">
+            <Style.Triggers>
+                <Trigger Property="eyeX:Behavior.HasGaze" Value="True">
+                    <Setter Property="Button.Background" Value="#E59400"/>
+                </Trigger>
+            </Style.Triggers>
+            <EventSetter Event="eyeX:Behavior.HasGazeChanged" Handler="EventSetter_OnHandler"/>
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
+
         <Style TargetType="{x:Type Button}" x:Key="SuggestionButtonStyle">
             <Style.Triggers>
                 <Trigger Property="eyeX:Behavior.HasGaze" Value="True">
                     <Setter Property="Button.Background" Value="#E59400"/>
                 </Trigger>
             </Style.Triggers>
+            <EventSetter Event="eyeX:Behavior.HasGazeChanged" Handler="EventSetter_OnHandler"/>
             <Setter Property="Background" Value="#F27360" />
             <Setter Property="Foreground" Value="White" />
             <Setter Property="FontSize" Value="15" />
@@ -69,7 +81,6 @@
             <Style.Triggers>
                 <Trigger Property="eyeX:Behavior.HasGaze" Value="True">
                     <Setter Property="Button.Background" Value="#E59400"/>
-
                 </Trigger>
             </Style.Triggers>
             <EventSetter Event="eyeX:Behavior.HasGazeChanged" Handler="EventSetter_OnHandler"/>
@@ -107,6 +118,7 @@
         </Style>
 
         <Style x:Key="TogButton" TargetType="{x:Type RadioButton}" BasedOn="{StaticResource {x:Type ToggleButton}}">
+            <EventSetter Event="eyeX:Behavior.HasGazeChanged" Handler="EventSetter_OnHandler"/>
             <Style.Triggers>
                 <Trigger Property="eyeX:Behavior.HasGaze" Value="True">
                     <Setter Property="Button.Background" Value="#E59400"/>
@@ -128,7 +140,7 @@
             <Grid.Background>
                 <ImageBrush ImageSource="/Resources/BackgroundPoly.jpg" Stretch="Uniform" Opacity="0.4"/>
             </Grid.Background>
-            
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="300"/>
                 <ColumnDefinition Width="*"/>
@@ -212,7 +224,7 @@
                                                     <Path x:Name="PathIcon" Width="15" Height="25" Stretch="Fill" Fill="#4C87B3" HorizontalAlignment="Left" Margin="17,0,0,0" />
                                                     <TextBlock Text="{TemplateBinding Content}" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Center" 
                                                                VerticalAlignment="Center" TextAlignment="Center" Padding="2,2,2,2"/>
-                                                   
+
                                                 </Grid>
                                             </Border>
                                         </ControlTemplate>
@@ -389,7 +401,7 @@
                                      IsChecked="{Binding IsBlinkEyesGazeActivate, Mode=TwoWay}" Style="{StaticResource TogButton}"/>
 
                         <Label Content="Other" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="25" Foreground="White" Background="#164e78"  Width="auto" />
-                        
+
                         <Button Content="CLR" Height="180" FontSize="30" Foreground="white" FontWeight="Bold"
                                     eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="Clr_Activate" Click="Clr_Activate" eyeX:Behavior.GazeAware="True">
                             <Button.Style>
@@ -404,13 +416,13 @@
 
                 <Button x:Name="MiscPanelDown" Height="auto" Grid.Row="3" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default"
                          Click="MiscPanelDown_Activate" eyeX:Behavior.HasGazeChanged="MiscPanelDown_HasGazeChanged" eyeX:Behavior.GazeAware="True">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource KeyboardButton}">
-                                <Setter Property="Background" Value="#002d49"/>
-                                <Setter Property="Foreground" Value="White"/>
-                            </Style>
-                        </Button.Style>
-                        <StackPanel>
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource KeyboardButton}">
+                            <Setter Property="Background" Value="#002d49"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Style>
+                    </Button.Style>
+                    <StackPanel>
                         <Image Source="/Resources/ArrowDown.png" Height="40"/>
                     </StackPanel>
                 </Button>
@@ -445,45 +457,18 @@
                     <Label x:Name="Status" Content="" Height="100" FontSize="40" FontWeight="Bold"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 </StackPanel>
 
+                <!-- TODO Add <EventSetter Event="eyeX:Behavior.HasGazeChanged" Handler="EventSetter_OnHandler"/> -->
                 <Button x:Name="SendTTS" Height="180" Grid.Row="3" Content="Send TTS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activatable="Default" 
-                        eyeX:Behavior.Activate="SendTTS_Activate"  Click="SendTTS_Activate" eyeX:Behavior.GazeAware="True">
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Style.Triggers>
-                                <Trigger Property="eyeX:Behavior.HasGaze" Value="True">
-                                    <Setter Property="Button.Background" Value="#E59400"/>
-                                </Trigger>
-                            </Style.Triggers>
-                            <Setter Property="Foreground" Value="Black"/>
-                        </Style>
-                    </Button.Style>
-                </Button>
+                        eyeX:Behavior.Activate="SendTTS_Activate"  Click="SendTTS_Activate" eyeX:Behavior.GazeAware="True" Style="{StaticResource GenericGazeButtonStyle}"/>
 
                 <Button x:Name="SendSMS" Height="180" Grid.Row="4" eyeX:Behavior.Activatable="Default" Content="Send SMS" FontSize="40" FontWeight="Bold" eyeX:Behavior.Activate="OnSendSMS" 
-                        Click="OnSendSMS" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SendSMS_HasGazeChanged">
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Style.Triggers>
-                                <Trigger Property="eyeX:Behavior.HasGaze" Value="True">
-                                    <Setter Property="Button.Background" Value="#E59400"/>
-                                </Trigger>
-                            </Style.Triggers>
-                            <Setter Property="Foreground" Value="Black"/>
-                        </Style>
-                    </Button.Style>
-                </Button>
+                        Click="OnSendSMS" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="SendSMS_HasGazeChanged" Style="{StaticResource GenericGazeButtonStyle}"/>
 
                 <Button Content="Speak" Grid.Row="5" Height="180" FontSize="50" FontWeight="Bold" Name="PlayText" eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="PlayText_Activate"
                         Click="PlayText_Activate" eyeX:Behavior.GazeAware="True" eyeX:Behavior.HasGazeChanged="PlayText_HasGazeChanged">
                     <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Style.Triggers>
-                                <Trigger Property="eyeX:Behavior.HasGaze" Value="True">
-                                    <Setter Property="Button.Background" Value="#E59400"/>
-                                </Trigger>
-                            </Style.Triggers>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource GenericGazeButtonStyle}">
                             <Setter Property="Background" Value="#F3C766"/>
-                            <Setter Property="Foreground" Value="Black"/>
                         </Style>
                     </Button.Style>
                 </Button>

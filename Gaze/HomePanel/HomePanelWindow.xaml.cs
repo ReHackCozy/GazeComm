@@ -57,13 +57,15 @@ namespace Gaze.HomePanel
 
         //HACK
         double fixationBeginTimeStamp = 0;
-        double fixationActivateDuration = 400; //In milisecond
+        double fixationActivateDuration = 600; //In milisecond
         bool fixationStart = false;
 
         //Blink
         private bool EyesBlinked = false;
         private bool CanBlinkActivate = false; // TODO
         System.Windows.Threading.DispatcherTimer EyeBlinkCooldownTimer = new System.Windows.Threading.DispatcherTimer();
+
+        System.Windows.Threading.DispatcherTimer CanBlinkTimer = new System.Windows.Threading.DispatcherTimer();
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -97,7 +99,7 @@ namespace Gaze.HomePanel
                 if (vm.IsBlinkEyesGazeActivate)
                 {
                     //If both eyes blinked
-                    if (userPresence.IsValid && !e.LeftEye.IsValid && !e.RightEye.IsValid && !EyesBlinked)
+                    if (userPresence.IsValid && !e.LeftEye.IsValid && !e.RightEye.IsValid && !EyesBlinked && CanBlinkActivate)
                     {
                         EyesBlinked = true;
 
@@ -106,6 +108,13 @@ namespace Gaze.HomePanel
                         eyeXHostRef.TriggerActivation();
                     }
                 }
+            };
+
+            CanBlinkTimer.Interval = new TimeSpan(0,0,0,1);
+            CanBlinkTimer.Tick += (s, e) =>
+            {
+                CanBlinkActivate = true;
+                CanBlinkTimer.Stop();
             };
 
             #endregion
@@ -143,7 +152,7 @@ namespace Gaze.HomePanel
 
             var gazableButton = element.DataContext as Button;
 
-            ActivationColorFadeOut(gazableButton);
+            //ActivationColorFadeOut(gazableButton);
 
             if (gazableButton != null)
                 addWordToSendMessageTextFromButton(gazableButton.Content.ToString());
@@ -303,7 +312,7 @@ namespace Gaze.HomePanel
             if (vm.MessageToSend.Length == 0)
                 return;
 
-            ActivationColorFadeOut(sender as Button);
+            //ActivationColorFadeOut(sender as Button);
 
             vm.PlayTTS();
             Status.Opacity = 0;
@@ -321,7 +330,7 @@ namespace Gaze.HomePanel
 
             var button = sender as Button;
 
-            ActivationColorFadeOut(button);
+            //ActivationColorFadeOut(button);
 
             if (button.Tag.Equals("next"))
                 {
@@ -374,7 +383,7 @@ namespace Gaze.HomePanel
 
             var button = sender as Button;
 
-            ActivationColorFadeOut(button);
+            //ActivationColorFadeOut(button);
 
             if (vm.MessageToSend.Length > 0)
             {
@@ -442,7 +451,7 @@ namespace Gaze.HomePanel
             if (!IsKeyboardGazable)
                 return;
 
-            ActivationColorFadeOut(sender as Button);
+            //ActivationColorFadeOut(sender as Button);
 
             vm.MessageToSend += " ";
 
@@ -866,8 +875,8 @@ namespace Gaze.HomePanel
         private void ActivationColorFadeOut(System.Windows.Controls.Control control)
         {
             var oriColor = control.Background.Clone() as SolidColorBrush;
- 
-            ColorAnimation ca = new ColorAnimation(Colors.Red, oriColor.Color, new Duration(TimeSpan.FromSeconds(0.1)));
+
+            ColorAnimation ca = new ColorAnimation(Colors.Red, oriColor.Color, new Duration(TimeSpan.FromSeconds(1)));
             Storyboard.SetTarget(ca, control);
             Storyboard.SetTargetProperty(ca, new PropertyPath("Background.Color"));
 
@@ -888,6 +897,7 @@ namespace Gaze.HomePanel
 
             Storyboard stb = new Storyboard();
             stb.Children.Add(ca);
+
             stb.Begin();
         }
 
@@ -897,17 +907,20 @@ namespace Gaze.HomePanel
         {
             System.Windows.Controls.Control control = sender as System.Windows.Controls.Control;
 
-            Button btn = control as Button;
-
-            if (btn != null)
+            if (control != null)
             {
-                if (btn.GetHasGaze())
+                if (control.GetHasGaze())
                 {
+                    CanBlinkTimer.Start();
                     ActivationColorFadeIn(control);
                 }
                 else
                 {
-                    ActivationColorFadeOut(control);
+                    if(CanBlinkTimer.IsEnabled)
+                        CanBlinkTimer.Stop();
+
+                    if (CanBlinkActivate)
+                        CanBlinkActivate = false;
                 }
             }
 

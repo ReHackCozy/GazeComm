@@ -61,9 +61,7 @@ namespace Gaze.HomePanel
         bool fixationStart = false;
 
         //Blink
-        private bool EyesBlinked = false;
         private bool CanBlinkActivate = false; // TODO
-        System.Windows.Threading.DispatcherTimer EyeBlinkCooldownTimer = new System.Windows.Threading.DispatcherTimer();
 
         System.Windows.Threading.DispatcherTimer CanBlinkTimer = new System.Windows.Threading.DispatcherTimer();
 
@@ -84,27 +82,17 @@ namespace Gaze.HomePanel
 
             #region BlinkTracker
 
-            EyeBlinkCooldownTimer.Tick += (s,e) =>
-            {
-                EyeBlinkCooldownTimer.Stop();
-                EyesBlinked = false;
-            };
-
             var userPresence = eyeXHostRef.UserPresence;
-            EyeBlinkCooldownTimer.Interval = new TimeSpan(0, 0, 0, 1);
             var eyePositionStream = eyeXHostRef.CreateEyePositionDataStream();
 
-            eyePositionStream.Next += (s,e) => 
+            eyePositionStream.Next += (s, e) =>
             {
                 if (vm.IsBlinkEyesGazeActivate)
                 {
                     //If both eyes blinked
-                    if (userPresence.IsValid && !e.LeftEye.IsValid && !e.RightEye.IsValid && !EyesBlinked && CanBlinkActivate)
+                    if (userPresence.IsValid && !e.LeftEye.IsValid && !e.RightEye.IsValid && CanBlinkActivate)
                     {
-                        EyesBlinked = true;
-
-                        EyeBlinkCooldownTimer.Start();
-
+                        CanBlinkActivate = false;
                         eyeXHostRef.TriggerActivation();
                     }
                 }

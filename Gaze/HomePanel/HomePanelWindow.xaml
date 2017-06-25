@@ -34,13 +34,34 @@
             <Setter Property="Foreground" Value="Black"/>
         </Style>
 
-        <Style TargetType="{x:Type Button}" x:Key="SuggestionButtonStyle">
-            <Style.Triggers>
-                <Trigger Property="eyeX:Behavior.HasGaze" Value="True">
-                    <Setter Property="Button.Background" Value="#E59400"/>
-                </Trigger>
-            </Style.Triggers>
-            <EventSetter Event="eyeX:Behavior.HasGazeChanged" Handler="EventSetter_OnHandler"/>
+        <!-- TODO: Work on this-->
+        <Style TargetType="{x:Type Button}" x:Key="GazeractionButtonStyle" BasedOn="{StaticResource GenericGazeButtonStyle}">
+            <Setter Property="Background" Value="LimeGreen" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontFamily" Value="./#Segoe UI" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Width" Value="Auto"/>
+            <Setter Property="MinWidth" Value="50"/>
+            <Setter Property="eyeX:Behavior.Activatable" Value="Default"/>
+            <Setter Property="eyeX:Behavior.GazeAware" Value="True"/>
+
+            <Setter Property="Template" x:Name="ControlTemplate">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <Grid>
+                                <Path x:Name="PathIcon" Width="15" Height="25" Stretch="Fill" Fill="#4C87B3" HorizontalAlignment="Left" Margin="17,0,0,0" />
+                                <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type Button}" x:Key="SuggestionButtonStyle" BasedOn="{StaticResource GenericGazeButtonStyle}">
             <Setter Property="Background" Value="#F27360" />
             <Setter Property="Foreground" Value="White" />
             <Setter Property="FontSize" Value="15" />
@@ -77,13 +98,7 @@
             </Setter>
         </Style>
 
-        <Style TargetType="{x:Type Button}" x:Key="KeyboardButton">
-            <Style.Triggers>
-                <Trigger Property="eyeX:Behavior.HasGaze" Value="True">
-                    <Setter Property="Button.Background" Value="#E59400"/>
-                </Trigger>
-            </Style.Triggers>
-            <EventSetter Event="eyeX:Behavior.HasGazeChanged" Handler="EventSetter_OnHandler"/>
+        <Style TargetType="{x:Type Button}" x:Key="KeyboardButton" BasedOn="{StaticResource GenericGazeButtonStyle}">
             <Setter Property="FontSize" Value="15" />
             <Setter Property="FontFamily" Value="./#Segoe UI" />
             <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -447,11 +462,10 @@
                     <Separator Height="5"/>
                 </StackPanel>
 
-                <!-- TEMP -->
+                <!-- TEMP, Not working for blink -->
                 <Button x:Name="EyeEnabler" Content="Gazeraction ON" Grid.Row="1" FontSize="30" Height="auto" Width="auto" FontWeight="Bold" 
                                     eyeX:Behavior.Activatable="Default" eyeX:Behavior.Activate="EyeEnabler_Checked" Click='EyeEnabler_Checked' eyeX:Behavior.GazeAware="True"
-                              FontFamily="Arial rounded MT bold" Foreground="Black" Background="#17af29">
-                </Button>
+                              FontFamily="Arial rounded MT bold" Foreground="Black" Background="#17af29"/>
 
                 <StackPanel Orientation="Vertical" Grid.Row="2" Background="White" VerticalAlignment="Stretch">
                     <Label x:Name="Status" Content="" Height="100" FontSize="40" FontWeight="Bold"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>

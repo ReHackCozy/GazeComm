@@ -32,6 +32,8 @@ namespace Gaze.HomePanel
         private ObservableCollection<Button> _suggestionsList = new ObservableCollection<Button>();
         private ObservableCollection<Button> _keyboardButtonList = new ObservableCollection<Button>();
 
+        /// TODO: Add can blink activate here, and bind with buttons to change color
+
         public HomePanelViewModel()
         {
             var currentApp = System.Windows.Application.Current as App;

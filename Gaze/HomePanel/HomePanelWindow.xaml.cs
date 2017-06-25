@@ -58,6 +58,7 @@ namespace Gaze.HomePanel
         //HACK
         double fixationBeginTimeStamp = 0;
         double fixationActivateDuration = 600; //In milisecond
+        private double blinkActivateDuration = 600; //In milisecond
         bool fixationStart = false;
 
         //Blink
@@ -864,7 +865,14 @@ namespace Gaze.HomePanel
         {
             var oriColor = control.Background.Clone() as SolidColorBrush;
 
-            ColorAnimation ca = new ColorAnimation(Colors.Red, oriColor.Color, new Duration(TimeSpan.FromSeconds(1)));
+            double duration = 1;
+
+            if (vm.IsFixationGazeActivate)
+                duration = fixationActivateDuration / 1000;
+            else if (vm.IsBlinkEyesGazeActivate)
+                duration = blinkActivateDuration / 1000;
+
+            ColorAnimation ca = new ColorAnimation(Colors.Red, oriColor.Color, new Duration(TimeSpan.FromSeconds(duration)));
             Storyboard.SetTarget(ca, control);
             Storyboard.SetTargetProperty(ca, new PropertyPath("Background.Color"));
 
@@ -879,7 +887,15 @@ namespace Gaze.HomePanel
         {
             var oriColor = control.Background.Clone() as SolidColorBrush;
 
-            ColorAnimation ca = new ColorAnimation(oriColor.Color, Colors.Red, new Duration(TimeSpan.FromSeconds(1)));
+            double duration = 1;
+
+            if (vm.IsFixationGazeActivate)
+                duration = fixationActivateDuration / 1000;
+            else if (vm.IsBlinkEyesGazeActivate)
+                duration = blinkActivateDuration / 1000;
+
+            ColorAnimation ca = new ColorAnimation(oriColor.Color, Colors.Red, new Duration(TimeSpan.FromSeconds(duration)));
+
             Storyboard.SetTarget(ca, control);
             Storyboard.SetTargetProperty(ca, new PropertyPath("Background.Color"));
 
@@ -893,6 +909,9 @@ namespace Gaze.HomePanel
 
         private void EventSetter_OnHandler(object sender, RoutedEventArgs e)
         {
+            if (!IsKeyboardGazable)
+                return;
+
             System.Windows.Controls.Control control = sender as System.Windows.Controls.Control;
 
             if (control != null)

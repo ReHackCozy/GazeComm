@@ -32,8 +32,6 @@ namespace Gaze.HomePanel
         private ObservableCollection<Button> _suggestionsList = new ObservableCollection<Button>();
         private ObservableCollection<Button> _keyboardButtonList = new ObservableCollection<Button>();
 
-        /// TODO: Add can blink activate here, and bind with buttons to change color
-
         public HomePanelViewModel()
         {
             var currentApp = System.Windows.Application.Current as App;
@@ -41,6 +39,8 @@ namespace Gaze.HomePanel
             userDataRef.UpdateDataDelegate += OnDataUpdated;
 
             keyboardManager = new KeyboardManager(this);
+
+            _isKeyboardGazable = true;
 
             _name = "";
             _phoneNumber = "";
@@ -175,6 +175,19 @@ namespace Gaze.HomePanel
 
                 _isFixationGazeActivate = value;
                 OnPropertyChanged("IsFixationGazeActivate");
+            }
+        }
+
+        private bool _isKeyboardGazable;
+        public bool IsKeyboardGazable
+        {
+            get { return _isKeyboardGazable; }
+            set
+            {
+                if (_isKeyboardGazable == value) return;
+
+                _isKeyboardGazable = value;
+                OnPropertyChanged("IsKeyboardGazable");
             }
         }
 

@@ -857,7 +857,7 @@ namespace Gaze.HomePanel
             else if (vm.IsBlinkEyesGazeActivate)
                 duration = blinkActivateDuration / 1000;
 
-            ColorAnimation ca = new ColorAnimation(Colors.Red, oriColor.Color, new Duration(TimeSpan.FromSeconds(duration)));
+            ColorAnimation ca = new ColorAnimation(Colors.Green, oriColor.Color, new Duration(TimeSpan.FromSeconds(duration)));
             Storyboard.SetTarget(ca, control);
             Storyboard.SetTargetProperty(ca, new PropertyPath("Background.Color"));
 
@@ -879,7 +879,7 @@ namespace Gaze.HomePanel
             else if (vm.IsBlinkEyesGazeActivate)
                 duration = blinkActivateDuration / 1000;
 
-            ColorAnimation ca = new ColorAnimation(oriColor.Color, Colors.Red, new Duration(TimeSpan.FromSeconds(duration)));
+            ColorAnimation ca = new ColorAnimation(oriColor.Color, Colors.Green, new Duration(TimeSpan.FromSeconds(duration)));
 
             Storyboard.SetTarget(ca, control);
             Storyboard.SetTargetProperty(ca, new PropertyPath("Background.Color"));
